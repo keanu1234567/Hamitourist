@@ -49,7 +49,6 @@ body {
   list-style: none;
   display: flex;
   gap: 25px;
-  flex-wrap: wrap;
 }
 
 .nav-links li a {
@@ -351,16 +350,25 @@ footer,
 @media (max-width: 1024px) {
   .navbar {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     padding: 15px 25px;
   }
 
+   /* FIXED nav-links to row and smaller text */
   .nav-links {
-    flex-direction: column;
+    flex-direction: row;/* keep links in a row */
+    justify-content: center;
+    align-items: center;
     width: 100%;
     margin-top: 10px;
-    gap: 15px;
+    padding: 0px 0px 0px 0px;
+    gap: 25px;           /* smaller gap for compact layout */
   }
+
+  .nav-links li a {
+    font-size: 0.85rem;  /* smaller text */
+  }
+
 
   .hero-overlay h1 { font-size: 2.2rem; }
   .hero-overlay p { font-size: 1rem; }
@@ -378,6 +386,57 @@ footer,
     position: static;
     text-align: center;
   }
+
+  .card-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* 3 columns for top row */
+    gap: 30px;
+    justify-content: center;
+    margin-top: 50px;
+  }
+
+  /* Bottom row: 2 cards centered between top row gaps */
+  .card-container > .card:nth-child(4) {
+    transform: translateX(0%); /* move a bit to the right */
+  }
+
+  .card-container > .card:nth-child(5) {
+    transform: translateX(0%); /* move a bit to the right */
+  }
+
+
+  .card {
+    background: rgba(241, 238, 238, 0.1);
+    border-radius: 18px;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: fadeInUp 0.8s ease;
+  }
+
+  .card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .card:hover img { transform: scale(1.1); }
+
+  .card h3 { margin: 15px; color: #2f5233; }
+
+  .card p {
+    margin: 0 15px 20px;
+    font-size: 0.95rem;
+    color: #f1f1f1;
+  }
+
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.15);
+  }
+  
 }
 
 @media (max-width: 480px) {

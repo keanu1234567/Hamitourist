@@ -15,7 +15,7 @@ function App() {
         <nav className="navbar">
           <div className="logo">🏔️ HamiTour</div>
           <ul className="nav-links">
-            <li><NavLink to="/" end>Home</NavLink></li>
+            <li className='nav-list'><NavLink to="/" end>Home</NavLink></li>
             <li><NavLink to="/tour">Virtual Tour</NavLink></li>
             <li><NavLink to="/about">About</NavLink></li> {/* ✅ Link to About */}
             <li><NavLink to="/conservation">Conservation</NavLink></li>
