@@ -1,0 +1,794 @@
+/* 🌍 General Styles + Font Imports */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Quicksand:wght@400;600;700&display=swap");
+
+body {
+  margin: 0;
+  font-family: "Poppins", "Quicksand", sans-serif;
+  color: #2e3d2f;
+  overflow-x: hidden;
+  background-color: #f8fbf9;
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+/* 🧭 Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px 40px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  animation: fadeDown 0.8s ease;
+}
+
+@keyframes fadeDown {
+  from { transform: translateY(-40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #2f5233;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  animation: fadeIn 1s ease;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.nav-links li a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+}
+
+.nav-links li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background-color: #5acb52;
+  transition: width 0.3s ease;
+}
+
+.nav-links li a:hover::after,
+.nav-links li a.active::after {
+  width: 100%;
+}
+
+.nav-links li a:hover {
+  color: #5acb52;
+}
+
+/* 🎯 Buttons */
+.btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #4caf50, #81c784);
+  padding: 12px 28px;
+  border-radius: 25px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+}
+
+.btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+}
+
+/* 🌿 Section */
+.section {
+  margin-top: -180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 80px 20px;
+  text-align: center;
+  background: transparent;
+  position: relative;
+  min-height: 100vh;
+}
+
+.section h2 {
+  margin-bottom: 20px;
+  font-size: 2.8rem;
+  font-family: "Quicksand", sans-serif;
+  color: #dde6dd;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  animation: fadeInUp 1s ease;
+}
+
+.section p {
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.7;
+  font-size: 1.05rem;
+  color: #333;
+  animation: fadeInUp 1.2s ease;
+}
+
+/* 🪪 Cards */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns for top row */
+  gap: 30px;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+/* Bottom row: 2 cards centered between top row gaps */
+.card-container > .card:nth-child(4) {
+  transform: translateX(40%); /* move a bit to the right */
+}
+
+.card-container > .card:nth-child(5) {
+  transform: translateX(60%); /* move a bit to the right */
+}
+
+
+.card {
+  background: rgba(241, 238, 238, 0.1);
+  border-radius: 18px;
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 300px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  animation: fadeInUp 0.8s ease;
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.card:hover img { transform: scale(1.1); }
+
+.card h3 { margin: 15px; color: #2f5233; }
+
+.card p {
+  margin: 0 15px 20px;
+  font-size: 0.95rem;
+  color: #f1f1f1;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* 🎥 Hero Section */
+.hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  overflow: hidden;
+}
+
+.hero-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.hero-overlay {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  padding: 20px;
+  animation: fadeInUp 1s ease;
+}
+
+.hero-overlay h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.hero-overlay p {
+  font-size: 1.2rem;
+  margin-top: 15px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* 🦶 Footer (Shared by All Pages) */
+footer,
+.tour-footer {
+  background: rgba(0, 0, 0, 0.2);
+  color: #fdfdfd;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  width: 100%;
+}
+
+/* ============================= */
+/* 🌈 TOUR PAGE STYLES           */
+/* ============================= */
+
+.tour-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ✨ Overlay text */
+.tour-overlay {
+  margin-top: -10px;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 180px;
+  z-index: 2;
+  animation: fadeIn 1.5s ease forwards;
+}
+
+.tour-overlay h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s ease;
+}
+
+.tour-overlay h1:hover { transform: scale(1.05); }
+
+.tour-overlay p {
+  font-size: 1.2rem;
+  opacity: 0.95;
+  letter-spacing: 1px;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  animation: fadeInUp 1.5s ease forwards;
+   margin-top: -10px;
+}
+
+/* 🎯 3D Tour Box */
+.tour-box {
+  margin-top: -190px;
+  position: relative;
+  width: 900px;
+  height: 450px;
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(180deg, #5999f2 0%, #0f1a38 100%);
+  z-index: 3;
+  animation: float 6s ease-in-out infinite;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.tour-box:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Background video for Tour page */
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+  z-index: -2;
+}
+
+/* 🌀 Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Back button */
+.back-button {
+  position: relative;
+  bottom: 27px;
+  right: 650px;
+  background: linear-gradient(135deg, #34d399, #059669);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.back-button:hover {
+  background: linear-gradient(135deg, #6ee7b7, #10b981);
+  transform: scale(1.08);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+}
+
+/* ============================= */
+/* 📱 Responsive Design          */
+/* ============================= */
+@media (max-width: 1024px) {
+  .tour-box { width: 80%; height: 450px; }
+  .tour-overlay h1 { font-size: 2.3rem; }
+  .back-button { right: 400px; }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px 25px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+    gap: 15px;
+  }
+
+  .hero-overlay h1 { font-size: 2.2rem; }
+  .hero-overlay p { font-size: 1rem; }
+
+  .card { width: 90%; }
+
+  .section h2 { font-size: 2rem; }
+
+  .tour-overlay { margin-bottom: 120px; }
+  .tour-box { width: 90%; height: 350px; margin-top: -100px; }
+  .back-button {
+    right: 0;
+    bottom: 10px;
+    display: block;
+    position: static;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .tour-overlay h1 { font-size: 1.6rem; }
+  .tour-box { width: 95%; height: 280px; margin-top: -80px; }
+  .back-button { font-size: 0.9rem; padding: 8px 14px; border-radius: 6px; }
+}
+
+/* Shared Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 🌄 SpotView Page Styles */
+
+.spotview-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
+
+.panorama-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: filter 0.3s ease;
+}
+
+.panorama-container.blurred {
+  filter: blur(8px) brightness(0.7);
+}
+
+.loading-text {
+  font-size: 40px;
+  font-style: italic;
+  color: black;
+  text-align: center;
+  margin-top: 50vh;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(14, 11, 11, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: clamp(1rem, 2vw, 1.8rem);
+  z-index: 5;
+}
+
+.spot-info {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.spot-title {
+  position: absolute;
+  top: 3vh;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  text-shadow: 0 0 1vw rgba(0, 0, 0, 0.7);
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  text-align: center;
+  width: 90vw;
+}
+
+.spot-description {
+  position: absolute;
+  bottom: 13vh;
+  left: 1vw;
+  color: white;
+  text-shadow: 0 0 1vw rgba(0, 0, 0, 0.7);
+  font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+  max-width: 90vw;
+  line-height: 1.5;
+}
+
+.back-btn {
+  position: absolute;
+  bottom: 5vh;
+  left: 1vw;
+  background: linear-gradient(135deg, #34d399, #059669);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  pointer-events: auto;
+  font-size: clamp(0.8rem, 1vw, 1.2rem);
+}
+
+.back-btn.hover {
+  background: linear-gradient(135deg, #6ee7b7, #10b981);
+  transform: scale(1.08);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close-btn {
+  position: absolute;
+  top: 2vh;
+  right: 2vw;
+  font-size: 1.5rem;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 8px;
+  padding: 5px 10px;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 30;
+}
+
+.canvas-view {
+  width: 80vw !important;
+  height: 80vh !important;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+  .canvas-view {
+    width: 90vw !important;
+    height: 70vh !important;
+  }
+
+  .spot-description {
+    bottom: 15vh;
+    font-size: 1rem;
+  }
+
+  .spot-title {
+    font-size: 1.8rem;
+  }
+
+  .back-btn {
+    bottom: 4vh;
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .spot-title {
+    font-size: 1.4rem;
+  }
+  .canvas-view {
+    width: 95vw !important;
+    height: 65vh !important;
+  }
+  .spot-description {
+    bottom: 18vh;
+    font-size: 0.9rem;
+  }
+}
+
+/* 🌋 Model Modal */
+/* 🌋 Fullscreen Model Modal */
+.model-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 30;
+  background: rgba(10, 10, 10, 0.1);
+  overflow: auto; /* no scrolling */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Fullscreen 3D model container */
+.model-view-section {
+  width: 100;
+  height: 100%; /* full viewport */
+  border-radius: 0;
+  overflow-y: auto;
+  position: relative; /* allows overlay inside */
+}
+
+/* Canvas fills container */
+.canvas-view {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+
+/* Overlay info on top of 3D model */
+.model-modal {
+  position: relative; /* parent for absolute positioning */
+}
+
+.model-info-section {
+  position: absolute;   /* remove from normal flow */
+  top: 95%;             /* below 3D box */
+  left: auto;           /* adjust left position */
+  transform: translateY(0); /* optional fine-tune */
+  width: 800px;
+  max-width: 90%;
+  height: auto;
+  background: rgba(0,0,0,0.25);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0,255,128,0.3);
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+  color: #e5e5e5;
+  backdrop-filter: blur(6px);
+}
+
+
+
+/* NEW 3D model container */
+.model-3d-box {
+  width: 100%;            /* full width of parent */
+  max-width: 1000px;      /* optional max width */
+  height: 70vh;
+  margin: 0 auto;          /* center horizontally */
+  box-shadow: 0 0 25px rgba(0, 255, 128, 0.1);
+  background:  rgba(10, 10, 10, 0.1);
+  border-radius: 0;
+  overflow: hidden;
+}
+/* 🌋 Model Title on Top */
+.model-title-top {
+  position: absolute;
+  top: 20px; /* distance from top */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4ade80;
+  text-shadow: 0 0 10px rgba(0, 255, 128, 0.5);
+  z-index: 20;
+  pointer-events: none; /* so it doesn't block interactions */
+}
+
+
+/* Model image inside overlay */
+/* Fixed size container for model image */
+/* Auto-sizing container for model image */
+.model-img {
+  max-width: 300px;        /* optional maximum width */
+  max-height: 250px;       /* optional maximum height */
+  width: auto;             /* let width adjust to image */
+  height: auto;            /* let height adjust to image */
+  object-fit: contain;     /* scales image to fit container without cropping */
+  border-radius: 12px;
+  border: 2px solid #4ade80;
+  background: rgba(0, 0, 0, 0.05); /* optional background for empty space */
+  flex-shrink: 0;          /* prevents shrinking in flex container */
+  display: block;           /* ensures border wraps tightly */
+}
+
+
+
+/* Info text inside overlay */
+.model-text {
+  width: 75%; /* right side */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: justify;
+}
+
+.model-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #4ade80;
+  margin: 0 0 10px 0;
+  text-shadow: 0 0 10px rgba(0, 255, 128, 0.5);
+}
+
+.model-description {
+  font-size: 1rem;
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .model-info-section {
+    flex-direction: column;
+    width: 95%;
+    padding: 15px;
+  }
+  .model-img {
+    width: 100%;
+    max-height: 150px;
+    margin-bottom: 15px;
+  }
+  .model-text {
+    width: 100%;
+  }
+  .model-title {
+    font-size: 1.5rem;
+  }
+  .model-description {
+    font-size: 0.9rem;
+  }
+}
+
+.flat-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(5,5,5,0.85);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+
+  pointer-events: auto;
+}
+
+/* Make image nearly full screen */
+.flat-img {
+  width: 90vw;
+  height: 85vh;
+  object-fit: contain;
+  border-radius: 12px;
+  position: relative;
+}
+
+/* Wraps image + close button */
+.flat-content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* X BUTTON */
+.close-flat {
+  position: absolute;
+  margin-top: -15px;
+  top: 15px;
+  right: 15px;
+  z-index: 1000; /* Ensure it's above the image */
+  
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: 0.2s;
+}
+
+
+.close-flat:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+
+.modal-text-overlay {
+  position: absolute;
+  top: 5%;          /* center vertically */
+  left: 50%;         /* center horizontally */
+  transform: translate(-50%, -50%);
+  color: rgb(255, 255, 255);
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(4, 5, 4, 0.9);
+  pointer-events: none; /* doesn't block clicks */
+  z-index: 1000;         /* above image */
+  text-align: center;
+}

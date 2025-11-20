@@ -1,0 +1,224 @@
+/* 🌄 ABOUT PAGE STYLES */
+
+.about-page {
+  position: relative;
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  overflow-x: hidden;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* 🎥 Fixed Background Video */
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  
+}
+
+/* 📖 About Content Section */
+.about-content {
+  max-width: 1150px;
+  margin: 10px auto 60px;
+  padding: 40px;
+  text-align: justify; 
+  border-radius: 12px;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1.5s ease forwards;
+  transition: all 0.4s ease;
+}
+
+
+
+/* 🌟 Fade-in Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.about-content h1 {
+  font-size: 2.8rem;
+  text-align: center;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  color: #ffffff;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.8);
+  transition: color 0.3s ease;
+}
+
+/* 🎇 Title hover effect */
+.about-content h1:hover {
+  color: #ffd700;
+}
+
+.about-content h2 {
+  font-size: 1.8rem;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  color: #f0f0f0;
+  border-left: 4px solid #ffd700;
+  padding-left: 10px;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.8);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+/* 🪶 Paragraph hover glow */
+.about-content h2:hover {
+
+  transform: scale(1.03);
+}
+
+.about-content p {
+  font-size: 1.08rem;
+  line-height: 1.8;
+  color: #eaeaea;
+  margin-bottom: 18px;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.8);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* 🪶 Paragraph hover glow */
+.about-content p:hover {
+  color: #ffd700;
+  transform: scale(1.01);
+}
+
+/* 🌿 Spots Section */
+.spots-section {
+    margin-top: -80px;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.spots-section h2 {
+  font-size: 2.4rem;
+  color: #ffffff;
+  margin-bottom: 10px;
+   text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+  transition: color 0.3s ease;
+}
+.spots-section h2:hover {
+  color: #ffd700;
+}
+
+.spots-desc {
+  max-width: 800px;
+  margin: 0 auto 40px;
+  color: #dddddd;
+  font-size: 1.05rem;
+ transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* 🪶 Paragraph hover glow */
+.spots-desc:hover {
+  color: #fff7c2;
+  transform: scale(1.01);
+}
+
+/* 🎨 Spots Grid (4 per row, responsive) */
+.spots-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  padding: 0 60px;
+}
+
+/* Responsive Grid Adjustments */
+@media (max-width: 1200px) {
+  .spots-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .spots-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .spots-grid {
+    grid-template-columns: 1fr;
+    padding: 0 20px;
+  }
+}
+
+.spot-card {
+  background: rgba(241, 238, 238, 0.1);
+  border-radius: 14px;
+  overflow: hidden;
+  backdrop-filter: blur(3px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.spot-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+}
+
+.spot-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.spot-info {
+  padding: 35px;
+}
+
+.spot-info h3 {
+  margin-top: -20px;
+  color: #d4e1d5;
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+  text-shadow: 0 4px 5px rgba(0, 0, 0, 0.9);
+}
+
+.spot-info p {
+  margin-top: 80px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #f1f1f1;
+  line-height: 1.5;
+ transition: color 0.3s ease;
+ text-shadow: 5px 4px 5px rgba(0, 0, 0, 0.9);
+}
+.spots-info p:hover {
+  color: #ffd700;
+}
+
+
+
+/* 📱 Responsive Text Scaling */
+@media (max-width: 768px) {
+  .about-content h1 {
+    font-size: 2.2rem;
+  }
+
+  .about-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .about-content p {
+    font-size: 0.95rem;
+  }
+
+  .spots-section h2 {
+    font-size: 1.8rem;
+  }
+
+  .spots-desc {
+    font-size: 0.95rem;
+  }
+}

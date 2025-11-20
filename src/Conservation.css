@@ -1,0 +1,140 @@
+/* Page wrapper */
+.conservation-page {
+  margin-top: -50px;
+  position: relative;
+  min-height: 100vh;
+  color: #fff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Background video */
+.conservation-page .background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  filter: brightness(0.9);
+}
+
+/* Hero header */
+.conservation-header {
+  text-align: center;
+  padding: 80px 20px 40px;
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+}
+
+.conservation-header h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.conservation-header h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #ffd700;
+}
+
+.conservation-header p {
+  max-width: 900px;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+/* Rules section */
+.rules-section {
+  max-width: 1000px;
+  margin: 0 auto 60px;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Individual rule card */
+.rule-card {
+  background: rgba(0,0,0,0.3);
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+.rule-card.open {
+  background: rgba(0, 0, 0, 0.70);
+  transform: scale(1.02);
+}
+
+/* Rule header */
+.rule-header {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.rule-icon {
+  font-size: 1.8rem;
+}
+
+.rule-header h3 {
+  flex: 1;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Toggle icon */
+.toggle-icon {
+  font-size: 1.2rem;
+  margin-left: 10px;
+}
+
+/* Rule description */
+.rule-desc {
+  margin-top: 10px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #f0f0f0;
+  display: none;
+  font-style: italic;
+}
+
+.rule-card.open .rule-desc {
+  display: block;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Did You Know section */
+.did-you-know {
+  max-width: 900px;
+  margin: 0 auto 60px;
+  padding: 30px 20px;
+  text-align: center;
+  background: rgba(0,0,0,0.4);
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.6);
+}
+
+.did-you-know h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #ffd700;
+}
+
+.did-you-know p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px);}
+  to { opacity: 1; transform: translateY(0);}
+}
