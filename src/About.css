@@ -198,7 +198,21 @@
     bottom: 15vh;
     font-size: 1rem;
   }
+  .spot-card {
+  background: rgba(69, 55, 55, 0.5);
+  border-radius: 18px;
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 300px;
+  height: 350px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  animation: fadeInUp 0.8s ease;
+  margin: auto;
 }
+
+
+}
+
 
 @media (max-width: 900px) {
   .spots-grid {
