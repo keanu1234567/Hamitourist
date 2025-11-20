@@ -348,7 +348,7 @@ footer,
   .back-button { right: 400px; }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .navbar {
     flex-direction: column;
     align-items: flex-start;
