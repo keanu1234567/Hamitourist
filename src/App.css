@@ -114,8 +114,9 @@ body {
   margin-bottom: 20px;
   font-size: 2.8rem;
   font-family: "Quicksand", sans-serif;
-  color: #dde6dd;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+ 
+  text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.9);
   animation: fadeInUp 1s ease;
 }
 
@@ -148,7 +149,7 @@ body {
 
 
 .card {
-  background: rgba(241, 238, 238, 0.1);
+  background: rgba(69, 55, 55, 0.5);
   border-radius: 18px;
   box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -166,12 +167,16 @@ body {
 
 .card:hover img { transform: scale(1.1); }
 
-.card h3 { margin: 15px; color: #2f5233; }
+.card h3 { 
+  margin: 15px; 
+  color: #4bd050; 
+  text-shadow: 1px 2px rgb(0, 0, 0, 0.7); }
 
 .card p {
   margin: 0 15px 20px;
   font-size: 0.95rem;
   color: #f1f1f1;
+  text-shadow: 1px 1px 3px rgb(0, 0, 0, 0.9); 
 }
 
 .card:hover {
@@ -265,7 +270,7 @@ footer,
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  text-shadow: 2px 4px 15px rgba(0, 0, 0, 0.9);
   transition: transform 0.3s ease;
 }
 
@@ -347,6 +352,17 @@ footer,
   .tour-box { width: 80%; height: 450px; }
   .tour-overlay h1 { font-size: 2.3rem; }
   .back-button { right: 400px; }
+  .spot-description {
+  position: absolute;
+  bottom: 8vh;
+  left: 1vw;
+  color: white;
+  text-shadow: 0 0 1vw rgba(0, 0, 0, 0.7);
+  font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+  max-width: 90vw;
+  line-height: 1.5;
+}
+
 }
 
 @media (max-width: 1170px) {
@@ -426,7 +442,7 @@ footer,
 
   .card:hover img { transform: scale(1.1); }
 
-  .card h3 { margin: 15px; color: #2f5233; }
+  /* .card h3 { margin: 15px; color: #2f5233; } */
 
   .card p {
     margin: 0 15px 20px;
@@ -443,6 +459,7 @@ footer,
   .tour-footer {
     justify-content: flex-end;
   }
+  
 }
 
 @media (max-width: 480px) {
@@ -534,7 +551,7 @@ footer,
 
 .spot-description {
   position: absolute;
-  bottom: 13vh;
+  bottom: 11vh;
   left: 1vw;
   color: white;
   text-shadow: 0 0 1vw rgba(0, 0, 0, 0.7);
@@ -855,5 +872,23 @@ footer,
   text-shadow: 0 0 10px rgba(4, 5, 4, 0.9);
   pointer-events: none; /* doesn't block clicks */
   z-index: 1000;         /* above image */
+  text-align: center;
+}
+.spot-error, .model-error-message {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 50, 50, 0.9);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  z-index: 9999;
+}
+
+.model-error {
+  color: red;
+  font-weight: bold;
   text-align: center;
 }

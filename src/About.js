@@ -32,7 +32,7 @@ function About() {
     { name: "Hidden Garden", img: "https://i.imgur.com/s6m3bpS.jpeg", desc: "A lush area teeming with wild orchids and rare plants." },
     { name: "Peak", img: "https://imgur.com/3PZJPKJ.jpeg", desc: "The summit offering a panoramic view of Davao Oriental." },
     { name: "Black Mountain", img: "https://imgur.com/WBZnjaY.jpeg", desc: "A ridge of darker soil standing out from its surroundings." },
-    { name: "Twin Falls", img: "https://imgur.com/buT7bj1.jpeg", desc: "A twin waterfall cascading gracefully through lush greenery." },
+    { name: "Twin Falls", img: "https://i.imgur.com/DRxCa9i.jpeg", desc: "A twin waterfall cascading gracefully through lush greenery." },
   ];
 
   return (

@@ -12,7 +12,7 @@ function Model({ url }) {
   scene.traverse((child) => {
     if (child.isMesh) {
       child.material.roughness = 5;
-      child.material.metalness = 0.5;
+      child.material.metalness = 0.2;
       child.material.needsUpdate = true;
     }
   });

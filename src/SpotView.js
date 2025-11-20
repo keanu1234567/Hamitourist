@@ -9,25 +9,24 @@
   import "./App.css";
 
   /* 🌱 Generic 3D Model Loader (NO auto-centering here) */
-  function ModelViewer({ url, scale = [0.2, 0.2, 0.2], position = [0, 0, 0] }) {
-    const { scene } = useGLTF(url);
+function ModelViewer({ url, scale = [0.2, 0.2, 0.2], position = [0, 0, 0], setModelError }) {
+  const { scene } = useGLTF(url, true);
 
-    // Reset rotation
-    scene.rotation.set(0, 0, 0);
-
-    // Apply scale and fixed position (no Box3 auto-centering)
-    scene.scale.set(...scale);
-    scene.position.set(...position);
-
-    // Optional tweak for Lady Slipper Orchid (example)
-    if (url.toLowerCase().includes("lady slipper orchid")) {
-      scene.scale.set(0.2, 0.2, 0.2);
+  useEffect(() => {
+    try {
+      scene.rotation.set(0, 0, 0);
+      scene.scale.set(...scale);
       scene.position.set(...position);
-      scene.rotation.y = Math.PI / 2;
+    } catch (err) {
+      console.error("🔥 Error loading 3D model:", err);
+      if (setModelError) setModelError("⚠ Failed to load 3D model."); // ✅ send error to parent
     }
+  }, [scene, scale, position, setModelError]);
 
-    return <primitive object={scene} />;
-  }
+  return <primitive object={scene} />;
+}
+
+
 
   /* 🎯 Main SpotView Component */
   const SpotView = () => {
@@ -39,6 +38,9 @@
     const [activeModel, setActiveModel] = useState(null);
     const [blurPanorama, setBlurPanorama] = useState(false);
     const [modelInfo, setModelInfo] = useState(null);
+    const [error, setError] = useState(null);
+    const [modelError, setModelError] = useState(null);
+
 
     const containerRef = useRef(null);
     const viewerRef = useRef(null);
@@ -49,6 +51,7 @@
       setActiveModel(null);
       setBlurPanorama(false);
       setModelInfo(null);
+      setModelError(null);
     };
 
     /* 🧭 Fetch Firestore Data */
@@ -57,12 +60,19 @@
         try {
           const ref = doc(db, "Spots", id);
           const snap = await getDoc(ref);
-          if (snap.exists()) setSpot(snap.data());
-          else console.error("❌ Spot not found!");
-        } catch (error) {
-          console.error("🔥 Error fetching spot:", error);
+          if (snap.exists()) {
+            setSpot(snap.data());
+            setError(null); // Clear any previous errors
+          } else {
+            setError("❌ Spot not found!");
+            console.error("❌ Spot not found!");
+          }
+        } catch (err) {
+          setError("🔥 Error fetching spot data!");
+          console.error("🔥 Error fetching spot:", err);
         }
       };
+
       fetchSpot();
     }, [id]);
 
@@ -193,17 +203,17 @@
         ];
         const modelInfoList = [
           {
-            name: "Scaevola Micrantha",
+            name: "No widely recognized common name",
             description:
-            "Common Name: No widely recognized common name\n" +
+            "Scientific Name: Scaveola micrantha\n" +
             "\n" +
               "A shrub or small tree in the family Goodeniaceae, growing up to 10mtall with smooth green to grey bark and oblanceolate to obovate leaves up to 15cmlong. Native to the Philippines, Taiwan, and Borneo, it thrives on ultramafic soils, particularly in the mossy-pygmy “bonsai” forests of Mount Hamiguitan at 1,160–1,600m elevation. This species is an indicator of ultrabasic ecosystems, adaptedtonutrient-poor, iron- and magnesium-rich soils. It contributes to the unique stuntedforest community alongside other endemic species and is classified as Least Concern by the IUCN.",
             image: "https://imgur.com/yn2xxt7.jpeg",
           },
           {
-            name: "Wendlandia Nervosa",
+            name: "No widely recognized common name",
             description:
-            "Common Name: No widely recognized common name\n" +
+            "Scientific Name: Wendlandia nervosa\n" +
             "\n" +
               "A flowering shrub or small tree endemic to the Black Mountain site of Mount Hamiguitan, Mindanao. It grows on nutrient-poor, acidic ultramafic soils, withopposite elliptic to oblong leaves featuring prominent veins. The species producesfragrant, tubular flowers in cymose or paniculiform clusters, often white, purple, or red. Part of the montane forest vegetation, it contributes to the high plant endemismandbiodiversity of Mount Hamiguitan, especially within the ultramafic pygmy forest community. Its unique adaptation to challenging soils highlights the ecological  importance of the sanctuary", 
             image: "https://i.imgur.com/8RSlcGE.jpeg",
@@ -235,7 +245,7 @@
         const modelSettings = [
           { scale: [0.4, 0.4, 0.4], position: [-0.5, 0, 0] },
           { scale: [0.6, 0.6, 0.6], position: [-0.2, 0.3, 0] },
-          { scale: [0.3, 0.3, 0.3], position: [0, -5.5, 0] },
+          { scale: [0.3, 0.3, 0.3], position: [0, -9, 0] },
         ];
         const pygmyImages = [
           "https://i.imgur.com/HxNkUwr.png",
@@ -250,25 +260,25 @@
         const sizes = [350, 500, 1100];
         const modelInfoList = [
           {
-            name: "Nepenthes Micramphora",
+            name: "No widely recognized common name",
             description:
-            "Common Name: No widely recognized common name\n" +
+            "Scientific Name: Nepenthes micramphora\n" +
             "\n" +
               " A tropical pitcher plant endemic to Mount Hamiguitan, Mindanao, growing at 1,100–1,635 m in ultramafic montane forests. It has narrow, funnel- shaped pitchers (4–6.7 cm) with a prominent peristome and lid, and smooth stemsand leaves. Found alongside other Nepenthes species, it is critically endangereddueto its limited range and habitat threats",
             image: "https://i.imgur.com/r0HRn0k.jpeg",
           },
           {
-            name: "Psammodynastes pulverulentus",
+            name: "Philippine Mock Viper",
             description:
-            "Common Name: Philippine Mock Viper, Common Mock Viper, Dusky Mock Viper\n" +  
+            "Scientific Name: Psammodynastes pulverulentus\n" +  
             "\n" +
               "A small, harmless “mock viper” snake (65–77 cm) with variable brownor gray patterns and distinctive Y-shaped head markings. Solitary and active day andnight, it lives near streams and rivers, feeding on frogs, geckos, and skinks. Nativetomany Philippine islands and found up to 2,100 m elevation.",
             image: "https://i.imgur.com/vBK0069.jpeg",
           },
           {
-            name: "Paphiopedilum Ciliolare",
+            name: "Lady Slipper Orchid",
             description:
-            "Common Name: Lady Slipper Orchid\n" +
+            "Scientific Name: Paphiopedilum ciliolare\n" +
             "\n" +
               " A rare orchid endemic to the Philippines, notably found in the PygmyField of Mount Hamiguitan. It grows terrestrially or on rocks in montane forests (300–1,830 m) with nutrient-poor soils. Each plant produces a single slipper-shaped flower with fine hairs and spotted petals. The leaves are narrow with a tessellated greenpattern. Threatened by habitat disturbance and overcollection, its wild populationisestimated below 2,500 mature individuals.",
 
@@ -318,33 +328,33 @@
         const sizes = [1200, 700, 950, 1500];
         const modelInfoList = [
           {
-            name: "Lindsaea Hamiguitanensis",
+            name: "No widely recognized common name",
             description: 
-            "Common Name: No widely recognized common name\n" +
+            "Scientific Name: Lindsaea hamiguitanensis\n" +
             "\n" +
             " A small terrestrial fern endemic to Mount Hamiguitan, Mindanao, growing at 1,100–1,200 m in lower montane rainforest. It has short-creepingrhizomes, long quadrangular petioles, and triangular fronds that are bipinnatetobasally tripinnate. The fronds feature 4–6 primary pinnae per side, with2–5herbaceous, light green pinnules per pinna, and continuous sori along the pinnulemargins. First discovered in 2009, it is restricted to the ultramafic forests of Mount Hamiguitan, which also host the Philippines’ largest pygmy “bonsai forest” andseveral other endemic fern species. Its unique morphology distinguishes it fromrelated Lindsaea species.",
             image: "https://imgur.com/7PKAuo0.jpeg",
           },
           {
-            name: "Nepenthes Justinae",
+            name: "No widely recognized common name",
             description:
-            "Common Name: No widely recognized common name\n" +
+            "Scientific Name: Nepenthes justinae\n" +
             "\n" +
             "A tropical pitcher plant endemic to Mount Hamiguitan, Mindanao, growing at 1,000–1,620 m in montane and pygmy forests on ultramafic soils. It hasclimbing stems up to 4 m, coriaceous leaves, and distinctive lower and upper pitcherswith specialized lids. Often found growing terrestrially or as an epiphyte, it coexistswith other Nepenthes species, with possible hybridization. Restricted to its mountainhabitat, it is vulnerable but legally protected within the Mount Hamiguitan RangeWildlife Sanctuary.",
             image: "https://i.imgur.com/N3sxDPo.jpeg",
           },
           {
-            name: " Trimeresurus Flavomaculatus",
+            name: "Philippine Pit Viper",
             description: 
-            "Common Name: Philippine Pit Viper, Philippine Green Pit Viper\n" +
+            "Scientific Name: Trimeresurus flavomaculatus\n" +
             "\n" +
             "A medium-sized, venomous pit viper endemic to the Philippines, typically green to yellow-green with yellow spots for camouflage. Found at lowtomid- elevation forests (200–1,160 m), it is nocturnal, arboreal, and solitary, feedingonsmall mammals, lizards, frogs, and birds. Females are larger than males andgivebirth to 10–20 live young. Two subspecies exist, and the species is classifiedasLeast Concern, though habitat loss and human activities pose threats.",
             image: "https://i.imgur.com/szpzG6n.jpeg",
           },
           {
-            name: "Pulchrana Grandocula",
+            name: "Big-eyed Frog",
             description:
-            "Common Name: Big-eyed for\n" +
+            "Scientific Name: Pulchrana grandocula\n" +
             "\n" +
             "A true frog endemic to southern Philippines, including Mindanaoandnearby islands. It inhabits streams and rivers in montane and lowland forests below1,500 m, adapting to both undisturbed and disturbed habitats. Males formchorusesnear pools, while females stay in forest understories or shallow caves. Tadpolesdevelop in streams and cling to submerged debris in fast-flowing waters. Recognizable by its large eyes and mottled gray skin, it helps control insect populations and serves as prey for larger animals. Although common and stable, it faces threats from habitat loss and pollution, but occurs in several protected areas.",
             image: "https://imgur.com/1PftzG4.jpeg",
@@ -379,17 +389,17 @@
         const sizes = [1000, 1500];
         const modelInfoList = [
           {
-            name: "Dendrochilum Kopfii",
+            name: "No widely recognized common name",
             description: 
-             "Common Name: No widely recognized common name\n" +
+             "Scientific Name: Dendrochilum kopfii\n" +
             "\n" +
             "An epiphytic and terrestrial orchid endemic to Mount Hamiguitan, Mindanao, growing at 1,200–2,000 m in misty, shaded montane forests. It hasarching inflorescence spikes with numerous small, delicate flowers in shades of brown, white, or red and white, and lance-shaped leaves arising frompseudobulbs. Thriving in cool, humid, and well-ventilated habitats, it is valued for its compact formand floriferous spiral flower arrangement.",
             image: "https://i.imgur.com/jIKS0I6.jpeg",
           },
           {
-            name: "Nepenthes Hamiguitanensis",
+            name: "Hamiguitan Pitcher Plant",
             description: 
-            "Common Name: Hamiguitan Pitcher Plant\n" +
+            "Scientific Name: Nepenthes hamiguitanensis\n" +
             "\n" +
             "A tropical climbing pitcher plant endemic to the summit ridge of Mount Hamiguitan, Mindanao, growing at 1,200–1,600 m, most common above 1,400m. It produces squat, infundibular-cylindrical upper pitchers up to 20 cm high, with ribbedperistomes and broad, cordate lids. Mature plants reach 4 m, with elliptic-oblongleaves and hairy stems and leaf margins. Terrestrial and found in primary montaneforests and forest edges, it prefers humus-rich soils in partial shade. Coexists withother Nepenthes species but no natural hybrids.",
 
@@ -447,25 +457,25 @@
 
       const modelInfoList = [
         {
-          name: "Tropidophorus Davaoensis",
+          name: "Davao Waterside Skink",
           description: 
-          "Common Name: Davao Waterside Skink, Davao Stream Skink\n" +
+          "Scientific Name: Tropidophorus davaoensis\n" +
           "/n" +
           "A small, semi-aquatic skink endemic to southern Mindanao, Philippines. It inhabits lowland forest streams, hiding among rocks, leaf litter, and aquaticvegetation. The species is ovoviviparous and distinguished by unique scale patterns, including separated prefrontals and two anterior loreals. First described near Malabutuan, Davao, it remains largely cryptic and specialized for riparian habitats. Classified as Least Concern by the IUCN, it reflects the rich semi-aquatic reptilebiodiversity of Mindanao",
           image: "https://i.imgur.com/JBj0E3H.jpeg",
         },
         {
-          name: "Pelobatrachus Stejnegeri",
+          name: "Mindanao Horned Frog",
           description:
-          "Common Name: Mindanao Horned Frog\n" +
+          "Scientific Name: Pelobatrachus stejnegeri\n" +
           "\n" +
           "A medium-sized frog endemic to Mindanao, Philippines, inhabitingmoist lowland and montane forests near rivers and streams. Recognizable by hornlike projections above the eyes and mottled, camouflaged skin, it is mostly nocturnal. Tadpoles develop in shallow freshwater, attaching to submerged debris. Sensitivetohabitat loss and climate change, it highlights the importance of conserving forest-floor and freshwater ecosystems for species survival.",
           image: "https://i.imgur.com/3AwsOpM.jpeg",
         },
         {
-          name: "Hoya Josseteae",
+          name: "No widely recognized common name",
           description: 
-          "Common Name: No widely recognized common name\n" +
+          "Scientific Name: Hoya josseteae\n" +
           "\n" +
           "A recently described epiphytic vine endemic to the Philippines. It hasleathery, dark green leaves and produces pale pink to white, star-shaped flowersinlarge umbels with a sweet fragrance. Unique corolla ridges and beaked coronascales distinguish it from related species. Growing in shaded, humid tropical forests, it anchors to host trees with aerial roots. Thriving in well-drained substrates, it bloomsmainly in warmer months and contributes to forest ecology while being valued for itshorticultural appeal.",
           image: "https://i.imgur.com/Amgwvg4.jpeg",
@@ -493,7 +503,7 @@
     }
   };
 
-
+    if (error) return <p className="error-text">{error}</p>;
     if (!spot) return <p className="loading-text">Loading 360° view...</p>;
 
     return (
@@ -524,6 +534,7 @@
   <button className="close-btn" onClick={handleCloseModal}>✖</button>
 
   {modelInfo && <h2 className="model-title-top">{modelInfo.name}</h2>}
+  {modelError && <p className="model-error">{modelError}</p>}
 
   {/* 3D MODEL BOX */}
   <div className="model-3d-box">
@@ -537,6 +548,7 @@
             url={activeModel.url}
             scale={activeModel.scale}
             position={activeModel.position}
+            setModelError={setModelError} // ✅ pass to child
           />
         </Suspense>
 
