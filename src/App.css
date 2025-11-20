@@ -227,6 +227,7 @@ footer,
 .tour-footer {
   background: rgba(0, 0, 0, 0.2);
   color: #fdfdfd;
+  justify-content: flex-end;
   text-align: center;
   padding: 20px;
   font-size: 0.95rem;

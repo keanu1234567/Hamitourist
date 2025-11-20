@@ -203,8 +203,6 @@ const Tour = () => {
 
       </div>
 
-      <Link to="/" className="back-button">⬅ Back</Link>
-
       <footer className="tour-footer">
         <p>© 2025 Mt. HamiTour | All Rights Reserved</p>
       </footer>
