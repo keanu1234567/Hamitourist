@@ -209,6 +209,10 @@
   animation: fadeInUp 0.8s ease;
   margin: auto;
 }
+about-content h2 {
+  text-align: left;
+}
+
 
 
 }

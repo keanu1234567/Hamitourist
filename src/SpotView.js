@@ -504,7 +504,13 @@ function ModelViewer({ url, scale = [0.2, 0.2, 0.2], position = [0, 0, 0], setMo
   };
 
     if (error) return <p className="error-text">{error}</p>;
-    if (!spot) return <p className="loading-text">Loading 360° view...</p>;
+    if (!spot) 
+  return (
+    <div className="loading-spinner-container">
+      <div className="spinner"></div>
+    </div>
+  );
+
 
     return (
       <div className="spotview-container">

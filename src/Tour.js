@@ -30,10 +30,12 @@ function BackgroundImage() {
 
 // Marker with vertical red line and label
 function Marker({ position, label, onClick }) {
+  const specialMarkers = ["Black Mountain", "Camp 3", "Peak", "Pygmy Field", "Mossy Forest"];
+  const labelColor = specialMarkers.includes(label) ? "#4bd050" : "white";
+
   const meshRef = useRef();
   const textRef = useRef();
-
-  const lineHeight = 8; // vertical offset for the text above marker
+  const lineHeight = 8;
   const points = [
     new THREE.Vector3(0, 0, 0),
     new THREE.Vector3(0, lineHeight, 0)
@@ -41,7 +43,7 @@ function Marker({ position, label, onClick }) {
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
-    const pulse = 1.2 + Math.sin(t * 2) * 0.2;
+    const pulse = 1.5 + Math.sin(t * 3) * 0.3;
 
     if (meshRef.current) {
       meshRef.current.material.emissiveIntensity = pulse * 1.2;
@@ -49,7 +51,6 @@ function Marker({ position, label, onClick }) {
     }
 
     if (textRef.current) {
-      // Make text always face the camera
       textRef.current.lookAt(state.camera.position);
       textRef.current.material.opacity = 0.7 + Math.sin(t * 2) * 0.3;
     }
@@ -57,7 +58,6 @@ function Marker({ position, label, onClick }) {
 
   return (
     <group position={position} onClick={onClick}>
-      {/* Sphere marker */}
       <mesh ref={meshRef}>
         <sphereGeometry args={[1, 16, 16]} />
         <meshStandardMaterial
@@ -68,15 +68,13 @@ function Marker({ position, label, onClick }) {
         />
       </mesh>
 
-      {/* Vertical red line */}
       <Line points={points} color="white" lineWidth={1} dashed={false} />
 
-      {/* Label text */}
       <Text
         ref={textRef}
         position={[0, lineHeight, 0]}
         fontSize={1.8}
-        color="white"
+        color={labelColor} // <- corrected
         anchorX="center"
         anchorY="middle"
         outlineWidth={0.2}
@@ -88,6 +86,7 @@ function Marker({ position, label, onClick }) {
     </group>
   );
 }
+
 
 
 // Main Tour component
@@ -178,6 +177,8 @@ const Tour = () => {
   </Suspense>
 
   {markers.map((m, i) => (
+
+    
     <Marker
       key={i}
       position={m.position}
