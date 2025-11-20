@@ -193,6 +193,11 @@
   .spots-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+    .spot-description {
+    margin-bottom: -15px;
+    bottom: 15vh;
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 900px) {
