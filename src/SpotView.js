@@ -117,9 +117,9 @@ function ModelViewer({ url, scale = [0.2, 0.2, 0.2], position = [0, 0, 0], setMo
         else if (name.includes("pygmy")) addImageInsidePanorama(panorama, "Pygmy Field");
         else if (name.includes("mossy")) addImageInsidePanorama(panorama, "Mossy Forest");
         else if (name.includes("peak")) addImageInsidePanorama(panorama, "Peak");
-        else if (name.includes("camp 3 inside")) addImageInsidePanorama(panorama, "Camp 3 Inside");
+        else if (name.includes("camp-3")) addImageInsidePanorama(panorama, "Camp-3");
         else if (name.includes("camp 3")) addCamp3Teleport(panorama); // ✅ Add Camp 3 teleport
-        else if (name.includes("camp 4 inside")) addImageInsidePanorama(panorama, "Camp 4 Inside");
+        else if (name.includes("camp-4")) addImageInsidePanorama(panorama, "Camp-4");
         else if (name.includes("camp 4")) addCamp4Teleport(panorama); // ✅ Add Camp 3 teleport
       });
 
@@ -150,8 +150,8 @@ function ModelViewer({ url, scale = [0.2, 0.2, 0.2], position = [0, 0, 0], setMo
 
     /* ------------------ Back to Camp 3 teleport inside Camp 3 ------------------ */
   const addBackToCamp3 = (panorama) => {
-    const backSpot = new PANOLENS.Infospot(500, "https://i.imgur.com/uTh9cBK.png");
-    backSpot.position.set(-1000, 0, -2000); // in front of camera
+    const backSpot = new PANOLENS.Infospot(1000, "https://i.imgur.com/uTh9cBK.png");
+    backSpot.position.set(-5000, 0, -800); // in front of camera
     backSpot.addHoverText("Exit");
     backSpot.addEventListener("click", () => {
       navigate(`/Spots/${"YCEKhHOU6eNHSqx10qSr"}`); // previous panorama ID
@@ -423,12 +423,12 @@ function ModelViewer({ url, scale = [0.2, 0.2, 0.2], position = [0, 0, 0], setMo
     
       }
                 /* ----------------- CAMP 3 INSIDE ----------------- */
-    if (type === "Camp 3 Inside") {
+    if (type === "Camp-3") {
       addBackToCamp3(panorama); // adds the back arrow
     }
 
     // ----------------- CAMP 3 INSIDE -----------------
-    if (type === "Camp 3 Inside") {
+    if (type === "Camp-3") {
       const camp3Models = [
         "/3dmodels/Tropidophorus davaoensis.glb",
         "/3dmodels/horned frog.glb",
@@ -498,7 +498,7 @@ function ModelViewer({ url, scale = [0.2, 0.2, 0.2], position = [0, 0, 0], setMo
       addBackToCamp3(panorama);
     }
 
-        if (type === "Camp 4 Inside") {
+        if (type === "Camp-4") {
       addBackToCamp4(panorama); // adds the back arrow
     }
   };
