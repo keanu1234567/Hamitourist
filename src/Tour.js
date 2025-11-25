@@ -48,23 +48,24 @@ function Marker({ position, label, onClick }) {
   const textRef = useRef();
   const lineHeight = 8;
 
-  const points = [new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, lineHeight, 0)];
+  const points = [
+    new THREE.Vector3(0, 0, 0),
+    new THREE.Vector3(0, lineHeight, 0),
+  ];
 
- const GREEN = "#00f900ff"; // bright green for 3D model markers
+  const GREEN = "#00f900"; // bright green for 3D model markers
 
-useFrame((state) => {
-  const t = state.clock.getElapsedTime();
-  const pulse = 1.5 + Math.sin(t * 3) * 0.3;
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime();
+    const pulse = 1.5 + Math.sin(t * 3) * 0.3;
 
-  if (meshRef.current) {
-    meshRef.current.scale.set(pulse, pulse, pulse);
-    meshRef.current.material.emissive.set(
-      specialMarkers.includes(label) ? GREEN : "#ffffff"
-    );
-    meshRef.current.material.emissiveIntensity = pulse * 0.5;
-  }
-
-
+    if (meshRef.current) {
+      meshRef.current.scale.set(pulse, pulse, pulse);
+      meshRef.current.material.emissive.set(
+        specialMarkers.includes(label) ? GREEN : "#ffffff"
+      );
+      meshRef.current.material.emissiveIntensity = pulse * 0.5;
+    }
 
     if (textRef.current) {
       textRef.current.lookAt(state.camera.position);
@@ -78,7 +79,11 @@ useFrame((state) => {
         <sphereGeometry args={[1, 16, 16]} />
         <meshStandardMaterial
           color={specialMarkers.includes(label) ? "#4bd050" : "#ffffff"}
-          emissive={specialMarkers.includes(label) ? new THREE.Color("#4bd050") : new THREE.Color("#ffffff")}
+          emissive={
+            specialMarkers.includes(label)
+              ? new THREE.Color("#4bd050")
+              : new THREE.Color("#ffffff")
+          }
           roughness={1}
         />
       </mesh>
@@ -101,7 +106,6 @@ useFrame((state) => {
     </group>
   );
 }
-
 
 // Main Tour component
 const Tour = () => {
@@ -252,56 +256,16 @@ const Tour = () => {
             maxPolarAngle={Math.PI / 2}
           />
         </Canvas>
-        {/* LEGEND - fixed top-left */}
-        <div
-          style={{
-            position: "absolute",
-            top: "10px",
-            left: "10px",
-            background: "rgba(30,30,30,0.8)",
-            padding: "10px 15px",
-            borderRadius: "12px",
-            color: "white",
-            fontSize: "0.6rem",
-            lineHeight: "1.5",
-            boxShadow: "0 4px 15px rgba(0,0,0,0.4)",
-            border: "1px solid #4bd050",
-            width: "250px",
-            fontFamily: "Poppins, sans-serif",
-            pointerEvents: "none", // so it doesn't block clicks
-          }}
-        >
-          <h4 style={{ margin: "0 0 5px 0", fontSize: "1rem" }}>
-            Map Feature:
-          </h4>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <div
-              style={{
-                width: "12px",
-                height: "12px",
-                borderRadius: "50%",
-                backgroundColor: "#78d47bff",
-              }}
-            ></div>
+
+        {/* INSERT LEGEND HERE */}
+        <div className="legend">
+          <h4>Map Feature:</h4>
+          <div className="legend-item">
+            <div className="legend-dot green"></div>
             <span>360° panorama with 3D models</span>
           </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              marginTop: "5px",
-            }}
-          >
-            <div
-              style={{
-                width: "12px",
-                height: "12px",
-                borderRadius: "50%",
-                backgroundColor: "white",
-                border: "1px solid #ccc",
-              }}
-            ></div>
+          <div className="legend-item">
+            <div className="legend-dot white"></div>
             <span>360° panorama only</span>
           </div>
         </div>
