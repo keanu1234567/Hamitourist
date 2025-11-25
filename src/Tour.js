@@ -1,6 +1,12 @@
 import React, { Suspense, useRef, useEffect, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, useGLTF, useTexture, Line, Text } from "@react-three/drei";
+import {
+  OrbitControls,
+  useGLTF,
+  useTexture,
+  Line,
+  Text,
+} from "@react-three/drei";
 import { Link, useNavigate } from "react-router-dom";
 import * as THREE from "three";
 import "./App.css";
@@ -20,7 +26,6 @@ function Model({ url }) {
   return <primitive object={scene} scale={0.1} position={[25, -120, -35]} />;
 }
 
-
 // Background image for the scene
 function BackgroundImage() {
   const texture = useTexture("/sky.jpg");
@@ -30,25 +35,36 @@ function BackgroundImage() {
 
 // Marker with vertical red line and label
 function Marker({ position, label, onClick }) {
-  const specialMarkers = ["Black Mountain", "Camp 3", "Peak", "Pygmy Field", "Mossy Forest"];
-  const labelColor = specialMarkers.includes(label) ? "#4bd050" : "white";
+  // These markers have 3D models → green
+  const specialMarkers = [
+    "Black Mountain",
+    "Camp 3",
+    "Peak",
+    "Pygmy Field",
+    "Mossy Forest",
+  ];
 
   const meshRef = useRef();
   const textRef = useRef();
   const lineHeight = 8;
-  const points = [
-    new THREE.Vector3(0, 0, 0),
-    new THREE.Vector3(0, lineHeight, 0)
-  ];
 
-  useFrame((state) => {
-    const t = state.clock.getElapsedTime();
-    const pulse = 1.5 + Math.sin(t * 3) * 0.3;
+  const points = [new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, lineHeight, 0)];
 
-    if (meshRef.current) {
-      meshRef.current.material.emissiveIntensity = pulse * 1.2;
-      meshRef.current.scale.set(pulse, pulse, pulse);
-    }
+ const GREEN = "#00f900ff"; // bright green for 3D model markers
+
+useFrame((state) => {
+  const t = state.clock.getElapsedTime();
+  const pulse = 1.5 + Math.sin(t * 3) * 0.3;
+
+  if (meshRef.current) {
+    meshRef.current.scale.set(pulse, pulse, pulse);
+    meshRef.current.material.emissive.set(
+      specialMarkers.includes(label) ? GREEN : "#ffffff"
+    );
+    meshRef.current.material.emissiveIntensity = pulse * 0.5;
+  }
+
+
 
     if (textRef.current) {
       textRef.current.lookAt(state.camera.position);
@@ -61,9 +77,8 @@ function Marker({ position, label, onClick }) {
       <mesh ref={meshRef}>
         <sphereGeometry args={[1, 16, 16]} />
         <meshStandardMaterial
-          color="green"
-          emissive="green"
-          emissiveIntensity={0.5}
+          color={specialMarkers.includes(label) ? "#4bd050" : "#ffffff"}
+          emissive={specialMarkers.includes(label) ? new THREE.Color("#4bd050") : new THREE.Color("#ffffff")}
           roughness={1}
         />
       </mesh>
@@ -74,7 +89,7 @@ function Marker({ position, label, onClick }) {
         ref={textRef}
         position={[0, lineHeight, 0]}
         fontSize={1.8}
-        color={labelColor} // <- corrected
+        color={specialMarkers.includes(label) ? "#4bd050" : "white"}
         anchorX="center"
         anchorY="middle"
         outlineWidth={0.2}
@@ -88,7 +103,6 @@ function Marker({ position, label, onClick }) {
 }
 
 
-
 // Main Tour component
 const Tour = () => {
   const audioRef = useRef(null);
@@ -97,7 +111,7 @@ const Tour = () => {
   const [imageModal, setImageModal] = useState({
     isOpen: false,
     img: "",
-    title: ""
+    title: "",
   });
 
   useEffect(() => {
@@ -107,15 +121,43 @@ const Tour = () => {
   }, []);
 
   const markers = [
-    { position: [15, 11, -48], label: "Unesco Marker", id: "fTLAXWb7Cph8jqeHxlXT" },
-    { position: [15, 13, -45], label: "Crossing Stampa", id: "EFNFONngOYNOOFbqdloj" },
-    { position: [10, 15, -40], label: "Puting Bato", id: "sk2Dc8hJYl1NUr3bAEsj" },
-    { position: [2, 11.5, -35], label: "Lantawan 1", id: "IMcVNrMMCsgXbiLPe10T" },
+    {
+      position: [15, 11, -48],
+      label: "Unesco Marker",
+      id: "fTLAXWb7Cph8jqeHxlXT",
+    },
+    {
+      position: [15, 13, -45],
+      label: "Crossing Stampa",
+      id: "EFNFONngOYNOOFbqdloj",
+    },
+    {
+      position: [10, 15, -40],
+      label: "Puting Bato",
+      id: "sk2Dc8hJYl1NUr3bAEsj",
+    },
+    {
+      position: [2, 11.5, -35],
+      label: "Lantawan 1",
+      id: "IMcVNrMMCsgXbiLPe10T",
+    },
     { position: [12, 15, -28], label: "Camp 4", id: "MeD7yd6kVBnAJYJXND7c" },
-    { position: [19, 17, -18], label: "Uwang Uwang", id: "68Q4aC5LVgIDYcU4rn0F" },
-    { position: [22, 19.5, -16], label: "Lantawan 2", id: "dIxy6t8cHc88lGY7eHTD" },
+    {
+      position: [19, 17, -18],
+      label: "Uwang Uwang",
+      id: "68Q4aC5LVgIDYcU4rn0F",
+    },
+    {
+      position: [22, 19.5, -16],
+      label: "Lantawan 2",
+      id: "dIxy6t8cHc88lGY7eHTD",
+    },
     { position: [10, 19.5, 1], label: "Camp 3", id: "YCEKhHOU6eNHSqx10qSr" },
-    { position: [4, 12.5, 8], label: "Pygmy Field", id: "q519aECmdG1TQF7D44Ld" },
+    {
+      position: [4, 12.5, 8],
+      label: "Pygmy Field",
+      id: "q519aECmdG1TQF7D44Ld",
+    },
     { position: [-4, 11, 15], label: "Lantawan 3", id: "rBS9OYsdZfgHCXMrWUNW" },
 
     // ⭐ SPECIAL MARKERS with image modal
@@ -126,8 +168,8 @@ const Tour = () => {
         setImageModal({
           isOpen: true,
           img: "/images/Tinagong Dagat .JPG",
-          title: "Tinagong Dagat"
-        })
+          title: "Tinagong Dagat",
+        }),
     },
     {
       position: [-17, 6, 28],
@@ -136,14 +178,22 @@ const Tour = () => {
         setImageModal({
           isOpen: true,
           img: "/images/Hidden Garden.jpeg",
-          title: "Hidden Garden"
-        })
+          title: "Hidden Garden",
+        }),
     },
 
-    { position: [-5, 8, 20], label: "Mossy Forest", id: "faYghVBuX9xcHpYLAgdH" },
+    {
+      position: [-5, 8, 20],
+      label: "Mossy Forest",
+      id: "faYghVBuX9xcHpYLAgdH",
+    },
     { position: [24.5, 25, 1], label: "Peak", id: "iNq6B4KSRrEnBcYOzYVX" },
-    { position: [11, 20, -3], label: "Black Mountain", id: "5u8jnd3X4g9lYMy2OMpq" },
-    { position: [7, 17, -2], label: "Twin Falls", id: "QGRePSC5lFbcbJ8ICvtB" }
+    {
+      position: [11, 20, -3],
+      label: "Black Mountain",
+      id: "5u8jnd3X4g9lYMy2OMpq",
+    },
+    { position: [7, 17, -2], label: "Twin Falls", id: "QGRePSC5lFbcbJ8ICvtB" },
   ];
 
   return (
@@ -162,46 +212,99 @@ const Tour = () => {
       </div>
 
       <div className="tour-box">
-<Canvas
-  className="tour-canvas"
-  shadows
-  camera={{ position: [-2500, 1000, -10], fov: 40 }}
-  gl={{ antialias: false, alpha: true }}
->
-  
-  <ambientLight intensity={0.6} />
-  <directionalLight position={[30, 60, 30]} intensity={1.3} castShadow />
-  
-  <Suspense fallback={null}>
-    <Model url="/3dmap/Map.glb" />
-  </Suspense>
+        <Canvas
+          className="tour-canvas"
+          shadows
+          camera={{ position: [-2500, 1000, -10], fov: 40 }}
+          gl={{ antialias: false, alpha: true }}
+        >
+          <ambientLight intensity={0.6} />
+          <directionalLight
+            position={[30, 60, 30]}
+            intensity={1.3}
+            castShadow
+          />
 
-  {markers.map((m, i) => (
+          <Suspense fallback={null}>
+            <Model url="/3dmap/Map.glb" />
+          </Suspense>
 
-    
-    <Marker
-      key={i}
-      position={m.position}
-      label={m.label}
-      onClick={m.onClick ? m.onClick : () => navigate(`/Spots/${m.id}`)}
-    />
-  ))}
+          {markers.map((m, i) => (
+            <Marker
+              key={i}
+              position={m.position}
+              label={m.label}
+              onClick={m.onClick ? m.onClick : () => navigate(`/Spots/${m.id}`)}
+            />
+          ))}
 
-  <OrbitControls
-    target={[10, 10, 0]}
-    enablePan
-    enableRotate
-    enableZoom
-    zoomSpeed={1.2}
-    enableDamping
-    dampingFactor={0.05}
-    minDistance={10}
-    maxDistance={150}
-    minPolarAngle={0.3}
-    maxPolarAngle={Math.PI / 2}
-  />
-</Canvas>
-
+          <OrbitControls
+            target={[10, 10, 0]}
+            enablePan
+            enableRotate
+            enableZoom
+            zoomSpeed={1.2}
+            enableDamping
+            dampingFactor={0.05}
+            minDistance={10}
+            maxDistance={150}
+            minPolarAngle={0.3}
+            maxPolarAngle={Math.PI / 2}
+          />
+        </Canvas>
+        {/* LEGEND - fixed top-left */}
+        <div
+          style={{
+            position: "absolute",
+            top: "10px",
+            left: "10px",
+            background: "rgba(30,30,30,0.8)",
+            padding: "10px 15px",
+            borderRadius: "12px",
+            color: "white",
+            fontSize: "0.6rem",
+            lineHeight: "1.5",
+            boxShadow: "0 4px 15px rgba(0,0,0,0.4)",
+            border: "1px solid #4bd050",
+            width: "250px",
+            fontFamily: "Poppins, sans-serif",
+            pointerEvents: "none", // so it doesn't block clicks
+          }}
+        >
+          <h4 style={{ margin: "0 0 5px 0", fontSize: "1rem" }}>
+            Map Feature:
+          </h4>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <div
+              style={{
+                width: "12px",
+                height: "12px",
+                borderRadius: "50%",
+                backgroundColor: "#78d47bff",
+              }}
+            ></div>
+            <span>360° panorama with 3D models</span>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              marginTop: "5px",
+            }}
+          >
+            <div
+              style={{
+                width: "12px",
+                height: "12px",
+                borderRadius: "50%",
+                backgroundColor: "white",
+                border: "1px solid #ccc",
+              }}
+            ></div>
+            <span>360° panorama only</span>
+          </div>
+        </div>
       </div>
 
       <footer className="tour-footer">
@@ -215,7 +318,9 @@ const Tour = () => {
             {/* Close Button */}
             <button
               className="close-flat"
-              onClick={() => setImageModal({ isOpen: false, img: "", title: "" })}
+              onClick={() =>
+                setImageModal({ isOpen: false, img: "", title: "" })
+              }
             >
               ✕
             </button>
@@ -224,7 +329,9 @@ const Tour = () => {
             <img src={imageModal.img} alt="" className="flat-img" />
 
             {/* Overlay Text */}
-            <div className="modal-text-overlay">{imageModal.title + " Panorama Unavailable"}</div>
+            <div className="modal-text-overlay">
+              {imageModal.title + " Panorama Unavailable"}
+            </div>
           </div>
         </div>
       )}
