@@ -112,6 +112,7 @@ const Tour = () => {
   const audioRef = useRef(null);
   const navigate = useNavigate();
 
+  const [isInteracting, setIsInteracting] = useState(false);
   const [imageModal, setImageModal] = useState({
     isOpen: false,
     img: "",
@@ -254,11 +255,19 @@ const Tour = () => {
             maxDistance={150}
             minPolarAngle={0.3}
             maxPolarAngle={Math.PI / 2}
+            onStart={() => setIsInteracting(true)} // user started interacting
+            onEnd={() => setIsInteracting(false)} // user stopped interacting
           />
         </Canvas>
 
         {/* INSERT LEGEND HERE */}
-        <div className="legend">
+        <div
+          className="legend"
+          style={{
+            opacity: isInteracting ? 0.2 : 1, // reduce opacity when interacting
+            transition: "opacity 0.3s ease", // smooth fade
+          }}
+        >
           <h4>Map Feature:</h4>
           <div className="legend-item">
             <div className="legend-dot green"></div>

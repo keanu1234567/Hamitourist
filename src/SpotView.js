@@ -239,7 +239,7 @@ const SpotView = () => {
           description:
             "Scientific Name: Wendlandia nervosa\n" +
             "\n" +
-            "A flowering shrub or small tree endemic to the Black Mountain site of Mount Hamiguitan, Mindanao. It grows on nutrient-poor, acidic ultramafic soils, withopposite elliptic to oblong leaves featuring prominent veins. The species producesfragrant, tubular flowers in cymose or paniculiform clusters, often white, purple, or red. Part of the montane forest vegetation, it contributes to the high plant endemismandbiodiversity of Mount Hamiguitan, especially within the ultramafic pygmy forest community. Its unique adaptation to challenging soils highlights the ecological  importance of the sanctuary",
+            "A flowering shrub or small tree endemic to the Black Mountain site of Mount Hamiguitan, Mindanao. It grows on nutrient-poor, acidic ultramafic soils, with opposite elliptic to oblong leaves featuring prominent veins. The species produces fragrant, tubular flowers in cymose or paniculiform clusters, often white, purple, or red. Part of the montane forest vegetation, it contributes to the high plant endemismand biodiversity of Mount Hamiguitan, especially within the ultramafic pygmy forest community. Its unique adaptation to challenging soils highlights the ecological importance of the sanctuary",
           image: "https://i.imgur.com/8RSlcGE.jpeg",
         },
       ];
@@ -318,7 +318,7 @@ const SpotView = () => {
           description:
             "Scientific Name: Nepenthes micramphora\n" +
             "\n" +
-            " A tropical pitcher plant endemic to Mount Hamiguitan, Mindanao, growing at 1,100–1,635 m in ultramafic montane forests. It has narrow, funnel- shaped pitchers (4–6.7 cm) with a prominent peristome and lid, and smooth stemsand leaves. Found alongside other Nepenthes species, it is critically endangereddueto its limited range and habitat threats",
+            " A tropical pitcher plant endemic to Mount Hamiguitan, Mindanao, growing at 1,100–1,635 m in ultramafic montane forests. It has narrow, funnel-shaped pitchers (4–6.7 cm) with a prominent peristome and lid, and smooth stemsand leaves. Found alongside other Nepenthes species, it is critically endangered due to its limited range and habitat threats",
           image: "https://i.imgur.com/r0HRn0k.jpeg",
         },
         {
@@ -326,7 +326,7 @@ const SpotView = () => {
           description:
             "Scientific Name: Psammodynastes pulverulentus\n" +
             "\n" +
-            "A small, harmless “mock viper” snake (65–77 cm) with variable brownor gray patterns and distinctive Y-shaped head markings. Solitary and active day andnight, it lives near streams and rivers, feeding on frogs, geckos, and skinks. Nativetomany Philippine islands and found up to 2,100 m elevation.",
+            "A small, harmless “mock viper” snake (65–77 cm) with variable brown or gray patterns and distinctive Y-shaped head markings. Solitary and active day and night, it lives near streams and rivers, feeding on frogs, geckos, and skinks. Native to many Philippine islands and found up to 2,100 m elevation.",
           image: "https://i.imgur.com/vBK0069.jpeg",
         },
         {
@@ -334,7 +334,7 @@ const SpotView = () => {
           description:
             "Scientific Name: Paphiopedilum ciliolare\n" +
             "\n" +
-            " A rare orchid endemic to the Philippines, notably found in the PygmyField of Mount Hamiguitan. It grows terrestrially or on rocks in montane forests (300–1,830 m) with nutrient-poor soils. Each plant produces a single slipper-shaped flower with fine hairs and spotted petals. The leaves are narrow with a tessellated greenpattern. Threatened by habitat disturbance and overcollection, its wild populationisestimated below 2,500 mature individuals.",
+            " A rare orchid endemic to the Philippines, notably found in the PygmyField of Mount Hamiguitan. It grows terrestrially or on rocks in montane forests (300–1,830 m) with nutrient-poor soils. Each plant produces a single slipper-shaped flower with fine hairs and spotted petals. The leaves are narrow with a tessellated green pattern. Threatened by habitat disturbance and over collection, its wild population is estimated below 2,500 mature individuals.",
 
           image: "https://imgur.com/ozvq09B.jpeg",
         },
@@ -420,7 +420,7 @@ const SpotView = () => {
           description:
             "Scientific Name: Lindsaea hamiguitanensis\n" +
             "\n" +
-            " A small terrestrial fern endemic to Mount Hamiguitan, Mindanao, growing at 1,100–1,200 m in lower montane rainforest. It has short-creepingrhizomes, long quadrangular petioles, and triangular fronds that are bipinnatetobasally tripinnate. The fronds feature 4–6 primary pinnae per side, with2–5herbaceous, light green pinnules per pinna, and continuous sori along the pinnulemargins. First discovered in 2009, it is restricted to the ultramafic forests of Mount Hamiguitan, which also host the Philippines’ largest pygmy “bonsai forest” andseveral other endemic fern species. Its unique morphology distinguishes it fromrelated Lindsaea species.",
+            " A small terrestrial fern endemic to Mount Hamiguitan, Mindanao, growing at 1,100–1,200 m in lower montane rainforest. It has short-creeping rhizomes, long quadrangular petioles, and triangular fronds that are bipinnatetobasally tripinnate. The fronds feature 4–6 primary pinnae per side, with2–5herbaceous, light green pinnules per pinna, and continuous sori along the pinnulemargins. First discovered in 2009, it is restricted to the ultramafic forests of Mount Hamiguitan, which also host the Philippines’ largest pygmy “bonsai forest” andseveral other endemic fern species. Its unique morphology distinguishes it fromrelated Lindsaea species.",
           image: "https://imgur.com/7PKAuo0.jpeg",
         },
         {
@@ -428,7 +428,7 @@ const SpotView = () => {
           description:
             "Scientific Name: Nepenthes justinae\n" +
             "\n" +
-            "A tropical pitcher plant endemic to Mount Hamiguitan, Mindanao, growing at 1,000–1,620 m in montane and pygmy forests on ultramafic soils. It hasclimbing stems up to 4 m, coriaceous leaves, and distinctive lower and upper pitcherswith specialized lids. Often found growing terrestrially or as an epiphyte, it coexistswith other Nepenthes species, with possible hybridization. Restricted to its mountainhabitat, it is vulnerable but legally protected within the Mount Hamiguitan RangeWildlife Sanctuary.",
+            "A tropical pitcher plant endemic to Mount Hamiguitan, Mindanao, growing at 1,000–1,620 m in montane and pygmy forests on ultramafic soils. It hasclimbing stems up to 4 m, coriaceous leaves, and distinctive lower and upper pitchers with specialized lids. Often found growing terrestrially or as an epiphyte, it coexists with other Nepenthes species, with possible hybridization. Restricted to its mountain habitat, it is vulnerable but legally protected within the Mount Hamiguitan Range Wildlife Sanctuary.",
           image: "https://i.imgur.com/N3sxDPo.jpeg",
         },
         {
@@ -436,7 +436,7 @@ const SpotView = () => {
           description:
             "Scientific Name: Trimeresurus flavomaculatus\n" +
             "\n" +
-            "A medium-sized, venomous pit viper endemic to the Philippines, typically green to yellow-green with yellow spots for camouflage. Found at lowtomid- elevation forests (200–1,160 m), it is nocturnal, arboreal, and solitary, feedingonsmall mammals, lizards, frogs, and birds. Females are larger than males andgivebirth to 10–20 live young. Two subspecies exist, and the species is classifiedasLeast Concern, though habitat loss and human activities pose threats.",
+            "A medium-sized, venomous pit viper endemic to the Philippines, typically green to yellow-green with yellow spots for camouflage. Found at lowtomid- elevation forests (200–1,160 m), it is nocturnal, arboreal, and solitary, feeding on small mammals, lizards, frogs, and birds. Females are larger than males and give birth to 10–20 live young. Two subspecies exist, and the species is classified as Least Concern, though habitat loss and human activities pose threats.",
           image: "https://i.imgur.com/szpzG6n.jpeg",
         },
         {
@@ -444,7 +444,7 @@ const SpotView = () => {
           description:
             "Scientific Name: Pulchrana grandocula\n" +
             "\n" +
-            "A true frog endemic to southern Philippines, including Mindanaoandnearby islands. It inhabits streams and rivers in montane and lowland forests below1,500 m, adapting to both undisturbed and disturbed habitats. Males formchorusesnear pools, while females stay in forest understories or shallow caves. Tadpolesdevelop in streams and cling to submerged debris in fast-flowing waters. Recognizable by its large eyes and mottled gray skin, it helps control insect populations and serves as prey for larger animals. Although common and stable, it faces threats from habitat loss and pollution, but occurs in several protected areas.",
+            "A true frog endemic to southern Philippines, including Mindanao and nearby islands. It inhabits streams and rivers in montane and lowland forests below1,500 m, adapting to both undisturbed and disturbed habitats. Males formchorusesnear pools, while females stay in forest understories or shallow caves. Tadpoles develop in streams and cling to submerged debris in fast-flowing waters. Recognizable by its large eyes and mottled gray skin, it helps control insect populations and serves as prey for larger animals. Although common and stable, it faces threats from habitat loss and pollution, but occurs in several protected areas.",
           image: "https://imgur.com/1PftzG4.jpeg",
         },
       ];
@@ -521,7 +521,7 @@ const SpotView = () => {
           description:
             "Scientific Name: Dendrochilum kopfii\n" +
             "\n" +
-            "An epiphytic and terrestrial orchid endemic to Mount Hamiguitan, Mindanao, growing at 1,200–2,000 m in misty, shaded montane forests. It hasarching inflorescence spikes with numerous small, delicate flowers in shades of brown, white, or red and white, and lance-shaped leaves arising frompseudobulbs. Thriving in cool, humid, and well-ventilated habitats, it is valued for its compact formand floriferous spiral flower arrangement.",
+            "An epiphytic and terrestrial orchid endemic to Mount Hamiguitan, Mindanao, growing at 1,200–2,000 m in misty, shaded montane forests. It hasarching inflorescence spikes with numerous small, delicate flowers in shades of brown, white, or red and white, and lance-shaped leaves arising from pseudobulbs. Thriving in cool, humid, and well-ventilated habitats, it is valued for its compact formand floriferous spiral flower arrangement.",
           image: "https://i.imgur.com/jIKS0I6.jpeg",
         },
         {
@@ -529,7 +529,7 @@ const SpotView = () => {
           description:
             "Scientific Name: Nepenthes hamiguitanensis\n" +
             "\n" +
-            "A tropical climbing pitcher plant endemic to the summit ridge of Mount Hamiguitan, Mindanao, growing at 1,200–1,600 m, most common above 1,400m. It produces squat, infundibular-cylindrical upper pitchers up to 20 cm high, with ribbedperistomes and broad, cordate lids. Mature plants reach 4 m, with elliptic-oblongleaves and hairy stems and leaf margins. Terrestrial and found in primary montaneforests and forest edges, it prefers humus-rich soils in partial shade. Coexists withother Nepenthes species but no natural hybrids.",
+            "A tropical climbing pitcher plant endemic to the summit ridge of Mount Hamiguitan, Mindanao, growing at 1,200–1,600 m, most common above 1,400m. It produces squat, infundibular-cylindrical upper pitchers up to 20 cm high, with ribbed peristomes and broad, cordate lids. Mature plants reach 4 m, with elliptic-oblong leaves and hairy stems and leaf margins. Terrestrial and found in primary montaneforests and forest edges, it prefers humus-rich soils in partial shade. Coexists withother Nepenthes species but no natural hybrids.",
 
           image: "https://i.imgur.com/xdwtCcg.jpeg",
         },
@@ -612,7 +612,7 @@ const SpotView = () => {
         [-1300, -400, -800],
       ];
 
-      const sizes = [800, 700, 450];
+      const sizes = [1000, 700, 450];
 
       const modelInfoList = [
         {
@@ -620,7 +620,7 @@ const SpotView = () => {
           description:
             "Scientific Name: Tropidophorus davaoensis\n" +
             "/n" +
-            "A small, semi-aquatic skink endemic to southern Mindanao, Philippines. It inhabits lowland forest streams, hiding among rocks, leaf litter, and aquaticvegetation. The species is ovoviviparous and distinguished by unique scale patterns, including separated prefrontals and two anterior loreals. First described near Malabutuan, Davao, it remains largely cryptic and specialized for riparian habitats. Classified as Least Concern by the IUCN, it reflects the rich semi-aquatic reptilebiodiversity of Mindanao",
+            "A small, semi-aquatic skink endemic to southern Mindanao, Philippines. It inhabits lowland forest streams, hiding among rocks, leaf litter, and aquatic vegetation. The species is ovoviviparous and distinguished by unique scale patterns, including separated prefrontals and two anterior loreals. First described near Malabutuan, Davao, it remains largely cryptic and specialized for riparian habitats. Classified as Least Concern by the IUCN, it reflects the rich semi-aquatic reptile biodiversity of Mindanao",
           image: "https://i.imgur.com/JBj0E3H.jpeg",
         },
         {
@@ -628,7 +628,7 @@ const SpotView = () => {
           description:
             "Scientific Name: Pelobatrachus stejnegeri\n" +
             "\n" +
-            "A medium-sized frog endemic to Mindanao, Philippines, inhabitingmoist lowland and montane forests near rivers and streams. Recognizable by hornlike projections above the eyes and mottled, camouflaged skin, it is mostly nocturnal. Tadpoles develop in shallow freshwater, attaching to submerged debris. Sensitivetohabitat loss and climate change, it highlights the importance of conserving forest-floor and freshwater ecosystems for species survival.",
+            "A medium-sized frog endemic to Mindanao, Philippines, inhabiting moist lowland and montane forests near rivers and streams. Recognizable by hornlike projections above the eyes and mottled, camouflaged skin, it is mostly nocturnal. Tadpoles develop in shallow freshwater, attaching to submerged debris. Sensitive to habitat loss and climate change, it highlights the importance of conserving forest-floor and freshwater ecosystems for species survival.",
           image: "https://i.imgur.com/3AwsOpM.jpeg",
         },
         {
@@ -636,7 +636,7 @@ const SpotView = () => {
           description:
             "Scientific Name: Hoya josseteae\n" +
             "\n" +
-            "A recently described epiphytic vine endemic to the Philippines. It hasleathery, dark green leaves and produces pale pink to white, star-shaped flowersinlarge umbels with a sweet fragrance. Unique corolla ridges and beaked coronascales distinguish it from related species. Growing in shaded, humid tropical forests, it anchors to host trees with aerial roots. Thriving in well-drained substrates, it bloomsmainly in warmer months and contributes to forest ecology while being valued for itshorticultural appeal.",
+            "A recently described epiphytic vine endemic to the Philippines. It hasleathery, dark green leaves and produces pale pink to white, star-shaped flowers in large umbels with a sweet fragrance. Unique corolla ridges and beaked coronascales distinguish it from related species. Growing in shaded, humid tropical forests, it anchors to host trees with aerial roots. Thriving in well-drained substrates, it blooms mainly in warmer months and contributes to forest ecology while being valued for it shorticultural appeal.",
           image: "https://i.imgur.com/Amgwvg4.jpeg",
         },
       ];
@@ -664,7 +664,7 @@ const SpotView = () => {
           // Draw halo/glow behind the image
           ctx.save();
           ctx.shadowColor = "white";
-          ctx.shadowBlur = 20;
+          ctx.shadowBlur = 30;
           ctx.shadowOffsetX = 0;
           ctx.shadowOffsetY = 0;
           ctx.drawImage(img, padding, padding); // center with padding

@@ -354,6 +354,20 @@ footer,
   .back-button { right: 400px; }
 
 }
+.close-btn {
+  position: absolute;
+  top: 2vh;
+  right: 2vw;
+  font-size: 1.5rem;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 8px;
+  padding: 1px 5px;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 30;
+}
 
 @media (max-width: 1170px) {
   .navbar {
@@ -376,7 +390,24 @@ footer,
   .nav-links li a {
     font-size: 0.85rem;  /* smaller text */
   }
-  
+  .model-info-section {
+  position: absolute;   /* remove from normal flow */
+  top: 95%;             /* below 3D box */
+  left: auto;           /* adjust left position */
+  transform: translateY(0); /* optional fine-tune */
+  width: 800px;
+  max-width: 90%;
+  height: auto;
+  background: rgba(0,0,0,0.25);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0,255,128,0.3);
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+  color: #e5e5e5;
+  backdrop-filter: blur(6px);
+}
 
 
 
@@ -1008,3 +1039,14 @@ footer,
   }
 }
 
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* space between logo and text */
+}
+
+.logo-img {
+  width: 40px; /* adjust size as needed */
+  height: 40px;
+}
