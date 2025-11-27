@@ -14,6 +14,7 @@ function ModelViewer({
   scale = [0.2, 0.2, 0.2],
   position = [0, 0, 0],
   setModelError,
+  setModelLoading,
 }) {
   const { scene } = useGLTF(url, true);
 
@@ -22,11 +23,14 @@ function ModelViewer({
       scene.rotation.set(0, 0, 0);
       scene.scale.set(...scale);
       scene.position.set(...position);
+
+      // 🔥 Notify parent: model is loaded
+      if (setModelLoading) setModelLoading(false);
     } catch (err) {
       console.error("🔥 Error loading 3D model:", err);
-      if (setModelError) setModelError("⚠ Failed to load 3D model."); // ✅ send error to parent
+      if (setModelError) setModelError("⚠ Failed to load 3D model.");
     }
-  }, [scene, scale, position, setModelError]);
+  }, [scene, scale, position, setModelError, setModelLoading]);
 
   return <primitive object={scene} />;
 }
@@ -46,6 +50,14 @@ const SpotView = () => {
   const containerRef = useRef(null);
   const viewerRef = useRef(null);
   const panoramaRef = useRef(null);
+  const [modelLoading, setModelLoading] = useState(true);
+
+  // --- Add this useEffect HERE ---
+  useEffect(() => {
+    if (activeModel?.url) {
+      setModelLoading(true); // Start loader every time a new model opens
+    }
+  }, [activeModel?.url]);
 
   // Close model modal
   const handleCloseModal = () => {
@@ -145,151 +157,147 @@ const SpotView = () => {
 
   /* ------------------ Camp 3 teleport to inside panorama ------------------ */
   const addCamp3Teleport = (panorama) => {
-  const size = 256; // canvas resolution
-  const textHeight = 50; // extra space inside canvas for text
-  const canvas = document.createElement("canvas");
-  canvas.width = size;
-  canvas.height = size + textHeight; // room for text
-  const ctx = canvas.getContext("2d");
+    const size = 256; // canvas resolution
+    const textHeight = 50; // extra space inside canvas for text
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size + textHeight; // room for text
+    const ctx = canvas.getContext("2d");
 
-  const img = new Image();
-  img.crossOrigin = "anonymous";
-  img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
-  img.onload = () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw the arrow image on top
-    ctx.drawImage(img, 0, 0, size, size);
+      // Draw the arrow image on top
+      ctx.drawImage(img, 0, 0, size, size);
 
-    // Draw always-visible bold text below the arrow
-    ctx.font = "bold 20px Poppins";
-    ctx.fillStyle = "white";
-    ctx.textAlign = "center";
-    ctx.fillText("Enter Camp 3", size / 2, size + 30);
+      // Draw always-visible bold text below the arrow
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Enter Camp 3", size / 2, size + 30);
 
-    const strokedImageURL = canvas.toDataURL();
-    const teleportSpot = new PANOLENS.Infospot(700, strokedImageURL); // size of arrow
-    teleportSpot.position.set(2000, -500, 1600);
-    teleportSpot.addEventListener("click", () => {
-      navigate(`/Spots/${"zvuINqT41VhWCKpenjZw"}`);
-      setTimeout(() => window.location.reload(), 100);
-    });
+      const strokedImageURL = canvas.toDataURL();
+      const teleportSpot = new PANOLENS.Infospot(500, strokedImageURL); // size of arrow
+      teleportSpot.position.set(2000, -500, 1600);
+      teleportSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"zvuINqT41VhWCKpenjZw"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
 
-    panorama.add(teleportSpot);
+      panorama.add(teleportSpot);
+    };
   };
-};
-
 
   /* ------------------ Back to Camp 3 teleport inside Camp 3 ------------------ */
   const addBackToCamp3 = (panorama) => {
-  const size = 256; // canvas resolution for arrow
-  const textHeight = 50; // extra space inside canvas for text
-  const canvas = document.createElement("canvas");
-  canvas.width = size;
-  canvas.height = size + textHeight;
-  const ctx = canvas.getContext("2d");
+    const size = 256; // canvas resolution for arrow
+    const textHeight = 50; // extra space inside canvas for text
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size + textHeight;
+    const ctx = canvas.getContext("2d");
 
-  const img = new Image();
-  img.crossOrigin = "anonymous";
-  img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
-  img.onload = () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw arrow image on top
-    ctx.drawImage(img, 0, 0, size, size);
+      // Draw arrow image on top
+      ctx.drawImage(img, 0, 0, size, size);
 
-    // Draw always-visible bold text below arrow
-    ctx.font = "bold 20px Poppins";
-    ctx.fillStyle = "white";
-    ctx.textAlign = "center";
-    ctx.fillText("Exit", size / 2, size + 30);
+      // Draw always-visible bold text below arrow
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Exit", size / 2, size + 30);
 
-    const strokedImageURL = canvas.toDataURL();
-    const backSpot = new PANOLENS.Infospot(1300, strokedImageURL); // size of arrow
-    backSpot.position.set(-5000, -800, 400);
-    backSpot.addEventListener("click", () => {
-      navigate(`/Spots/${"YCEKhHOU6eNHSqx10qSr"}`); // previous panorama ID
-      setTimeout(() => window.location.reload(), 100);
-    });
+      const strokedImageURL = canvas.toDataURL();
+      const backSpot = new PANOLENS.Infospot(1000, strokedImageURL); // size of arrow
+      backSpot.position.set(-5000, -800, 400);
+      backSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"YCEKhHOU6eNHSqx10qSr"}`); // previous panorama ID
+        setTimeout(() => window.location.reload(), 100);
+      });
 
-    panorama.add(backSpot);
+      panorama.add(backSpot);
+    };
   };
-};
-
 
   /* ------------------ Camp 4 teleport to inside panorama ------------------ */
- const addCamp4Teleport = (panorama) => {
-  const size = 256; // canvas resolution for arrow
-  const textHeight = 50; // extra space inside canvas for text
-  const canvas = document.createElement("canvas");
-  canvas.width = size;
-  canvas.height = size + textHeight;
-  const ctx = canvas.getContext("2d");
+  const addCamp4Teleport = (panorama) => {
+    const size = 256; // canvas resolution for arrow
+    const textHeight = 50; // extra space inside canvas for text
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size + textHeight;
+    const ctx = canvas.getContext("2d");
 
-  const img = new Image();
-  img.crossOrigin = "anonymous";
-  img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
-  img.onload = () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw arrow image on top
-    ctx.drawImage(img, 0, 0, size, size);
+      // Draw arrow image on top
+      ctx.drawImage(img, 0, 0, size, size);
 
-    // Draw always-visible bold text below arrow
-    ctx.font = "bold 20px Poppins";
-    ctx.fillStyle = "white";
-    ctx.textAlign = "center";
-    ctx.fillText("Enter Camp 4", size / 2, size + 30);
+      // Draw always-visible bold text below arrow
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Enter Camp 4", size / 2, size + 30);
 
-    const strokedImageURL = canvas.toDataURL();
-    const teleportSpot = new PANOLENS.Infospot(600, strokedImageURL); // size of arrow
-    teleportSpot.position.set(2000, -500, -600);
-    teleportSpot.addEventListener("click", () => {
-      navigate(`/Spots/${"8us4vrBVTMIDiCXXWHlY"}`);
-      setTimeout(() => window.location.reload(), 100);
-    });
+      const strokedImageURL = canvas.toDataURL();
+      const teleportSpot = new PANOLENS.Infospot(500, strokedImageURL); // size of arrow
+      teleportSpot.position.set(2000, -500, -600);
+      teleportSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"8us4vrBVTMIDiCXXWHlY"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
 
-    panorama.add(teleportSpot);
+      panorama.add(teleportSpot);
+    };
   };
-};
-
 
   /* ------------------ Back to Camp 4 teleport inside Camp 3 ------------------ */
   const addBackToCamp4 = (panorama) => {
-  const size = 256; // canvas resolution for arrow
-  const textHeight = 50; // extra space inside canvas for text
-  const canvas = document.createElement("canvas");
-  canvas.width = size;
-  canvas.height = size + textHeight;
-  const ctx = canvas.getContext("2d");
+    const size = 256; // canvas resolution for arrow
+    const textHeight = 50; // extra space inside canvas for text
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size + textHeight;
+    const ctx = canvas.getContext("2d");
 
-  const img = new Image();
-  img.crossOrigin = "anonymous";
-  img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
-  img.onload = () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw arrow image on top
-    ctx.drawImage(img, 0, 0, size, size);
+      // Draw arrow image on top
+      ctx.drawImage(img, 0, 0, size, size);
 
-    // Draw always-visible bold text below arrow
-    ctx.font = "bold 20px Poppins";
-    ctx.fillStyle = "white";
-    ctx.textAlign = "center";
-    ctx.fillText("Exit", size / 2, size + 30);
+      // Draw always-visible bold text below arrow
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Exit", size / 2, size + 30);
 
-    const strokedImageURL = canvas.toDataURL();
-    const backSpot = new PANOLENS.Infospot(300, strokedImageURL); // size of arrow
-    backSpot.position.set(-1000, -300, 700);
-    backSpot.addEventListener("click", () => {
-      navigate(`/Spots/${"MeD7yd6kVBnAJYJXND7c"}`); // previous panorama ID
-      setTimeout(() => window.location.reload(), 100);
-    });
+      const strokedImageURL = canvas.toDataURL();
+      const backSpot = new PANOLENS.Infospot(200, strokedImageURL); // size of arrow
+      backSpot.position.set(-1000, -300, 650);
+      backSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"MeD7yd6kVBnAJYJXND7c"}`); // previous panorama ID
+        setTimeout(() => window.location.reload(), 100);
+      });
 
-    panorama.add(backSpot);
+      panorama.add(backSpot);
+    };
   };
-};
-
 
   /* 🖼️ Add Infospots for existing models */
   const addImageInsidePanorama = (panorama, type) => {
@@ -510,25 +518,25 @@ const SpotView = () => {
         {
           name: "No widely recognized common name",
           description:
-            "Scientific Name: Lindsaea hamiguitanensis\n\nA small terrestrial fern endemic to Mount Hamiguitan, Mindanao...",
+            "Scientific Name: Lindsaea hamiguitanensis\n\nA small terrestrial fern endemic to Mount Hamiguitan, Mindanao, growing at 1,100–1,200 m in lower montane rainforest. It has short-creeping rhizomes, long quadrangular petioles, and triangular fronds that are bipinnatetobasally tripinnate. The fronds feature 4–6 primary pinnae per side, with2–5herbaceous, light green pinnules per pinna, and continuous sori along the pinnulemargins. First discovered in 2009, it is restricted to the ultramafic forests of Mount Hamiguitan, which also host the Philippines’ largest pygmy “bonsai forest” andseveral other endemic fern species. Its unique morphology distinguishes it fromrelated Lindsaea species.",
           image: "https://imgur.com/7PKAuo0.jpeg",
         },
         {
           name: "No widely recognized common name",
           description:
-            "Scientific Name: Nepenthes justinae\n\nA tropical pitcher plant endemic to Mount Hamiguitan, Mindanao...",
+            "Scientific Name: Nepenthes justinae\n\nA tropical pitcher plant endemic to Mount Hamiguitan, Mindanao, growing at 1,000–1,620 m in montane and pygmy forests on ultramafic soils. It hasclimbing stems up to 4 m, coriaceous leaves, and distinctive lower and upper pitchers with specialized lids. Often found growing terrestrially or as an epiphyte, it coexists with other Nepenthes species, with possible hybridization. Restricted to its mountain habitat, it is vulnerable but legally protected within the Mount Hamiguitan Range Wildlife Sanctuary.",
           image: "https://i.imgur.com/N3sxDPo.jpeg",
         },
         {
           name: "Philippine Pit Viper",
           description:
-            "Scientific Name: Trimeresurus flavomaculatus\n\nA medium-sized, venomous pit viper endemic to the Philippines...",
+            "Scientific Name: Trimeresurus flavomaculatus\n\nA medium-sized, venomous pit viper endemic to the Philippines, typically green to yellow-green with yellow spots for camouflage. Found at lowtomid- elevation forests (200–1,160 m), it is nocturnal, arboreal, and solitary, feeding on small mammals, lizards, frogs, and birds. Females are larger than males and give birth to 10–20 live young. Two subspecies exist, and the species is classified as Least Concern, though habitat loss and human activities pose threats.",
           image: "https://i.imgur.com/szpzG6n.jpeg",
         },
         {
           name: "Big-eyed Frog",
           description:
-            "Scientific Name: Pulchrana grandocula\n\nA true frog endemic to southern Philippines, including Mindanao...",
+            "Scientific Name: Pulchrana grandocula\n\nA medium-sized, venomous pit viper endemic to the Philippines, typically green to yellow-green with yellow spots for camouflage. Found at lowtomid- elevation forests (200–1,160 m), it is nocturnal, arboreal, and solitary, feeding on small mammals, lizards, frogs, and birds. Females are larger than males and give birth to 10–20 live young. Two subspecies exist, and the species is classified as Least Concern, though habitat loss and human activities pose threats.",
           image: "https://imgur.com/1PftzG4.jpeg",
         },
       ];
@@ -605,13 +613,13 @@ const SpotView = () => {
         {
           name: "No widely recognized common name",
           description:
-            "Scientific Name: Dendrochilum kopfii\n\nAn epiphytic and terrestrial orchid endemic to Mount Hamiguitan, Mindanao...",
+            "Scientific Name: Dendrochilum kopfii\n\nAn epiphytic and terrestrial orchid endemic to Mount Hamiguitan, Mindanao, growing at 1,200–2,000 m in misty, shaded montane forests. It hasarching inflorescence spikes with numerous small, delicate flowers in shades of brown, white, or red and white, and lance-shaped leaves arising from pseudobulbs. Thriving in cool, humid, and well-ventilated habitats, it is valued for its compact formand floriferous spiral flower arrangement.",
           image: "https://i.imgur.com/jIKS0I6.jpeg",
         },
         {
           name: "Hamiguitan Pitcher Plant",
           description:
-            "Scientific Name: Nepenthes hamiguitanensis\n\nA tropical climbing pitcher plant endemic to the summit ridge of Mount Hamiguitan...",
+            "Scientific Name: Nepenthes hamiguitanensis\n\nA tropical climbing pitcher plant endemic to the summit ridge of Mount Hamiguitan, Mindanao, growing at 1,200–1,600 m, most common above 1,400m. It produces squat, infundibular-cylindrical upper pitchers up to 20 cm high, with ribbed peristomes and broad, cordate lids. Mature plants reach 4 m, with elliptic-oblong leaves and hairy stems and leaf margins. Terrestrial and found in primary montaneforests and forest edges, it prefers humus-rich soils in partial shade. Coexists withother Nepenthes species but no natural hybrids.",
           image: "https://i.imgur.com/xdwtCcg.jpeg",
         },
       ];
@@ -671,97 +679,100 @@ const SpotView = () => {
 
     // ----------------- CAMP 3 INSIDE -----------------
     if (type === "Camp III") {
-  const camp3Models = [
-    "/3dmodels/Tropidophorus davaoensis.glb",
-    "/3dmodels/horned frog.glb",
-    "/3dmodels/hoya josseteae.glb",
-  ];
+      const camp3Models = [
+        "/3dmodels/Tropidophorus davaoensis.glb",
+        "/3dmodels/horned frog.glb",
+        "/3dmodels/hoya josseteae.glb",
+      ];
 
-  const modelSettings = [
-    { scale: [0.3, 0.3, 0.3], position: [0, 1, 0] },
-    { scale: [0.1, 0.1, 0.1], position: [0, 1, -1] },
-    { scale: [0.3, 0.3, 0.3], position: [0, 0.5, 0] },
-  ];
+      const modelSettings = [
+        { scale: [0.3, 0.3, 0.3], position: [0, 1, 0] },
+        { scale: [0.1, 0.1, 0.1], position: [0, 1, -1] },
+        { scale: [0.3, 0.3, 0.3], position: [0, 0.5, 0] },
+      ];
 
-  const images = [
-    "https://i.imgur.com/wdf4LFU.png", // Tropidophorus Davaoensis
-    "https://i.imgur.com/M9ZKf3y.png", // Horned Frog
-    "https://i.imgur.com/fzEjaLW.png", // Hoya Josseteae
-  ];
+      const images = [
+        "https://i.imgur.com/wdf4LFU.png", // Tropidophorus Davaoensis
+        "https://i.imgur.com/M9ZKf3y.png", // Horned Frog
+        "https://i.imgur.com/fzEjaLW.png", // Hoya Josseteae
+      ];
 
-  const positions = [
-    [6500, -5000, 500],
-    [-1000, -3000, -3000],
-    [-1300, 200, -800],
-  ];
+      const positions = [
+        [6500, -5000, 500],
+        [-1000, -3000, -3000],
+        [-1300, 200, -800],
+      ];
 
-  const sizes = [2300, 1200, 650];
+      const sizes = [2300, 1200, 650];
 
-  const modelInfoList = [
-    {
-      name: "Davao Waterside Skink",
-      description: "Scientific Name: Tropidophorus davaoensis\n\nA small, semi-aquatic skink endemic to southern Mindanao...",
-      image: "https://i.imgur.com/JBj0E3H.jpeg",
-    },
-    {
-      name: "Mindanao Horned Frog",
-      description: "Scientific Name: Pelobatrachus stejnegeri\n\nA medium-sized frog endemic to Mindanao...",
-      image: "https://i.imgur.com/3AwsOpM.jpeg",
-    },
-    {
-      name: "No widely recognized common name",
-      description: "Scientific Name: Hoya josseteae\n\nA recently described epiphytic vine endemic to the Philippines...",
-      image: "https://i.imgur.com/Amgwvg4.jpeg",
-    },
-  ];
+      const modelInfoList = [
+        {
+          name: "Davao Waterside Skink",
+          description:
+            "Scientific Name: Tropidophorus davaoensis\n\nA small, semi-aquatic skink endemic to southern Mindanao, Philippines. It inhabits lowland forest streams, hiding among rocks, leaf litter, and aquatic vegetation. The species is ovoviviparous and distinguished by unique scale patterns, including separated prefrontals and two anterior loreals. First described near Malabutuan, Davao, it remains largely cryptic and specialized for riparian habitats. Classified as Least Concern by the IUCN, it reflects the rich semi-aquatic reptile biodiversity of Mindanao",
+          image: "https://i.imgur.com/JBj0E3H.jpeg",
+        },
+        {
+          name: "Mindanao Horned Frog",
+          description:
+            "Scientific Name: Pelobatrachus stejnegeri\n\nA medium-sized frog endemic to Mindanao, Philippines, inhabiting moist lowland and montane forests near rivers and streams. Recognizable by hornlike projections above the eyes and mottled, camouflaged skin, it is mostly nocturnal. Tadpoles develop in shallow freshwater, attaching to submerged debris. Sensitive to habitat loss and climate change, it highlights the importance of conserving forest-floor and freshwater ecosystems for species survival.",
+          image: "https://i.imgur.com/3AwsOpM.jpeg",
+        },
+        {
+          name: "No widely recognized common name",
+          description:
+            "Scientific Name: Hoya josseteae\n\nA recently described epiphytic vine endemic to the Philippines. It hasleathery, dark green leaves and produces pale pink to white, star-shaped flowers in large umbels with a sweet fragrance. Unique corolla ridges and beaked coronascales distinguish it from related species. Growing in shaded, humid tropical forests, it anchors to host trees with aerial roots. Thriving in well-drained substrates, it blooms mainly in warmer months and contributes to forest ecology while being valued for it shorticultural appeal.",
+          image: "https://i.imgur.com/Amgwvg4.jpeg",
+        },
+      ];
 
-  camp3Models.forEach((model, i) => {
-    const size = 256; // canvas resolution
-    const textHeight = 50; // space for text below image
-    const canvas = document.createElement("canvas");
-    canvas.width = size;
-    canvas.height = size + textHeight;
-    const ctx = canvas.getContext("2d");
+      camp3Models.forEach((model, i) => {
+        const size = 256; // canvas resolution
+        const textHeight = 50; // space for text below image
+        const canvas = document.createElement("canvas");
+        canvas.width = size;
+        canvas.height = size + textHeight;
+        const ctx = canvas.getContext("2d");
 
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.src = images[i];
-    img.onload = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.src = images[i];
+        img.onload = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw halo/glow behind the image
-      ctx.save();
-      ctx.shadowColor = "white";
-      ctx.shadowBlur = 50;
-      ctx.drawImage(img, 0, 0, size, size);
-      ctx.restore();
+          // Draw halo/glow behind the image
+          ctx.save();
+          ctx.shadowColor = "white";
+          ctx.shadowBlur = 50;
+          ctx.drawImage(img, 0, 0, size, size);
+          ctx.restore();
 
-      // Draw image
-      ctx.drawImage(img, 0, 0, size, size);
+          // Draw image
+          ctx.drawImage(img, 0, 0, size, size);
 
-      // Draw always-visible bold text below image
-      ctx.font = "bold 20px Poppins";
-      ctx.fillStyle = "white";
-      ctx.textAlign = "center";
-      ctx.fillText("Click to view 3D model", size / 2, size + 30);
+          // Draw always-visible bold text below image
+          ctx.font = "bold 20px Poppins";
+          ctx.fillStyle = "white";
+          ctx.textAlign = "center";
+          ctx.fillText("Click to view 3D model", size / 2, size + 30);
 
-      const strokedImageURL = canvas.toDataURL();
-      const infospot = new PANOLENS.Infospot(sizes[i], strokedImageURL);
-      infospot.position.set(...positions[i]);
+          const strokedImageURL = canvas.toDataURL();
+          const infospot = new PANOLENS.Infospot(sizes[i], strokedImageURL);
+          infospot.position.set(...positions[i]);
 
-      infospot.addEventListener("click", () => {
-        setBlurPanorama(true);
-        setActiveModel({
-          url: model,
-          scale: modelSettings[i].scale,
-          position: modelSettings[i].position,
-        });
-        setModelInfo(modelInfoList[i]);
+          infospot.addEventListener("click", () => {
+            setBlurPanorama(true);
+            setActiveModel({
+              url: model,
+              scale: modelSettings[i].scale,
+              position: modelSettings[i].position,
+            });
+            setModelInfo(modelInfoList[i]);
+          });
+
+          panorama.add(infospot);
+        };
       });
-
-      panorama.add(infospot);
-    };
-  });
 
       // Add back arrow
       addBackToCamp3(panorama);
@@ -818,6 +829,12 @@ const SpotView = () => {
           {/* 3D MODEL BOX */}
           <div className="model-3d-box">
             <div className="model-view-section">
+              {/* LOADING SPINNER */}
+              {modelLoading && (
+                <div className="model-loading-spinner">
+                  <div className="spinner"></div>
+                </div>
+              )}
               <Canvas
                 camera={{ position: [0, 1.5, 5], fov: 45 }}
                 className="canvas-view"
@@ -830,7 +847,8 @@ const SpotView = () => {
                     url={activeModel.url}
                     scale={activeModel.scale}
                     position={activeModel.position}
-                    setModelError={setModelError} // ✅ pass to child
+                    setModelError={setModelError}
+                    setModelLoading={setModelLoading}
                   />
                 </Suspense>
 

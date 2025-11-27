@@ -1051,3 +1051,30 @@ footer,
   width: 40px; /* adjust size as needed */
   height: 40px;
 }
+
+.model-loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid rgb(248, 241, 241);
+  border-top-color: rgb(132, 207, 11);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.model-3d-box {
+  position: relative; /* required so spinner stays inside */
+}

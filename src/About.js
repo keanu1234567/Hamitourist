@@ -54,7 +54,8 @@ function About() {
       </audio>
 
       {/* 📖 About Mt. Hamiguitan */}
-      <section className="about-content">
+      <section className="about-wrapper">
+      <div className="about-content">
         <h1>About Mt. Hamiguitan</h1>
         <p>
           Mt. Hamiguitan Range Wildlife Sanctuary, located in Davao Oriental,
@@ -95,6 +96,7 @@ function About() {
           technology and environmental education, this system inspires users to
           appreciate and protect the natural heritage of Mt. Hamiguitan.
         </p>
+      </div>
       </section>
 
       {/* 🌿 Spots Gallery */}
