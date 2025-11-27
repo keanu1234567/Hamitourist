@@ -37,7 +37,7 @@
   transform: translateY(30px);
   animation: fadeInUp 1.5s ease forwards;
   transition: all 0.4s ease;
-  background: rgba(0, 0, 0, 0.10); /* dark overlay */
+  background: rgba(0, 0, 0, 0.30); /* dark overlay */
   backdrop-filter: blur(4px);
 
   opacity: 0;
@@ -91,7 +91,7 @@
 
 .about-content p {
   font-size: 1.08rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.8;
   color: #eaeaea;
   margin-bottom: 18px;
@@ -185,7 +185,7 @@
   color: #f1f1f1;
   text-shadow: 1px 1px rgb(0, 0, 0, 0.9); 
   padding-top: -10px;
-  font-weight: 600;
+  font-weight: 300;
   
   
 }
@@ -284,7 +284,7 @@ about-content h2 {
 
 .spot-info p {
   margin-top: 80px;
-  font-weight: 600;
+  
   font-size: 0.95rem;
   color: #f1f1f1;
   line-height: 1.5;

@@ -703,7 +703,7 @@ const SpotView = () => {
         [-1300, 200, -800],
       ];
 
-      const sizes = [2300, 1200, 650];
+      const sizes = [2500, 1400, 800];
 
       const modelInfoList = [
         {
@@ -740,15 +740,28 @@ const SpotView = () => {
         img.onload = () => {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+          // Calculate aspect ratio
+          const aspect = img.width / img.height;
+          let drawWidth = size;
+          let drawHeight = size;
+
+          if (aspect > 1) {
+            // Image is wider than tall
+            drawHeight = size / aspect;
+          } else {
+            // Image is taller than wide
+            drawWidth = size * aspect;
+          }
+
+          const offsetX = (size - drawWidth) / 2;
+          const offsetY = (size - drawHeight) / 2;
+
           // Draw halo/glow behind the image
           ctx.save();
           ctx.shadowColor = "white";
-          ctx.shadowBlur = 50;
-          ctx.drawImage(img, 0, 0, size, size);
+          ctx.shadowBlur = 20;
+          ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
           ctx.restore();
-
-          // Draw image
-          ctx.drawImage(img, 0, 0, size, size);
 
           // Draw always-visible bold text below image
           ctx.font = "bold 20px Poppins";
