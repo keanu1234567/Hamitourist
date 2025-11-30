@@ -355,6 +355,7 @@ footer,
   .back-button { right: 400px; }
 
 }
+
 .close-btn {
   position: absolute;
   top: 2vh;
@@ -1077,4 +1078,105 @@ footer,
 
 .model-3d-box {
   position: relative; /* required so spinner stays inside */
+}
+
+
+/* Default desktop styles */
+.guide-popup {
+  position: absolute;
+  top: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 30px 55px;
+  width: 75%;
+  max-width: 800px;
+  min-width: 300px;
+  font-size: 1.6rem;
+  color: rgb(253, 253, 253);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  animation: holoScan 2s ease-out, fadeOutGuide 4s ease forwards;
+  z-index: 9999;
+  overflow: hidden;
+  display: block;
+}
+
+.hand-click {
+  display: inline-block;
+  font-size: 5rem;
+  margin-left: 210px;
+  animation: handClick 1s infinite ease-in-out;
+}
+
+/* Keyframes remain the same */
+@keyframes holoScan {
+  0% { clip-path: inset(100% 0 0 0); opacity: 0; }
+  50% { clip-path: inset(0 0 0 0); opacity: 1; }
+  100% { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes fadeOutGuide {
+  0% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes handClick {
+  0% { transform: scale(1) translateY(0); opacity: 1; }
+  40% { transform: scale(0.9) translateY(3px); opacity: 0.8; }
+  70% { transform: scale(1.1) translateY(-3px); opacity: 1; }
+  100% { transform: scale(1) translateY(0); }
+}
+
+/* RESPONSIVE STYLES */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .guide-popup {
+    width: 85%;
+    padding: 25px 40px;
+    font-size: 1.4rem;
+  }
+
+  .hand-click {
+    font-size: 4rem;
+    margin-left: 150px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .guide-popup {
+    width: 95%;
+    top: 15%;
+    padding: 20px 25px;
+    font-size: 1.2rem;
+  }
+
+  .hand-click {
+    font-size: 3rem;
+    margin-left: 100px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .guide-popup {
+    width: 98%;
+    top: 10%;
+    padding: 15px 20px;
+    font-size: 1rem;
+  }
+
+  .hand-click {
+    font-size: 2.5rem;
+    margin-left: 150px;
+  }
+}
+
+
+img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-select: none;
 }

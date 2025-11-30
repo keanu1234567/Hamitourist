@@ -201,6 +201,13 @@ const Tour = () => {
     { position: [7, 17, -2], label: "Twin Falls", id: "QGRePSC5lFbcbJ8ICvtB" },
   ];
 
+  const [showGuide, setShowGuide] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowGuide(false), 3500); // auto hide after 3.5s
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="tour-wrapper">
       <video autoPlay loop muted playsInline className="background-video">
@@ -217,6 +224,15 @@ const Tour = () => {
       </div>
 
       <div className="tour-box">
+        {showGuide && (
+          <div className="guide-popup">
+            <p>
+              Click the markers to start the Virtual Tour!
+              <span className="hand-click">👆</span>
+            </p>
+          </div>
+        )}
+
         <Canvas
           className="tour-canvas"
           shadows

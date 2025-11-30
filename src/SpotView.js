@@ -52,6 +52,17 @@ const SpotView = () => {
   const panoramaRef = useRef(null);
   const [modelLoading, setModelLoading] = useState(true);
 
+  
+  useEffect(() => {
+    const handleContextMenu = (e) => e.preventDefault();
+    document.addEventListener("contextmenu", handleContextMenu);
+
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, []);
+
+
   // --- Add this useEffect HERE ---
   useEffect(() => {
     if (activeModel?.url) {
@@ -558,7 +569,7 @@ const SpotView = () => {
           // Draw halo/glow behind the image
           ctx.save();
           ctx.shadowColor = "white";
-          ctx.shadowBlur = 10;
+          ctx.shadowBlur = 20;
           ctx.drawImage(img, 0, 0, size, size);
           ctx.restore();
 
