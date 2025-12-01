@@ -766,9 +766,9 @@ footer,
 /* Auto-sizing container for model image */
 .model-img {
   max-width: 300px;        /* optional maximum width */
-  max-height: 250px;       /* optional maximum height */
+  max-height: 100%;       /* optional maximum height */
   width: auto;             /* let width adjust to image */
-  height: auto;            /* let height adjust to image */
+  height: 100%;            /* let height adjust to image */
   object-fit: contain;     /* scales image to fit container without cropping */
   border-radius: 12px;
   border: 2px solid #4ade80;
@@ -799,6 +799,7 @@ footer,
   font-size: 1rem;
   line-height: 1.4;
   white-space: pre-wrap;
+  text-align: justify;
 }
 
 /* Responsive adjustments */
@@ -1088,17 +1089,19 @@ footer,
   left: 50%;
   transform: translateX(-50%);
   padding: 30px 55px;
-  width: 75%;
+  width: 73%;
   max-width: 800px;
   min-width: 300px;
   font-size: 1.6rem;
   color: rgb(253, 253, 253);
-  border-radius: 12px;
+  border-radius: 25px;
   background: rgba(0, 0, 0, 0.6);
   animation: holoScan 2s ease-out, fadeOutGuide 4s ease forwards;
   z-index: 9999;
   overflow: hidden;
   display: block;
+  pointer-events: none;
+
 }
 
 .hand-click {
@@ -1133,7 +1136,6 @@ footer,
 /* Tablets */
 @media (max-width: 1024px) {
   .guide-popup {
-    width: 85%;
     padding: 25px 40px;
     font-size: 1.4rem;
   }
@@ -1147,7 +1149,7 @@ footer,
 /* Mobile */
 @media (max-width: 768px) {
   .guide-popup {
-    width: 95%;
+    width: 65%;
     top: 15%;
     padding: 20px 25px;
     font-size: 1.2rem;
@@ -1155,22 +1157,22 @@ footer,
 
   .hand-click {
     font-size: 3rem;
-    margin-left: 100px;
+    margin-left: 170px;
   }
 }
 
 /* Small Mobile */
 @media (max-width: 480px) {
   .guide-popup {
-    width: 98%;
-    top: 10%;
-    padding: 15px 20px;
-    font-size: 1rem;
+    width: 65%;
+    top: 30%;
+   
+    font-size: 0.7rem;
   }
 
   .hand-click {
     font-size: 2.5rem;
-    margin-left: 150px;
+    margin-left: 100px;
   }
 }
 

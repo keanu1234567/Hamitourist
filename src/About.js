@@ -17,22 +17,22 @@ function About() {
   }, []);
 
   const spots = [
-    { name: "UNESCO Marker", img: "https://i.imgur.com/z2naEKO.jpeg", desc: "Symbol of Mt. Hamiguitan’s global recognition as a UNESCO World Heritage Site." },
-    { name: "Crossing Stampa", img: "https://i.imgur.com/VDlrFPZ.jpeg", desc: "A trail intersection guiding explorers to different paths of Hamiguitan." },
-    { name: "Puting Bato", img: "https://i.imgur.com/dLofKtJ.jpeg", desc: "A ridge of bright rocks offering a panoramic view of the mountain range." },
-    { name: "Lantawan 1", img: "https://i.imgur.com/U1UmFwr.jpeg", desc: "A scenic viewpoint with breathtaking sights of the surrounding forests." },
-    { name: "Camp 4", img: "https://i.imgur.com/jKc9S8B.jpeg", desc: "A peaceful rest stop surrounded by rich vegetation." },
-    { name: "Uwang-Uwang", img: "https://i.imgur.com/7JsMLdl.jpeg", desc: "A dense area with rock formations and rich biodiversity." },
-    { name: "Lantawan 2", img: "https://i.imgur.com/usYiedr.jpeg", desc: "A misty vantage point where clouds meet the treetops." },
-    { name: "Camp 3", img: "http://i.imgur.com/61rtYFn.jpeg", desc: "A quiet camp surrounded by the mountain’s natural charm." },
-    { name: "Pygmy Field", img: "https://i.imgur.com/1bgyovZ.jpeg", desc: "Home to dwarf trees and rare endemic species." },
-    { name: "Lantawan 3", img: "https://i.imgur.com/DGGOaxK.jpeg", desc: "A perfect spot for a breathtaking sunrise view." },
+    { name: "UNESCO Marker", img: "https://i.imgur.com/z2naEKO.jpeg", desc: "The official jump-off point of the Mt. Hamiguitan trail, marking the start of the climb into the UNESCO World Heritage Site." },
+    { name: "Crossing Stampa", img: "https://i.imgur.com/VDlrFPZ.jpeg", desc: "A trail crossroad where trekkers usually regroup before heading deeper into the forest." },
+    { name: "Puting Bato", img: "https://i.imgur.com/dLofKtJ.jpeg", desc: "A pale rock formation along the path, offering hikers a short rest stop and scenic view." },
+    { name: "Lantawan 1", img: "https://i.imgur.com/U1UmFwr.jpeg", desc: "– A natural viewing deck where hikers can pause to admire the surrounding forest and slopes." },
+    { name: "Camp 4", img: "https://i.imgur.com/jKc9S8B.jpeg", desc: "A designated resting campsite for trekkers, often used for overnight stays." },
+    { name: "Uwang-Uwang", img: "https://i.imgur.com/7JsMLdl.jpeg", desc: "Named after the local beetle (uwang), this spot is known for its rich insect and wildlife diversity." },
+    { name: "Lantawan 2", img: "https://i.imgur.com/usYiedr.jpeg", desc: "Another scenic viewpoint, giving a higher perspective of the mountain terrain." },
+    { name: "Camp 3", img: "http://i.imgur.com/61rtYFn.jpeg", desc: "A common campsite along the trail where hikers rest and prepare for the push toward higher elevation." },
+    { name: "Pygmy Field", img: "https://i.imgur.com/1bgyovZ.jpeg", desc: "A unique bonsai forest, where centuries-old trees remain stunted due to the harsh soil and climate." },
+    { name: "Lantawan 3", img: "https://i.imgur.com/DGGOaxK.jpeg", desc: "The last viewing deck before reaching the higher mossy forest, offering breathtaking panoramas." },
     { name: "Tinagong Dagat", img: "https://i.imgur.com/RUZIkdP.jpeg", desc: "A ‘hidden sea’ that mysteriously changes water level." },
-    { name: "Mossy Forest", img: "https://i.imgur.com/aKFFyvd.jpeg", desc: "A cool, damp forest filled with mosses and ferns." },
+    { name: "Mossy Forest", img: "https://i.imgur.com/aKFFyvd.jpeg", desc: "A mystical forest with trees covered in moss, orchids, and ferns, often shrouded in fog." },
     { name: "Hidden Garden", img: "https://i.imgur.com/s6m3bpS.jpeg", desc: "A lush area teeming with wild orchids and rare plants." },
-    { name: "Peak", img: "https://imgur.com/3PZJPKJ.jpeg", desc: "The summit offering a panoramic view of Davao Oriental." },
-    { name: "Black Mountain", img: "https://imgur.com/WBZnjaY.jpeg", desc: "A ridge of darker soil standing out from its surroundings." },
-    { name: "Twin Falls", img: "https://i.imgur.com/DRxCa9i.jpeg", desc: "A twin waterfall cascading gracefully through lush greenery." },
+    { name: "Peak", img: "https://imgur.com/3PZJPKJ.jpeg", desc: "The summit of Mt. Hamiguitan, rewarding climbers with stunning 360° views of Davao Oriental and beyond." },
+    { name: "Black Mountain", img: "https://imgur.com/WBZnjaY.jpeg", desc: "A ridge of darker rock and soil, distinct in color compared to other parts of the trail." },
+    { name: "Twin Falls", img: "https://i.imgur.com/DRxCa9i.jpeg", desc: "A pair of waterfalls cascading side by side, one of the refreshing natural highlights of the trek." },
   ];
 
   return (

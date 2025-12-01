@@ -337,7 +337,7 @@ const SpotView = () => {
           description:
             "Scientific Name: Scaveola micrantha\n" +
             "\n" +
-            'A shrub or small tree in the family Goodeniaceae, growing up to 10mtall with smooth green to grey bark and oblanceolate to obovate leaves up to 15cmlong. Native to the Philippines, Taiwan, and Borneo, it thrives on ultramafic soils, particularly in the mossy-pygmy "bonsai" forests of Mount Hamiguitan at 1,160–1,600m elevation. This species is an indicator of ultrabasic ecosystems, adaptedtonutrient-poor, iron- and magnesium-rich soils. It contributes to the unique stuntedforest community alongside other endemic species and is classified as Least Concern by the IUCN.',
+            'This Goodeniaceae shrub or small tree grows up to 10 m with smooth bark and 15 cm leaves. It is native to the Philippines, Taiwan, and Borneo and thrives on ultramafic soils, especially in the mossy-pygmy “bonsai” forests of Mt. Hamiguitan at 1,160–1,600 m. The species is an indicator of ultrabasic ecosystems, adapted to nutrient-poor, iron- and magnesium-rich soils. It is listed as Least Concern, but its specialized habitat makes it vulnerable. Ecologically, it supports biodiversity, stabilizes soil, and helps indicate forest health. Conservation efforts include habitat protection, monitoring, and regulated tourism.',    
           image: "https://imgur.com/yn2xxt7.jpeg",
         },
         {
@@ -345,7 +345,7 @@ const SpotView = () => {
           description:
             "Scientific Name: Wendlandia nervosa\n" +
             "\n" +
-            "A flowering shrub or small tree endemic to the Black Mountain site of Mount Hamiguitan, Mindanao. It grows on nutrient-poor, acidic ultramafic soils, with opposite elliptic to oblong leaves featuring prominent veins. The species produces fragrant, tubular flowers in cymose or paniculiform clusters, often white, purple, or red. Part of the montane forest vegetation, it contributes to the high plant endemismand biodiversity of Mount Hamiguitan, especially within the ultramafic pygmy forest community. Its unique adaptation to challenging soils highlights the ecological importance of the sanctuary",
+            "This flowering shrub or small tree is endemic to the Black Mountain area of Mt. Hamiguitan in Mindanao. It grows on nutrient-poor, acidic ultramafic soils and has opposite elliptic to oblong leaves with prominent veins. It produces fragrant tubular flowers in cymose or paniculiform clusters, often white, purple, or red. As part of the montane and ultramafic pygmy forest, it contributes to Mt. Hamiguitan’s high endemism and biodiversity. The species is Vulnerable due to its restricted ultramafic habitat and sensitivity to disturbance. Protection within the Mt. Hamiguitan Range Wildlife Sanctuary helps reduce threats such as deforestation. Ecologically, it supports pollinators, boosts plant diversity, provides habitat for small fauna, and serves as an indicator of ultramafic forest health. Conservation includes strict habitat protection, biodiversity monitoring, regulated eco-tourism, and environmental education.",
           image: "https://i.imgur.com/8RSlcGE.jpeg",
         },
       ];
@@ -428,7 +428,7 @@ const SpotView = () => {
           description:
             "Scientific Name: Nepenthes micramphora\n" +
             "\n" +
-            "A tropical pitcher plant endemic to Mount Hamiguitan, Mindanao, growing at 1,100–1,635 m in ultramafic montane forests. It has narrow, funnel-shaped pitchers (4–6.7 cm) with a prominent peristome and lid, and smooth stems and leaves. Found alongside other Nepenthes species, it is critically endangered due to its limited range and habitat threats",
+            "This tropical pitcher plant, endemic to Mount Hamiguitan, grows at 1,100–1,635 m in ultramafic montane forests. It has narrow, funnel-shaped pitchers (4–6.7 cm) with a pronounced peristome and lid, and smooth stems and leaves. Found with other Nepenthes species, it is Critically Endangered due to its very limited range, habitat loss, and risks of overcollection. Ecologically, it controls insect populations, obtains nutrients from trapped prey in nutrient-poor soils, and supports a specialized micro-ecosystem. In the Mt. Hamiguitan Range Wildlife Sanctuary, it is protected through strict habitat conservation, population monitoring, regulated tourism, and education efforts, all essential for its survival.",
           image: "https://i.imgur.com/r0HRn0k.jpeg",
         },
         {
@@ -436,7 +436,7 @@ const SpotView = () => {
           description:
             "Scientific Name: Psammodynastes pulverulentus\n" +
             "\n" +
-            "A small, harmless “mock viper” snake (65–77 cm) with variable brown or gray patterns and distinctive Y-shaped head markings. Solitary and active day and night, it lives near streams and rivers, feeding on frogs, geckos, and skinks. Native to many Philippine islands and found up to 2,100 m elevation.",
+            "The Philippine Mock Viper is a small, harmless snake (65–77 cm) with brown or gray patterns and a Y-shaped head marking. It lives near streams and moist forest floors, is active day and night, and eats frogs, geckos, and skinks. It is native to many Philippine islands up to 2,100 m elevation Though listed as Least Concern, it depends on intact forests, making protected areas like Mt. Hamiguitan important. It helps control small vertebrates and serves as prey, supporting the forest food chain. In the sanctuary, it benefits from habitat protection, monitoring, and regulated tourism.",
           image: "https://i.imgur.com/vBK0069.jpeg",
         },
         {
@@ -444,7 +444,7 @@ const SpotView = () => {
           description:
             "Scientific Name: Paphiopedilum ciliolare\n" +
             "\n" +
-            "A rare orchid endemic to the Philippines, notably found in the PygmyField of Mount Hamiguitan. It grows terrestrially or on rocks in montane forests (300–1,830 m) with nutrient-poor soils. Each plant produces a single slipper-shaped flower with fine hairs and spotted petals. The leaves are narrow with a tessellated green pattern. Threatened by habitat disturbance and over collection, its wild population is estimated below 2,500 mature individuals.",
+            "This rare orchid, endemic to the Philippines and found in the Pygmy Field of Mt. Hamiguitan, grows on soil or rocks in montane forests (300–1,830 m). It has a single slipper-shaped flower with fine hairs and spotted petals, and narrow, tessellated leaves. Fewer than 2,500 mature individuals remain due to habitat disturbance and overcollection. Classified as Endangered, it is threatened by habitat loss, illegal collection, and its slow growth. It supports specialized pollinators, maintains soil microhabitats, and indicates healthy forest ecosystems. In the Mt. Hamiguitan Range Wildlife Sanctuary, it benefits from strict habitat protection, zero-extraction rules, monitoring, controlled tourism, and education efforts, all vital for its survival.",
           image: "https://imgur.com/ozvq09B.jpeg",
         },
       ];
@@ -529,25 +529,25 @@ const SpotView = () => {
         {
           name: "No widely recognized common name",
           description:
-            "Scientific Name: Lindsaea hamiguitanensis\n\nA small terrestrial fern endemic to Mount Hamiguitan, Mindanao, growing at 1,100–1,200 m in lower montane rainforest. It has short-creeping rhizomes, long quadrangular petioles, and triangular fronds that are bipinnatetobasally tripinnate. The fronds feature 4–6 primary pinnae per side, with2–5herbaceous, light green pinnules per pinna, and continuous sori along the pinnulemargins. First discovered in 2009, it is restricted to the ultramafic forests of Mount Hamiguitan, which also host the Philippines’ largest pygmy “bonsai forest” andseveral other endemic fern species. Its unique morphology distinguishes it fromrelated Lindsaea species.",
+            "Scientific Name: Lindsaea hamiguitanensis\n\nThis small terrestrial fern is endemic to Mt. Hamiguitan, Mindanao, growing at 1,100–1,200 m in lower montane rainforest. It has short-creeping rhizomes, long quadrangular petioles, and triangular bipinnate to tripinnate fronds with continuous sori along the pinnule margins. Discovered in 2009, it is restricted to the ultramafic pygmy forests alongside other endemic ferns. Classified as Endangered, it is threatened by its limited distribution and fragile habitat. Ecologically, it stabilizes soil, provides microhabitats for invertebrates, and supports biodiversity in the Pygmy Forest. Conservation includes habitat protection, monitoring, regulated tourism, and research, ensuring its survival.",
           image: "https://imgur.com/7PKAuo0.jpeg",
         },
         {
           name: "No widely recognized common name",
           description:
-            "Scientific Name: Nepenthes justinae\n\nA tropical pitcher plant endemic to Mount Hamiguitan, Mindanao, growing at 1,000–1,620 m in montane and pygmy forests on ultramafic soils. It hasclimbing stems up to 4 m, coriaceous leaves, and distinctive lower and upper pitchers with specialized lids. Often found growing terrestrially or as an epiphyte, it coexists with other Nepenthes species, with possible hybridization. Restricted to its mountain habitat, it is vulnerable but legally protected within the Mount Hamiguitan Range Wildlife Sanctuary.",
+            "Scientific Name: Nepenthes justinae\n\nThis tropical pitcher plant is endemic to Mt. Hamiguitan, Mindanao, growing at 1,000–1,620 m in montane and pygmy ultramafic forests. It has climbing stems up to 4 m, coriaceous leaves, and distinctive lower and upper pitchers, growing terrestrially or as an epiphyte and sometimes hybridizing with other Nepenthes species. Classified as Vulnerable, it is threatened by its limited range, slow growth, and sensitive habitat, though legal protection in the Mt. Hamiguitan Range Wildlife Sanctuary helps safeguard it. Ecologically, it traps insects for nutrients, supports specialized invertebrates, and enhances plant biodiversity. Conservation includes habitat protection, monitoring, regulated eco-tourism, and education to preserve the species and ecosystem balance.",
           image: "https://i.imgur.com/N3sxDPo.jpeg",
         },
         {
           name: "Philippine Pit Viper",
           description:
-            "Scientific Name: Trimeresurus flavomaculatus\n\nA medium-sized, venomous pit viper endemic to the Philippines, typically green to yellow-green with yellow spots for camouflage. Found at lowtomid- elevation forests (200–1,160 m), it is nocturnal, arboreal, and solitary, feeding on small mammals, lizards, frogs, and birds. Females are larger than males and give birth to 10–20 live young. Two subspecies exist, and the species is classified as Least Concern, though habitat loss and human activities pose threats.",
+            "Scientific Name: Trimeresurus flavomaculatus\n\nThe Philippine Pit Viper is a medium-sized, venomous snake endemic to the Philippines, green to yellow-green with yellow spots, living in low to mid-elevation forests (200–1,160 m). It is nocturnal, arboreal, and feeds on small vertebrates. Classified as Least Concern, it is threatened by habitat loss, making Mt. Hamiguitan protection important. It regulates prey populations, serves as prey, and helps maintain the forest food web. Conservation includes habitat protection, monitoring, and education.",
           image: "https://i.imgur.com/szpzG6n.jpeg",
         },
         {
           name: "Big-eyed Frog",
           description:
-            "Scientific Name: Pulchrana grandocula\n\nA medium-sized, venomous pit viper endemic to the Philippines, typically green to yellow-green with yellow spots for camouflage. Found at lowtomid- elevation forests (200–1,160 m), it is nocturnal, arboreal, and solitary, feeding on small mammals, lizards, frogs, and birds. Females are larger than males and give birth to 10–20 live young. Two subspecies exist, and the species is classified as Least Concern, though habitat loss and human activities pose threats.",
+            "Scientific Name: Pulchrana grandocula\n\nThe Big-eyed Frog is endemic to the southern Philippines, living in streams below 1,500 m. Males call near pools, females stay in understory or caves, and tadpoles cling to debris. It controls insects and serves as prey. Classified as Least Concern, it is threatened by habitat loss and pollution. Conservation in Mt. Hamiguitan includes stream protection, monitoring, and education to maintain healthy populations and ecosystems.",
           image: "https://imgur.com/1PftzG4.jpeg",
         },
       ];
@@ -624,13 +624,13 @@ const SpotView = () => {
         {
           name: "No widely recognized common name",
           description:
-            "Scientific Name: Dendrochilum kopfii\n\nAn epiphytic and terrestrial orchid endemic to Mount Hamiguitan, Mindanao, growing at 1,200–2,000 m in misty, shaded montane forests. It hasarching inflorescence spikes with numerous small, delicate flowers in shades of brown, white, or red and white, and lance-shaped leaves arising from pseudobulbs. Thriving in cool, humid, and well-ventilated habitats, it is valued for its compact formand floriferous spiral flower arrangement.",
+            "Scientific Name: Dendrochilum kopfii\n\nThis orchid is endemic to Mt. Hamiguitan, growing at 1,200–2,000 m in shaded montane forests. It has arching inflorescences with small brown, white, or red flowers and lance-shaped leaves from pseudobulbs, thriving in cool, humid habitats. Classified as Vulnerable, it is threatened by limited range and habitat disturbance, but protected within the Mt. Hamiguitan Range Wildlife Sanctuary. Ecologically, it provides nectar and microhabitats for pollinators, supports biodiversity, and indicates forest health. Conservation includes habitat protection, monitoring, regulated tourism, and education",
           image: "https://i.imgur.com/jIKS0I6.jpeg",
         },
         {
           name: "Hamiguitan Pitcher Plant",
           description:
-            "Scientific Name: Nepenthes hamiguitanensis\n\nA tropical climbing pitcher plant endemic to the summit ridge of Mount Hamiguitan, Mindanao, growing at 1,200–1,600 m, most common above 1,400m. It produces squat, infundibular-cylindrical upper pitchers up to 20 cm high, with ribbed peristomes and broad, cordate lids. Mature plants reach 4 m, with elliptic-oblong leaves and hairy stems and leaf margins. Terrestrial and found in primary montaneforests and forest edges, it prefers humus-rich soils in partial shade. Coexists withother Nepenthes species but no natural hybrids.",
+            "Scientific Name: Nepenthes hamiguitanensis\n\nThe Hamiguitan Pitcher Plant is a tropical climbing Nepenthes endemic to Mt. Hamiguitan, growing at 1,200–1,600 m, mostly above 1,400 m. It has upper pitchers up to 20 cm, elliptic-oblong leaves, and hairy stems, and grows terrestrially in primary montane forests and edges. Classified as Vulnerable, it is threatened by limited range, specialized habitat, and slow growth. Ecologically, it traps insects, provides microhabitats, and boosts plant diversity. Conservation includes habitat protection, monitoring, controlled tourism, and education.",
           image: "https://i.imgur.com/xdwtCcg.jpeg",
         },
       ];
@@ -720,19 +720,19 @@ const SpotView = () => {
         {
           name: "Davao Waterside Skink",
           description:
-            "Scientific Name: Tropidophorus davaoensis\n\nA small, semi-aquatic skink endemic to southern Mindanao, Philippines. It inhabits lowland forest streams, hiding among rocks, leaf litter, and aquatic vegetation. The species is ovoviviparous and distinguished by unique scale patterns, including separated prefrontals and two anterior loreals. First described near Malabutuan, Davao, it remains largely cryptic and specialized for riparian habitats. Classified as Least Concern by the IUCN, it reflects the rich semi-aquatic reptile biodiversity of Mindanao",
+            "Scientific Name: Tropidophorus davaoensis\n\nThis small, semi-aquatic skink is endemic to southern Mindanao, living in lowland forest streams among rocks, leaf litter, and aquatic vegetation. It is ovoviviparous and has distinctive scale patterns, remaining largely cryptic and specialized for riparian habitats. Classified as Least Concern, it depends on healthy streams, threatened by pollution and deforestation. Ecologically, it controls insects, serves as prey, supports freshwater habitat health, and indicates riparian ecosystem quality. Conservation includes stream protection, monitoring, regulated tourism, and education.",
           image: "https://i.imgur.com/JBj0E3H.jpeg",
         },
         {
           name: "Mindanao Horned Frog",
           description:
-            "Scientific Name: Pelobatrachus stejnegeri\n\nA medium-sized frog endemic to Mindanao, Philippines, inhabiting moist lowland and montane forests near rivers and streams. Recognizable by hornlike projections above the eyes and mottled, camouflaged skin, it is mostly nocturnal. Tadpoles develop in shallow freshwater, attaching to submerged debris. Sensitive to habitat loss and climate change, it highlights the importance of conserving forest-floor and freshwater ecosystems for species survival.",
+            "Scientific Name: Pelobatrachus stejnegeri\n\nThe Mindanao Horned Frog is a medium-sized, nocturnal frog endemic to Mindanao, living in moist lowland and montane forests near streams. It has horn-like eye projections and mottled skin, with tadpoles developing on submerged debris. Classified as Vulnerable, it is threatened by habitat loss, water pollution, and climate change, making Mt. Hamiguitan protection essential. Ecologically, it controls insects, serves as prey, aids nutrient cycling, and indicates forest-floor and freshwater health. Conservation includes habitat protection, monitoring, regulated tourism, and education.",
           image: "https://i.imgur.com/3AwsOpM.jpeg",
         },
         {
           name: "No widely recognized common name",
           description:
-            "Scientific Name: Hoya josseteae\n\nA recently described epiphytic vine endemic to the Philippines. It hasleathery, dark green leaves and produces pale pink to white, star-shaped flowers in large umbels with a sweet fragrance. Unique corolla ridges and beaked coronascales distinguish it from related species. Growing in shaded, humid tropical forests, it anchors to host trees with aerial roots. Thriving in well-drained substrates, it blooms mainly in warmer months and contributes to forest ecology while being valued for it shorticultural appeal.",
+            "Scientific Name: Hoya josseteae\n\nThis epiphytic vine is endemic to the Philippines, with leathery dark green leaves and pale pink to white star-shaped flowers in fragrant umbels. It grows in shaded, humid forests, anchoring to host trees with aerial roots, and blooms mainly in warmer months. Classified as Vulnerable, it is threatened by restricted range, habitat loss, and overcollection, making Mt. Hamiguitan protection essential. Ecologically, it provides nectar, supports canopy biodiversity, indicates forest health, and adds aesthetic value. Conservation includes forest protection, monitoring, regulated tourism, and education.",
           image: "https://i.imgur.com/Amgwvg4.jpeg",
         },
       ];

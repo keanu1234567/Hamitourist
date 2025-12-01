@@ -68,19 +68,17 @@ function Home() {
         <div className="card-container">
           <div className="card">
             <img src="pygmy.jpg" alt="Pygmy Forest" />
-            <h3>Pygmy Forest</h3>
+            <h3>Pygmy Field</h3>
             <p>
-              Home to century-old trees that grow only a few feet tall, creating
-              a unique bonsai-like forest ecosystem.
+              A unique bonsai forest, where centuries-old trees remain stunted due to the harsh soil and climate.
             </p>
           </div>
 
           <div className="card">
-            <img src="IMG_0782.jpg" alt="Philippine Eagle Habitat" />
+            <img src="IMG_0782.jpg" alt="Peak" />
             <h3>Peak</h3>
             <p>
-              A place where touches the skies and view the most iconic landmarks
-              of Davao Oriental.
+              The summit of Mt. Hamiguitan, rewarding climbers with stunning 360° views of Davao Oriental and beyond.
             </p>
           </div>
 
@@ -88,24 +86,21 @@ function Home() {
             <img src="IMG_0857.jpg" alt="Black Mountain" />
             <h3>Black Mountain</h3>
             <p>
-              A hidden valley that floods during the rainy season, turning into
-              a surreal inland lake.
+              A ridge of darker rock and soil, distinct in color compared to other parts of the trail.
             </p>
           </div>
           <div className="card">
-            <img src="IMG_0411.jpg" alt="Tinagong Dagat" />
+            <img src="IMG_0411.jpg" alt="Camp 3" />
             <h3>Camp 3</h3>
             <p>
-              A hidden valley that floods during the rainy season, turning into
-              a surreal inland lake.
+              A common campsite along the trail where hikers rest and prepare for the push toward higher elevation.
             </p>
           </div>
           <div className="card">
-            <img src="IMG_0582.jpg" alt="Tinagong Dagat" />
+            <img src="IMG_0582.jpg" alt="Mossy Forest" />
             <h3>Mossy Forest</h3>
             <p>
-              A hidden valley that floods during the rainy season, turning into
-              a surreal inland lake.
+              A mystical forest with trees covered in moss, orchids, and ferns, often shrouded in fog.
             </p>
           </div>
         </div>
