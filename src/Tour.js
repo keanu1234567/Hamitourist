@@ -109,6 +109,9 @@ function Marker({ position, label, onClick }) {
 
 // Main Tour component
 const Tour = () => {
+  const cameraRef = useRef();
+  const controlsRef = useRef();
+
   const audioRef = useRef(null);
   const navigate = useNavigate();
 
@@ -118,6 +121,11 @@ const Tour = () => {
     img: "",
     title: "",
   });
+
+  const playZoomVideo = (afterAction) => {
+    setZoomAfterAction(() => afterAction); // store the action
+    setZoomVideoVisible(true);
+  };
 
   useEffect(() => {
     if (audioRef.current) {
@@ -208,6 +216,52 @@ const Tour = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const [zoomVideoVisible, setZoomVideoVisible] = useState(false);
+  const [zoomAfterAction, setZoomAfterAction] = useState(null);
+
+  const flyToCamera = (targetPosition, afterFly) => {
+    if (!cameraRef.current || !controlsRef.current) return;
+
+    const camera = cameraRef.current;
+    const controls = controlsRef.current;
+
+    const startPos = camera.position.clone();
+    const startTarget = controls.target.clone();
+
+    // end position (move slightly above and in front of the marker)
+    const endPos = new THREE.Vector3(
+      targetPosition[0] + 5,
+      targetPosition[1] + 8,
+      targetPosition[2] + 12
+    );
+
+    const endTarget = new THREE.Vector3(
+      targetPosition[0],
+      targetPosition[1],
+      targetPosition[2]
+    );
+
+    let progress = 0;
+    const duration = 1.2; // seconds
+
+    const animate = () => {
+      progress += 0.02;
+      const t = Math.min(progress / duration, 1);
+
+      camera.position.lerpVectors(startPos, endPos, t);
+      controls.target.lerpVectors(startTarget, endTarget, t);
+      controls.update();
+
+      if (t < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        afterFly(); // run the next action (play zoom-effect.mov)
+      }
+    };
+
+    animate();
+  };
+
   return (
     <div className="tour-wrapper">
       <video autoPlay loop muted playsInline className="background-video">
@@ -238,6 +292,9 @@ const Tour = () => {
           shadows
           camera={{ position: [-2500, 1000, -10], fov: 40 }}
           gl={{ antialias: false, alpha: true }}
+          onCreated={({ camera }) => {
+            cameraRef.current = camera;
+          }}
         >
           <ambientLight intensity={0.6} />
           <directionalLight
@@ -255,11 +312,18 @@ const Tour = () => {
               key={i}
               position={m.position}
               label={m.label}
-              onClick={m.onClick ? m.onClick : () => navigate(`/Spots/${m.id}`)}
+              onClick={() =>
+                flyToCamera(m.position, () =>
+                  playZoomVideo(
+                    m.onClick ? m.onClick : () => navigate(`/Spots/${m.id}`)
+                  )
+                )
+              }
             />
           ))}
 
           <OrbitControls
+            ref={controlsRef}
             target={[10, 10, 0]}
             enablePan
             enableRotate
@@ -299,6 +363,20 @@ const Tour = () => {
       <footer className="tour-footer">
         <p>© 2025 Mt. HamiTour | All Rights Reserved</p>
       </footer>
+
+      {zoomVideoVisible && (
+        <video
+          className="zoom-video-overlay"
+          src="/zoom-effect.mov"
+          autoPlay
+          muted
+          playsInline
+          onEnded={() => {
+            setZoomVideoVisible(false); // hide video
+            if (zoomAfterAction) zoomAfterAction(); // run the marker action
+          }}
+        />
+      )}
 
       {/* ⭐ IMAGE MODAL */}
       {imageModal.isOpen && (
