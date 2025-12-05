@@ -80,8 +80,18 @@
   gap: 30px;
 }
 
+/* Rule Icon for PNG */
+.rule-icon img {
+  width: 60px;        /* desired width */
+  height: 60px;       /* desired height */
+  object-fit: contain; /* keep aspect ratio */
+  display: block;      /* ensure proper sizing */
+  margin-right: 0px;  /* spacing from title */
+}
+
+/* Remove font-size from .rule-icon */
 .rule-icon {
-  font-size: 1.8rem;
+  margin-right: 0; /* optional, spacing handled by img */
 }
 
 .rule-header h3 {
@@ -105,6 +115,8 @@
   color: #f0f0f0;
   display: none;
   font-style: italic;
+  margin-left: 5.5rem;
+  margin-top: 0.5rem;
 }
 
 .rule-card.open .rule-desc {
@@ -126,7 +138,7 @@
 .did-you-know h2 {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: #ffd700;
+  color: #77f01b;
 }
 
 .did-you-know p {
@@ -213,6 +225,7 @@
     font-size: 1.6rem;
   }
 
+
   .toggle-icon {
     font-size: 1rem;
   }
@@ -276,8 +289,10 @@
   }
 
   .rule-desc {
-    font-size: 0.9rem;
-  }
+  font-size: 0.9rem;        /* already exists */
+  margin-left: 0;            /* remove large left margin for small screens */
+  margin-top: 0.1rem;
+}
 
   .did-you-know h2 {
     font-size: 1.4rem;
@@ -315,4 +330,3 @@
   box-shadow: 0 0 15px rgba(0,0,0,0.5);
 }
 }
-

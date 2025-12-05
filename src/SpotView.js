@@ -52,7 +52,7 @@ const SpotView = () => {
   const panoramaRef = useRef(null);
   const [modelLoading, setModelLoading] = useState(true);
 
-  
+
   useEffect(() => {
     const handleContextMenu = (e) => e.preventDefault();
     document.addEventListener("contextmenu", handleContextMenu);
@@ -107,7 +107,7 @@ const SpotView = () => {
     if (viewerRef.current) {
       try {
         viewerRef.current.dispose();
-      } catch {}
+      } catch { }
       viewerRef.current = null;
       THREE.Cache.clear();
     }
@@ -162,7 +162,7 @@ const SpotView = () => {
         viewerRef.current?.dispose?.();
         panoramaRef.current?.dispose?.();
         THREE.Cache.clear();
-      } catch {}
+      } catch { }
     };
   }, [spot]);
 
@@ -318,79 +318,98 @@ const SpotView = () => {
         "/3dmodels/Scaveola.glb",
         "/3dmodels/Wendlandia Nervosa.glb",
       ];
+
       const images = [
         "https://i.imgur.com/rtdNyCT.png",
         "https://i.imgur.com/c9KxAbm.png",
       ];
+
       const positions = [
         [2500, -4000, -1200],
         [3200, -5300, -6000],
       ];
+
       const sizes = [1800, 3500];
+
       const modelSettings = [
         { scale: [0.25, 0.25, 0.25], position: [0, -2, 0] },
         { scale: [0.3, 0.3, 0.3], position: [0, -0.5, 0] },
       ];
+
       const modelInfoList = [
         {
           name: "No widely recognized common name",
           description:
-            "Scientific Name: Scaveola micrantha\n" +
-            "\n" +
-            'This Goodeniaceae shrub or small tree grows up to 10 m with smooth bark and 15 cm leaves. It is native to the Philippines, Taiwan, and Borneo and thrives on ultramafic soils, especially in the mossy-pygmy “bonsai” forests of Mt. Hamiguitan at 1,160–1,600 m. The species is an indicator of ultrabasic ecosystems, adapted to nutrient-poor, iron- and magnesium-rich soils. It is listed as Least Concern, but its specialized habitat makes it vulnerable. Ecologically, it supports biodiversity, stabilizes soil, and helps indicate forest health. Conservation efforts include habitat protection, monitoring, and regulated tourism.',    
+            "Scientific Name: Scaveola micrantha\n\n" + "This Goodeniaceae shrub or small tree grows up to 10 m with smooth bark and 15 cm leaves. It is native to the Philippines, Taiwan, and Borneo and thrives on ultramafic soils, especially in the mossy-pygmy “bonsai” forests of Mt. Hamiguitan at 1,160–1,600 m. The species is an indicator of ultrabasic ecosystems, adapted to nutrient-poor, iron- and magnesium-rich soils. It is listed as Least Concern, but its specialized habitat makes it vulnerable. Ecologically, it supports biodiversity, stabilizes soil, and helps indicate forest health. Conservation efforts include habitat protection, monitoring, and regulated tourism.",
           image: "https://imgur.com/yn2xxt7.jpeg",
         },
         {
           name: "No widely recognized common name",
           description:
-            "Scientific Name: Wendlandia nervosa\n" +
-            "\n" +
-            "This flowering shrub or small tree is endemic to the Black Mountain area of Mt. Hamiguitan in Mindanao. It grows on nutrient-poor, acidic ultramafic soils and has opposite elliptic to oblong leaves with prominent veins. It produces fragrant tubular flowers in cymose or paniculiform clusters, often white, purple, or red. As part of the montane and ultramafic pygmy forest, it contributes to Mt. Hamiguitan’s high endemism and biodiversity. The species is Vulnerable due to its restricted ultramafic habitat and sensitivity to disturbance. Protection within the Mt. Hamiguitan Range Wildlife Sanctuary helps reduce threats such as deforestation. Ecologically, it supports pollinators, boosts plant diversity, provides habitat for small fauna, and serves as an indicator of ultramafic forest health. Conservation includes strict habitat protection, biodiversity monitoring, regulated eco-tourism, and environmental education.",
+            "Scientific Name: Wendlandia nervosa\n\n" + "This flowering shrub or small tree is endemic to the Black Mountain area of Mt. Hamiguitan in Mindanao. It grows on nutrient-poor, acidic ultramafic soils and has opposite elliptic to oblong leaves with prominent veins. It produces fragrant tubular flowers in cymose or paniculiform clusters, often white, purple, or red. As part of the montane and ultramafic pygmy forest, it contributes to Mt. Hamiguitan’s high endemism and biodiversity. The species is Vulnerable due to its restricted ultramafic habitat and sensitivity to disturbance. Protection within the Mt. Hamiguitan Range Wildlife Sanctuary helps reduce threats such as deforestation. Ecologically, it supports pollinators, boosts plant diversity, provides habitat for small fauna, and serves as an indicator of ultramafic forest health. Conservation includes strict habitat protection, biodiversity monitoring, regulated eco-tourism, and environmental education.",
           image: "https://i.imgur.com/8RSlcGE.jpeg",
         },
       ];
 
+      // ✅✅✅ CORRECT SOUND PATH
+      const clickSounds = [
+        "/sounds/click.mp3",
+        "/sounds/click.mp3",
+      ];
+
+      // ✅✅✅ PRELOAD SOUNDS TO AVOID BLOCKING
+      const preloadedSounds = clickSounds.map(src => {
+        const audio = new Audio(src);
+        audio.load();
+        audio.volume = 1.0;
+        return audio;
+      });
+
       models.forEach((model, i) => {
         const size = 256;
-        const textHeight = 50; // extra space for text
+        const textHeight = 50;
         const canvas = document.createElement("canvas");
         canvas.width = size;
-        canvas.height = size + textHeight; // make room for text
+        canvas.height = size + textHeight;
         const ctx = canvas.getContext("2d");
 
         const img = new Image();
         img.crossOrigin = "anonymous";
         img.src = images[i];
+
         img.onload = () => {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-          // Draw halo behind the image
           ctx.save();
           ctx.shadowColor = "white";
           ctx.shadowBlur = 10;
           ctx.drawImage(img, 0, 0, size, size);
           ctx.restore();
 
-          // Draw image
           ctx.drawImage(img, 0, 0, size, size);
 
-          // Draw always-visible text below image
           ctx.font = "bold 20px Poppins";
           ctx.fillStyle = "white";
           ctx.textAlign = "center";
-          ctx.fillText("Click to view 3D model", size / 2, size + 25); // inside canvas
+          ctx.fillText("Click to view 3D model", size / 2, size + 25);
 
           const strokedImageURL = canvas.toDataURL();
           const infospot = new PANOLENS.Infospot(sizes[i], strokedImageURL);
           infospot.position.set(...positions[i]);
 
+          // ✅✅✅ CLICK EVENT WITH GUARANTEED SOUND PLAYBACK
           infospot.addEventListener("click", () => {
+            const audio = preloadedSounds[i];
+            audio.currentTime = 0; // allow rapid clicking
+            audio.play().catch(err => console.log("Sound failed:", err));
+
             setBlurPanorama(true);
             setActiveModel({
               url: model,
               scale: modelSettings[i].scale,
               position: modelSettings[i].position,
             });
+
             setModelInfo(modelInfoList[i]);
           });
 
@@ -398,6 +417,8 @@ const SpotView = () => {
         };
       });
     }
+
+
 
     /* ----------------- PYGMY FIELD ----------------- */
     if (type === "Pygmy Field") {
@@ -406,52 +427,66 @@ const SpotView = () => {
         "/3dmodels/philippine mock viper.glb",
         "/3dmodels/Lady Slipper Orchid.glb",
       ];
+
       const modelSettings = [
         { scale: [0.4, 0.4, 0.4], position: [-0.5, 0, 0] },
         { scale: [0.6, 0.6, 0.6], position: [-0.2, 0.3, 0] },
         { scale: [0.3, 0.3, 0.3], position: [0, -9, 0] },
       ];
+
       const pygmyImages = [
         "https://i.imgur.com/HxNkUwr.png",
         "https://i.imgur.com/0mWD1dk.png",
         "https://i.imgur.com/XzOiUmN.png",
       ];
+
       const positions = [
         [1000, -800, 700],
         [1600, -1000, -1200],
         [500, -1800, 4000],
       ];
+
       const sizes = [500, 700, 1300];
+
       const modelInfoList = [
         {
           name: "No widely recognized common name",
           description:
-            "Scientific Name: Nepenthes micramphora\n" +
-            "\n" +
-            "This tropical pitcher plant, endemic to Mount Hamiguitan, grows at 1,100–1,635 m in ultramafic montane forests. It has narrow, funnel-shaped pitchers (4–6.7 cm) with a pronounced peristome and lid, and smooth stems and leaves. Found with other Nepenthes species, it is Critically Endangered due to its very limited range, habitat loss, and risks of overcollection. Ecologically, it controls insect populations, obtains nutrients from trapped prey in nutrient-poor soils, and supports a specialized micro-ecosystem. In the Mt. Hamiguitan Range Wildlife Sanctuary, it is protected through strict habitat conservation, population monitoring, regulated tourism, and education efforts, all essential for its survival.",
+            "Scientific Name: Nepenthes micramphora\n" + "\n" + "This tropical pitcher plant, endemic to Mount Hamiguitan, grows at 1,100–1,635 m in ultramafic montane forests. It has narrow, funnel-shaped pitchers (4–6.7 cm) with a pronounced peristome and lid, and smooth stems and leaves. Found with other Nepenthes species, it is Critically Endangered due to its very limited range, habitat loss, and risks of overcollection. Ecologically, it controls insect populations, obtains nutrients from trapped prey in nutrient-poor soils, and supports a specialized micro-ecosystem. In the Mt. Hamiguitan Range Wildlife Sanctuary, it is protected through strict habitat conservation, population monitoring, regulated tourism, and education efforts, all essential for its survival.",
           image: "https://i.imgur.com/r0HRn0k.jpeg",
         },
         {
           name: "Philippine Mock Viper",
           description:
-            "Scientific Name: Psammodynastes pulverulentus\n" +
-            "\n" +
-            "The Philippine Mock Viper is a small, harmless snake (65–77 cm) with brown or gray patterns and a Y-shaped head marking. It lives near streams and moist forest floors, is active day and night, and eats frogs, geckos, and skinks. It is native to many Philippine islands up to 2,100 m elevation Though listed as Least Concern, it depends on intact forests, making protected areas like Mt. Hamiguitan important. It helps control small vertebrates and serves as prey, supporting the forest food chain. In the sanctuary, it benefits from habitat protection, monitoring, and regulated tourism.",
+            "Scientific Name: Psammodynastes pulverulentus\n" + "\n" + "The Philippine Mock Viper is a small, harmless snake (65–77 cm) with brown or gray patterns and a Y-shaped head marking. It lives near streams and moist forest floors, is active day and night, and eats frogs, geckos, and skinks. It is native to many Philippine islands up to 2,100 m elevation Though listed as Least Concern, it depends on intact forests, making protected areas like Mt. Hamiguitan important. It helps control small vertebrates and serves as prey, supporting the forest food chain. In the sanctuary, it benefits from habitat protection, monitoring, and regulated tourism.",
           image: "https://i.imgur.com/vBK0069.jpeg",
         },
         {
           name: "Lady Slipper Orchid",
           description:
-            "Scientific Name: Paphiopedilum ciliolare\n" +
-            "\n" +
             "This rare orchid, endemic to the Philippines and found in the Pygmy Field of Mt. Hamiguitan, grows on soil or rocks in montane forests (300–1,830 m). It has a single slipper-shaped flower with fine hairs and spotted petals, and narrow, tessellated leaves. Fewer than 2,500 mature individuals remain due to habitat disturbance and overcollection. Classified as Endangered, it is threatened by habitat loss, illegal collection, and its slow growth. It supports specialized pollinators, maintains soil microhabitats, and indicates healthy forest ecosystems. In the Mt. Hamiguitan Range Wildlife Sanctuary, it benefits from strict habitat protection, zero-extraction rules, monitoring, controlled tourism, and education efforts, all vital for its survival.",
           image: "https://imgur.com/ozvq09B.jpeg",
         },
       ];
 
+      // ✅ ✅ ✅ CLICK SOUND FROM PUBLIC
+      const clickSounds = [
+        "/sounds/click.mp3",
+        "/sounds/click.mp3",
+        "/sounds/click.mp3",
+      ];
+
+      // ✅ ✅ ✅ PRELOAD SOUNDS
+      const preloadedSounds = clickSounds.map(src => {
+        const audio = new Audio(src);
+        audio.load();
+        audio.volume = 1.0;
+        return audio;
+      });
+
       pygmyModels.forEach((model, i) => {
         const size = 256;
-        const textHeight = 50; // extra space for text
+        const textHeight = 50;
         const canvas = document.createElement("canvas");
         canvas.width = size;
         canvas.height = size + textHeight;
@@ -460,36 +495,43 @@ const SpotView = () => {
         const img = new Image();
         img.crossOrigin = "anonymous";
         img.src = pygmyImages[i];
+
         img.onload = () => {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-          // Draw halo behind image
+          // Glow
           ctx.save();
           ctx.shadowColor = "white";
           ctx.shadowBlur = 10;
           ctx.drawImage(img, 0, 0, size, size);
           ctx.restore();
 
-          // Draw image
+          // Image
           ctx.drawImage(img, 0, 0, size, size);
 
-          // Draw always-visible text below image
+          // Text
           ctx.font = "bold 20px Poppins";
           ctx.fillStyle = "white";
           ctx.textAlign = "center";
-          ctx.fillText("Click to view 3D model", size / 2, size + 30); // text inside canvas
+          ctx.fillText("Click to view 3D model", size / 2, size + 30);
 
           const strokedImageURL = canvas.toDataURL();
           const infospot = new PANOLENS.Infospot(sizes[i], strokedImageURL);
           infospot.position.set(...positions[i]);
 
+          // ✅ ✅ ✅ CLICK EVENT WITH SOUND
           infospot.addEventListener("click", () => {
+            const audio = preloadedSounds[i];
+            audio.currentTime = 0;
+            audio.play().catch(err => console.log("Sound failed:", err));
+
             setBlurPanorama(true);
             setActiveModel({
               url: model,
               scale: modelSettings[i].scale,
               position: modelSettings[i].position,
             });
+
             setModelInfo(modelInfoList[i]);
           });
 
@@ -497,6 +539,7 @@ const SpotView = () => {
         };
       });
     }
+
 
     /* ----------------- MOSSY FOREST ----------------- */
     if (type === "Mossy Forest") {
@@ -506,25 +549,30 @@ const SpotView = () => {
         "/3dmodels/pit viper.glb",
         "/3dmodels/Pulchrana grandocula.glb",
       ];
+
       const modelSettings = [
         { scale: [5, 5, 5], position: [1, -4, 0] },
         { scale: [0.3, 0.3, 0.3], position: [0, -1, 0] },
         { scale: [0.2, 0.2, 0.2], position: [0, 0.5, 0.2] },
         { scale: [0.3, 0.3, 0.3], position: [0, -0.5, 0] },
       ];
+
       const images = [
         "https://i.imgur.com/8UwKbTf.png",
         "https://i.imgur.com/ewKb52P.png",
         "https://i.imgur.com/fOGjkwI.png",
         "https://i.imgur.com/ETCXQue.png",
       ];
+
       const positions = [
         [-1200, -1200, 2000],
         [2000, -500, -500],
         [2500, -3500, 4000],
         [8000, -6000, 1000],
       ];
+
       const sizes = [1000, 700, 2000, 3300];
+
       const modelInfoList = [
         {
           name: "No widely recognized common name",
@@ -552,9 +600,25 @@ const SpotView = () => {
         },
       ];
 
+      // ✅ ✅ ✅ CLICK SOUND FROM PUBLIC
+      const clickSounds = [
+        "/sounds/click.mp3",
+        "/sounds/click.mp3",
+        "/sounds/click.mp3",
+        "/sounds/click.mp3",
+      ];
+
+      // ✅ ✅ ✅ PRELOAD SOUNDS
+      const preloadedSounds = clickSounds.map(src => {
+        const audio = new Audio(src);
+        audio.load();
+        audio.volume = 1.0;
+        return audio;
+      });
+
       mossyModels.forEach((model, i) => {
-        const size = 256; // canvas resolution
-        const textHeight = 50; // space for text below image
+        const size = 256;
+        const textHeight = 50;
         const canvas = document.createElement("canvas");
         canvas.width = size;
         canvas.height = size + textHeight;
@@ -563,20 +627,21 @@ const SpotView = () => {
         const img = new Image();
         img.crossOrigin = "anonymous";
         img.src = images[i];
+
         img.onload = () => {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-          // Draw halo/glow behind the image
+          // Glow
           ctx.save();
           ctx.shadowColor = "white";
           ctx.shadowBlur = 20;
           ctx.drawImage(img, 0, 0, size, size);
           ctx.restore();
 
-          // Draw image
+          // Image
           ctx.drawImage(img, 0, 0, size, size);
 
-          // Draw always-visible bold text below image
+          // Text
           ctx.font = "bold 20px Poppins";
           ctx.fillStyle = "white";
           ctx.textAlign = "center";
@@ -586,13 +651,19 @@ const SpotView = () => {
           const infospot = new PANOLENS.Infospot(sizes[i], strokedImageURL);
           infospot.position.set(...positions[i]);
 
+          // ✅ ✅ ✅ CLICK EVENT WITH SOUND
           infospot.addEventListener("click", () => {
+            const audio = preloadedSounds[i];
+            audio.currentTime = 0;
+            audio.play().catch(err => console.log("Sound failed:", err));
+
             setBlurPanorama(true);
             setActiveModel({
               url: model,
               scale: modelSettings[i].scale,
               position: modelSettings[i].position,
             });
+
             setModelInfo(modelInfoList[i]);
           });
 
@@ -601,25 +672,31 @@ const SpotView = () => {
       });
     }
 
+
     /* ----------------- PEAK ----------------- */
     if (type === "Peak") {
       const peakModels = [
         "/3dmodels/kopfii.glb",
         "/3dmodels/hamiguitan pitcher.glb",
       ];
+
       const modelSettings = [
         { scale: [0.1, 0.1, 0.1], position: [0, -1.2, 0.5] },
         { scale: [0.2, 0.2, 0.2], position: [0, -0.7, 0] },
       ];
+
       const images = [
         "https://i.imgur.com/7rVup0Z.png",
         "https://i.imgur.com/pLIOyYx.png",
       ];
+
       const positions = [
         [2700, -3000, 1200],
         [3000, -2700, -2000],
       ];
+
       const sizes = [1500, 1800];
+
       const modelInfoList = [
         {
           name: "No widely recognized common name",
@@ -635,9 +712,23 @@ const SpotView = () => {
         },
       ];
 
+      // ✅ ✅ ✅ CLICK SOUND FROM PUBLIC
+      const clickSounds = [
+        "/sounds/click.mp3",
+        "/sounds/click.mp3",
+      ];
+
+      // ✅ ✅ ✅ PRELOAD SOUNDS
+      const preloadedSounds = clickSounds.map((src) => {
+        const audio = new Audio(src);
+        audio.load();
+        audio.volume = 1.0;
+        return audio;
+      });
+
       peakModels.forEach((model, i) => {
-        const size = 256; // canvas resolution
-        const textHeight = 50; // extra space for text
+        const size = 256;
+        const textHeight = 50;
         const canvas = document.createElement("canvas");
         canvas.width = size;
         canvas.height = size + textHeight;
@@ -646,20 +737,21 @@ const SpotView = () => {
         const img = new Image();
         img.crossOrigin = "anonymous";
         img.src = images[i];
+
         img.onload = () => {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-          // Draw halo/glow behind the image
+          // Glow
           ctx.save();
           ctx.shadowColor = "white";
-          ctx.shadowBlur = 5;
+          ctx.shadowBlur = 20;
           ctx.drawImage(img, 0, 0, size, size);
           ctx.restore();
 
-          // Draw image
+          // Image
           ctx.drawImage(img, 0, 0, size, size);
 
-          // Draw always-visible bold text below image
+          // Text
           ctx.font = "bold 20px Poppins";
           ctx.fillStyle = "white";
           ctx.textAlign = "center";
@@ -669,13 +761,19 @@ const SpotView = () => {
           const infospot = new PANOLENS.Infospot(sizes[i], strokedImageURL);
           infospot.position.set(...positions[i]);
 
+          // ✅ ✅ ✅ CLICK EVENT WITH SOUND
           infospot.addEventListener("click", () => {
+            const audio = preloadedSounds[i];
+            audio.currentTime = 0;
+            audio.play().catch((err) => console.log("Sound failed:", err));
+
             setBlurPanorama(true);
             setActiveModel({
               url: model,
               scale: modelSettings[i].scale,
               position: modelSettings[i].position,
             });
+
             setModelInfo(modelInfoList[i]);
           });
 
@@ -683,6 +781,8 @@ const SpotView = () => {
         };
       });
     }
+
+
     /* ----------------- CAMP 3 INSIDE ----------------- */
     if (type === "Camp III") {
       addBackToCamp3(panorama); // adds the back arrow
@@ -719,27 +819,38 @@ const SpotView = () => {
       const modelInfoList = [
         {
           name: "Davao Waterside Skink",
-          description:
-            "Scientific Name: Tropidophorus davaoensis\n\nThis small, semi-aquatic skink is endemic to southern Mindanao, living in lowland forest streams among rocks, leaf litter, and aquatic vegetation. It is ovoviviparous and has distinctive scale patterns, remaining largely cryptic and specialized for riparian habitats. Classified as Least Concern, it depends on healthy streams, threatened by pollution and deforestation. Ecologically, it controls insects, serves as prey, supports freshwater habitat health, and indicates riparian ecosystem quality. Conservation includes stream protection, monitoring, regulated tourism, and education.",
+          description: "Scientific Name: Tropidophorus davaoensis\n\nThis small, semi-aquatic skink is endemic to southern Mindanao, living in lowland forest streams among rocks, leaf litter, and aquatic vegetation. It is ovoviviparous and has distinctive scale patterns, remaining largely cryptic and specialized for riparian habitats. Classified as Least Concern, it depends on healthy streams, threatened by pollution and deforestation. Ecologically, it controls insects, serves as prey, supports freshwater habitat health, and indicates riparian ecosystem quality. Conservation includes stream protection, monitoring, regulated tourism, and education.",
           image: "https://i.imgur.com/JBj0E3H.jpeg",
         },
         {
           name: "Mindanao Horned Frog",
-          description:
-            "Scientific Name: Pelobatrachus stejnegeri\n\nThe Mindanao Horned Frog is a medium-sized, nocturnal frog endemic to Mindanao, living in moist lowland and montane forests near streams. It has horn-like eye projections and mottled skin, with tadpoles developing on submerged debris. Classified as Vulnerable, it is threatened by habitat loss, water pollution, and climate change, making Mt. Hamiguitan protection essential. Ecologically, it controls insects, serves as prey, aids nutrient cycling, and indicates forest-floor and freshwater health. Conservation includes habitat protection, monitoring, regulated tourism, and education.",
+          description: "Scientific Name: Pelobatrachus stejnegeri\n\nThe Mindanao Horned Frog is a medium-sized, nocturnal frog endemic to Mindanao, living in moist lowland and montane forests near streams. It has horn-like eye projections and mottled skin, with tadpoles developing on submerged debris. Classified as Vulnerable, it is threatened by habitat loss, water pollution, and climate change, making Mt. Hamiguitan protection essential. Ecologically, it controls insects, serves as prey, aids nutrient cycling, and indicates forest-floor and freshwater health. Conservation includes habitat protection, monitoring, regulated tourism, and education.",
           image: "https://i.imgur.com/3AwsOpM.jpeg",
         },
         {
           name: "No widely recognized common name",
-          description:
-            "Scientific Name: Hoya josseteae\n\nThis epiphytic vine is endemic to the Philippines, with leathery dark green leaves and pale pink to white star-shaped flowers in fragrant umbels. It grows in shaded, humid forests, anchoring to host trees with aerial roots, and blooms mainly in warmer months. Classified as Vulnerable, it is threatened by restricted range, habitat loss, and overcollection, making Mt. Hamiguitan protection essential. Ecologically, it provides nectar, supports canopy biodiversity, indicates forest health, and adds aesthetic value. Conservation includes forest protection, monitoring, regulated tourism, and education.",
-          image: "https://i.imgur.com/Amgwvg4.jpeg",
+          description: "Scientific Name: Hoya josseteae\n\nThis epiphytic vine is endemic to the Philippines, with leathery dark green leaves and pale pink to white star-shaped flowers in fragrant umbels. It grows in shaded, humid forests, anchoring to host trees with aerial roots, and blooms mainly in warmer months. Classified as Vulnerable, it is threatened by restricted range, habitat loss, and overcollection, making Mt. Hamiguitan protection essential. Ecologically, it provides nectar, supports canopy biodiversity, indicates forest health, and adds aesthetic value. Conservation includes forest protection, monitoring, regulated tourism, and education.",
         },
       ];
 
+      // ✅ CLICK SOUND FROM PUBLIC
+      const clickSounds = [
+        "/sounds/click.mp3",
+        "/sounds/click.mp3",
+        "/sounds/click.mp3",
+      ];
+
+      // ✅ PRELOAD SOUNDS
+      const preloadedSounds = clickSounds.map(src => {
+        const audio = new Audio(src);
+        audio.load();
+        audio.volume = 1.0;
+        return audio;
+      });
+
       camp3Models.forEach((model, i) => {
         const size = 256; // canvas resolution
-        const textHeight = 50; // space for text below image
+        const textHeight = 50;
         const canvas = document.createElement("canvas");
         canvas.width = size;
         canvas.height = size + textHeight;
@@ -748,33 +859,32 @@ const SpotView = () => {
         const img = new Image();
         img.crossOrigin = "anonymous";
         img.src = images[i];
+
         img.onload = () => {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-          // Calculate aspect ratio
+          // Maintain aspect ratio
           const aspect = img.width / img.height;
           let drawWidth = size;
           let drawHeight = size;
 
           if (aspect > 1) {
-            // Image is wider than tall
             drawHeight = size / aspect;
           } else {
-            // Image is taller than wide
             drawWidth = size * aspect;
           }
 
           const offsetX = (size - drawWidth) / 2;
           const offsetY = (size - drawHeight) / 2;
 
-          // Draw halo/glow behind the image
+          // Draw halo/glow behind image
           ctx.save();
           ctx.shadowColor = "white";
           ctx.shadowBlur = 20;
           ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
           ctx.restore();
 
-          // Draw always-visible bold text below image
+          // Draw always-visible text below image
           ctx.font = "bold 20px Poppins";
           ctx.fillStyle = "white";
           ctx.textAlign = "center";
@@ -784,13 +894,19 @@ const SpotView = () => {
           const infospot = new PANOLENS.Infospot(sizes[i], strokedImageURL);
           infospot.position.set(...positions[i]);
 
+          // ✅ CLICK EVENT WITH SOUND
           infospot.addEventListener("click", () => {
+            const audio = preloadedSounds[i];
+            audio.currentTime = 0;
+            audio.play().catch(err => console.log("Sound failed:", err));
+
             setBlurPanorama(true);
             setActiveModel({
               url: model,
               scale: modelSettings[i].scale,
               position: modelSettings[i].position,
             });
+
             setModelInfo(modelInfoList[i]);
           });
 
@@ -798,128 +914,130 @@ const SpotView = () => {
         };
       });
 
-      // Add back arrow
-      addBackToCamp3(panorama);
-    }
 
-    if (type === "Camp IV") {
-      addBackToCamp4(panorama); // adds the back arrow
-    }
-  };
 
-  if (error) return <p className="error-text">{error}</p>;
-  if (!spot)
-    return (
-      <div className="loading-spinner-container">
-        <div className="spinner"></div>
-      </div>
-    );
+    // Add back arrow
+    addBackToCamp3(panorama);
+  }
 
+  if (type === "Camp IV") {
+    addBackToCamp4(panorama); // adds the back arrow
+  }
+};
+
+if (error) return <p className="error-text">{error}</p>;
+if (!spot)
   return (
-    <div className="spotview-container">
-      <div
-        ref={containerRef}
-        className={`panorama-container ${blurPanorama ? "blurred" : ""}`}
-      />
-      {loading && <div className="loading-overlay">Loading panorama...</div>}
+    <div className="loading-spinner-container">
+      <div className="spinner"></div>
+    </div>
+  );
 
-      {!activeModel && (
-        <div className="spot-info">
-          <h1 className="spot-title">{spot?.Name}</h1>
-          <p className="spot-description">{spot?.Description}</p>
-          <div
-            className={`back-btn ${hoverBack ? "hover" : ""}`}
-            onClick={() => {
-              navigate("/tour");
-              setTimeout(() => window.location.reload(), 140);
-            }}
-            onMouseEnter={() => setHoverBack(true)}
-            onMouseLeave={() => setHoverBack(false)}
-          >
-            ⬅ Back
+return (
+  <div className="spotview-container">
+    <div
+      ref={containerRef}
+      className={`panorama-container ${blurPanorama ? "blurred" : ""}`}
+    />
+    {loading && <div className="loading-overlay">Loading panorama...</div>}
+
+    {!activeModel && (
+      <div className="spot-info">
+        <h1 className="spot-title">{spot?.Name}</h1>
+        <p className="spot-description">{spot?.Description}</p>
+        <div
+          className={`back-btn ${hoverBack ? "hover" : ""}`}
+          onClick={() => {
+            navigate("/tour");
+            setTimeout(() => window.location.reload(), 140);
+          }}
+          onMouseEnter={() => setHoverBack(true)}
+          onMouseLeave={() => setHoverBack(false)}
+        >
+          ⬅ Back
+        </div>
+      </div>
+    )}
+
+    {activeModel && (
+      <div className="model-modal">
+        <button className="close-btn" onClick={handleCloseModal}>
+          ✖
+        </button>
+
+        {modelInfo && <h2 className="model-title-top">{modelInfo.name}</h2>}
+        {modelError && <p className="model-error">{modelError}</p>}
+
+        {/* 3D MODEL BOX */}
+        <div className="model-3d-box">
+          <div className="model-view-section">
+            {/* LOADING SPINNER */}
+            {modelLoading && (
+              <div className="model-loading-spinner">
+                <div className="spinner"></div>
+              </div>
+            )}
+            <Canvas
+              camera={{ position: [0, 1.5, 5], fov: 45 }}
+              className="canvas-view"
+            >
+              <ambientLight intensity={0.7} />
+              <directionalLight position={[5, 10, 5]} intensity={1.2} />
+
+              <Suspense fallback={null}>
+                <ModelViewer
+                  url={activeModel.url}
+                  scale={activeModel.scale}
+                  position={activeModel.position}
+                  setModelError={setModelError}
+                  setModelLoading={setModelLoading}
+                />
+              </Suspense>
+
+              <OrbitControls target={[0, 1, 0]} />
+            </Canvas>
           </div>
         </div>
-      )}
 
-      {activeModel && (
-        <div className="model-modal">
-          <button className="close-btn" onClick={handleCloseModal}>
-            ✖
-          </button>
-
-          {modelInfo && <h2 className="model-title-top">{modelInfo.name}</h2>}
-          {modelError && <p className="model-error">{modelError}</p>}
-
-          {/* 3D MODEL BOX */}
-          <div className="model-3d-box">
-            <div className="model-view-section">
-              {/* LOADING SPINNER */}
-              {modelLoading && (
-                <div className="model-loading-spinner">
-                  <div className="spinner"></div>
-                </div>
-              )}
-              <Canvas
-                camera={{ position: [0, 1.5, 5], fov: 45 }}
-                className="canvas-view"
-              >
-                <ambientLight intensity={0.7} />
-                <directionalLight position={[5, 10, 5]} intensity={1.2} />
-
-                <Suspense fallback={null}>
-                  <ModelViewer
-                    url={activeModel.url}
-                    scale={activeModel.scale}
-                    position={activeModel.position}
-                    setModelError={setModelError}
-                    setModelLoading={setModelLoading}
-                  />
-                </Suspense>
-
-                <OrbitControls target={[0, 1, 0]} />
-              </Canvas>
-            </div>
-          </div>
-
-          {/* MODEL INFO SECTION - OUTSIDE THE 3D BOX */}
-          {modelInfo && (
-            <div
-              className="model-info-section"
-              onWheel={(e) => e.stopPropagation()}
-            >
-              <img
-                src={modelInfo.image}
-                alt={modelInfo.name}
-                className="model-img"
-              />
-              <div className="model-text">
-                <p className="model-description">
-                  {modelInfo.description.split("\n").map((line, index) => {
-                    if (line.startsWith("Scientific Name:")) {
-                      const parts = line.split(":");
-                      return (
-                        <span key={index}>
-                          Scientific Name: <i>{parts[1].trim()}</i>
-                          <br />
-                        </span>
-                      );
-                    }
-
+        {/* MODEL INFO SECTION - OUTSIDE THE 3D BOX */}
+        {modelInfo && (
+          <div
+            className="model-info-section"
+            onWheel={(e) => e.stopPropagation()}
+          >
+            <img
+              src={modelInfo.image}
+              alt={modelInfo.name}
+              className="model-img"
+            />
+            <div className="model-text">
+              <p className="model-description">
+                {modelInfo.description.split("\n").map((line, index) => {
+                  if (line.startsWith("Scientific Name:")) {
+                    const parts = line.split(":");
                     return (
                       <span key={index}>
-                        {line}
+                        Scientific Name: <i>{parts[1].trim()}</i>
                         <br />
                       </span>
                     );
-                  })}
-                </p>
-              </div>
+                  }
+
+                  return (
+                    <span key={index}>
+                      {line}
+                      <br />
+                    </span>
+                  );
+                })}
+              </p>
             </div>
-          )}
-        </div>
-      )}
-    </div>
-  );
+          </div>
+        )}
+      </div>
+    )}
+  </div>
+);
 };
 
 export default SpotView;
