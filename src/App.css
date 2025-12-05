@@ -72,13 +72,19 @@ body {
 
 .nav-links li a:hover::after,
 .nav-links li a.active::after {
-  width: 100%;
+  display: none;
 }
 
 .nav-links li a:hover {
   color: #5acb52;
 }
-
+.nav-links li a.active {
+  background-color: #49b345;
+  color: #ffffff;
+  padding: 5px 13px; /* bigger padding to make the box larger */
+  border-radius: 12px; /* slightly more rounded for emphasis */
+  transform: scale(1.1); /* optional: makes the box pop out slightly */
+}
 /* 🎯 Buttons */
 .btn {
   display: inline-block;
@@ -1192,3 +1198,215 @@ img {
   z-index: 9999;
   pointer-events: none; /* allows clicks to pass through */
 }
+
+.user-icon {
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.account-icon {
+  position: relative;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  background: rgba(255, 255, 255, 0.638);
+  border-radius: 6px;
+  padding: 10px;
+  width: 180px;
+  text-align: center;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
+  animation: fadeDown 0.2s ease-in-out;
+  z-index: 100;
+}
+
+.dropdown-button {
+  display: block;
+  padding: 8px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 12px;
+  background-color: rgb(132, 207, 11);
+  
+  font-weight: bold;
+}
+
+.dropdown-button:hover {
+  background-color: #385a02;
+  color: #fff;
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Full screen wrapper */
+.admin-login-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Background video */
+.login-background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+/* Dark overlay for contrast */
+.login-overlay {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Logo and title */
+.login-logo-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  animation: popIn 1s ease-out;
+  margin-top: -200px;
+}
+
+.login-logo {
+  width: 150px;
+  height: auto;
+  
+}
+
+.login-logo-title h1 {
+  color: #2f5233;
+  font-size: 2.5rem;
+  
+}
+
+/* Login form container */
+.login-container {
+  max-width: 450px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background: rgba(0, 43, 64, 0.85);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  animation: fadeUp 1s ease-out;
+}
+.login-container h2 {
+  color: #f1f1f1;
+  margin-bottom: 15px;
+}
+
+.login-container input {
+  margin: 10px 0;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+}
+
+.login-container button {
+  padding: 12px;
+  width: 80px;
+  margin-top: 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  background-color: #5acb52;
+  color: #fff;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.login-container button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #5acb52;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes rotateLogo {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.back-button {
+  position: absolute;
+  top: 480px;
+  left: 550px;
+  background: rgba(90, 203, 82, 0.85);
+  border: none;
+  color: #fff;
+  height: 30px;
+  width: 75px;/* smaller padding */
+  font-size: 14px;   /* smaller font size */
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.back-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 8px #5acb52;
+}
+
+
+/* rest of your admin-login styles remain the same... */
+
