@@ -754,7 +754,19 @@ footer,
   gap: 20px;
   overflow: hidden;
   color: #e5e5e5;
+  flex-direction: column;
+  align-items: center;
   backdrop-filter: blur(6px);
+}
+
+.model-parts-img {
+  width: 100%;
+  max-width: 600px;
+
+  border-radius: 10px;
+  border: 2px solid #4ade80;
+  background: rgba(0,0,0,0.2);
+  
 }
 
 
@@ -809,6 +821,7 @@ footer,
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  text-align: justify;
 }
 
 .model-title {
@@ -1365,7 +1378,7 @@ img {
 /* Buttons inherit existing style */
 .login-container .button-group button {
   padding: 12px;
-  width: 120px; /* wider so text fits nicely */
+  width: 90px; /* wider so text fits nicely */
   cursor: pointer;
   border: none;
   border-radius: 8px;

@@ -52,7 +52,6 @@ const SpotView = () => {
   const panoramaRef = useRef(null);
   const [modelLoading, setModelLoading] = useState(true);
 
-
   useEffect(() => {
     const handleContextMenu = (e) => e.preventDefault();
     document.addEventListener("contextmenu", handleContextMenu);
@@ -61,7 +60,6 @@ const SpotView = () => {
       document.removeEventListener("contextmenu", handleContextMenu);
     };
   }, []);
-
 
   // --- Add this useEffect HERE ---
   useEffect(() => {
@@ -107,7 +105,7 @@ const SpotView = () => {
     if (viewerRef.current) {
       try {
         viewerRef.current.dispose();
-      } catch { }
+      } catch {}
       viewerRef.current = null;
       THREE.Cache.clear();
     }
@@ -137,20 +135,34 @@ const SpotView = () => {
       const name = (spot.Name || "").trim().toLowerCase();
 
       // Existing spot checks
-      if (name.includes("black mountain"))
+      if (name.includes("black mountain")) {
         addImageInsidePanorama(panorama, "BlackMountain");
-      else if (name.includes("pygmy"))
+        addBlackMountainToCamp3(panorama);
+      } else if (name.includes("pygmy")) {
         addImageInsidePanorama(panorama, "Pygmy Field");
-      else if (name.includes("mossy"))
+        addPygmyToLantawan3(panorama);
+      } else if (name.includes("mossy")) {
         addImageInsidePanorama(panorama, "Mossy Forest");
-      else if (name.includes("peak")) addImageInsidePanorama(panorama, "Peak");
+        addMossyForestBackToLantawan3(panorama);
+      } else if (name.includes("peak"))
+        addImageInsidePanorama(panorama, "Peak");
       else if (name.includes("camp iii"))
         addImageInsidePanorama(panorama, "Camp III");
       else if (name.includes("camp 3"))
         addCamp3Teleport(panorama); // ✅ Add Camp 3 teleport
       else if (name.includes("camp iv"))
         addImageInsidePanorama(panorama, "Camp IV");
-      else if (name.includes("camp 4")) addCamp4Teleport(panorama); // ✅ Add Camp 3 teleport
+      else if (name.includes("camp 4")) addCamp4Teleport(panorama);
+      else if (name.includes("unesco marker"))
+        addUnescoToCrossingStampa(panorama); // ✅
+      else if (name.includes("crossing stampa"))
+        addCrossingStampaToPutingBato(panorama);
+      else if (name.includes("puting bato")) addPutingBatoToLantawan1(panorama);
+      else if (name.includes("lantawan 1")) addLantawan1ToCamp4(panorama);
+      else if (name.includes("uwang-uwang")) addUwanguwangToLantawan2(panorama);
+      else if (name.includes("lantawan 2")) addLantawan2ToCamp3(panorama);
+      else if (name.includes("twin falls")) addTwinFallsToCamp3(panorama);
+      else if (name.includes("lantawan 3")) addLantawan3ToMossy(panorama);
     });
 
     const handleResize = () => viewer.onWindowResize();
@@ -162,9 +174,186 @@ const SpotView = () => {
         viewerRef.current?.dispose?.();
         panoramaRef.current?.dispose?.();
         THREE.Cache.clear();
-      } catch { }
+      } catch {}
     };
   }, [spot]);
+
+  /* ------------------ Unesco Marker to Crossing Stampa ------------------ */
+
+  const addUnescoToCrossingStampa = (panorama) => {
+    const size = 256; // canvas resolution
+    const textHeight = 50; // extra space inside canvas for text
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size + textHeight; // room for text
+    const ctx = canvas.getContext("2d");
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw the arrow image on top
+      ctx.drawImage(img, 0, 0, size, size);
+
+      // Draw always-visible bold text below the arrow
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("To Crossing Stampa", size / 2, size + 30);
+
+      const strokedImageURL = canvas.toDataURL();
+      const teleportSpot = new PANOLENS.Infospot(1500, strokedImageURL); // size of arrow
+      teleportSpot.position.set(1000, -500, 4600);
+      teleportSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"EFNFONngOYNOOFbqdloj"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+
+      panorama.add(teleportSpot);
+    };
+  };
+  /* ------------------  Crossing Stampa to Puting Bato------------------ */
+
+  const addCrossingStampaToPutingBato = (panorama) => {
+    const size = 256;
+    const textHeight = 50;
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size + textHeight;
+    const ctx = canvas.getContext("2d");
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Back to UNESCO
+      ctx.drawImage(img, 0, 0, size, size);
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Back to UNESCO Marker", size / 2, size + 30);
+
+      const backArrowURL = canvas.toDataURL();
+      const backSpot = new PANOLENS.Infospot(1300, backArrowURL);
+      backSpot.position.set(-4000, -500, 500); // adjust as needed
+      backSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"fTLAXWb7Cph8jqeHxlXT"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+      panorama.add(backSpot);
+
+      // Forward to Puting Bato
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, size, size);
+      ctx.fillText("Go to Puting Bato", size / 2, size + 30);
+      const forwardArrowURL = canvas.toDataURL();
+      const forwardSpot = new PANOLENS.Infospot(1300, forwardArrowURL);
+      forwardSpot.position.set(4000, -200, -3000); // adjust as needed
+      forwardSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"sk2Dc8hJYl1NUr3bAEsj"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+      panorama.add(forwardSpot);
+    };
+  };
+
+  /* ------------------ Puting Bato to Lantawan 1------------------ */
+
+  const addPutingBatoToLantawan1 = (panorama) => {
+    const size = 256;
+    const textHeight = 50;
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size + textHeight;
+    const ctx = canvas.getContext("2d");
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Back to UNESCO
+      ctx.drawImage(img, 0, 0, size, size);
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Back to Crossing Stampa", size / 2, size + 30);
+
+      const backArrowURL = canvas.toDataURL();
+      const backSpot = new PANOLENS.Infospot(1400, backArrowURL);
+      backSpot.position.set(-1000, -500, 5500); // adjust as needed
+      backSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"EFNFONngOYNOOFbqdloj"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+      panorama.add(backSpot);
+
+      // Forward to Puting Bato
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, size, size);
+      ctx.fillText("Go to Lantawan 1", size / 2, size + 30);
+      const forwardArrowURL = canvas.toDataURL();
+      const forwardSpot = new PANOLENS.Infospot(1000, forwardArrowURL);
+      forwardSpot.position.set(500, 800, -2000); // adjust as needed
+      forwardSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"IMcVNrMMCsgXbiLPe10T"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+      panorama.add(forwardSpot);
+    };
+  };
+
+  /* ------------------ Lantawan 1 to Camp 4 ------------------ */
+
+  const addLantawan1ToCamp4 = (panorama) => {
+    const size = 256;
+    const textHeight = 50;
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size + textHeight;
+    const ctx = canvas.getContext("2d");
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Back to UNESCO
+      ctx.drawImage(img, 0, 0, size, size);
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Back to Puting Bato", size / 2, size + 30);
+
+      const backArrowURL = canvas.toDataURL();
+      const backSpot = new PANOLENS.Infospot(1400, backArrowURL);
+      backSpot.position.set(-500, -2000, -6000); // adjust as needed
+      backSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"sk2Dc8hJYl1NUr3bAEsj"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+      panorama.add(backSpot);
+
+      // Forward to Puting Bato
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, size, size);
+      ctx.fillText("Go to Camp 4", size / 2, size + 30);
+      const forwardArrowURL = canvas.toDataURL();
+      const forwardSpot = new PANOLENS.Infospot(1000, forwardArrowURL);
+      forwardSpot.position.set(-1800, 200, 4000); // adjust as needed
+      forwardSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"MeD7yd6kVBnAJYJXND7c"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+      panorama.add(forwardSpot);
+    };
+  };
 
   /* ------------------ Camp 3 teleport to inside panorama ------------------ */
   const addCamp3Teleport = (panorama) => {
@@ -235,6 +424,69 @@ const SpotView = () => {
       });
 
       panorama.add(backSpot);
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw arrow image on top
+      ctx.drawImage(img, 0, 0, size, size);
+
+      // Draw always-visible bold text below arrow
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Go to Twin Falls", size / 2, size + 30);
+
+      const twinImageURL = canvas.toDataURL();
+      const twinSpot = new PANOLENS.Infospot(2000, twinImageURL); // size of arrow
+      twinSpot.position.set(8500, -800, -3000);
+      twinSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"QGRePSC5lFbcbJ8ICvtB"}`); // previous panorama ID
+        setTimeout(() => window.location.reload(), 100);
+      });
+
+      panorama.add(twinSpot);
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw arrow image on top
+      ctx.drawImage(img, 0, 0, size, size);
+
+      // Draw always-visible bold text below arrow
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Go to Black Mountain", size / 2, size + 30);
+
+      const blackImageURL = canvas.toDataURL();
+      const blackSpot = new PANOLENS.Infospot(1300, blackImageURL); // size of arrow
+      blackSpot.position.set(4500, -800, -3000);
+      blackSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"5u8jnd3X4g9lYMy2OMpq"}`); // previous panorama ID
+        setTimeout(() => window.location.reload(), 100);
+      });
+
+      panorama.add(blackSpot);
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw arrow image on top
+      ctx.drawImage(img, 0, 0, size, size);
+
+      // Draw always-visible bold text below arrow
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Go to Pygmy Field", size / 2, size + 30);
+
+      const pygmyImageURL = canvas.toDataURL();
+      const pygmySpot = new PANOLENS.Infospot(700, pygmyImageURL); // size of arrow
+      pygmySpot.position.set(-300, -100, 3000);
+      pygmySpot.addEventListener("click", () => {
+        navigate(`/Spots/${"q519aECmdG1TQF7D44Ld"}`); // previous panorama ID
+        setTimeout(() => window.location.reload(), 100);
+      });
+
+      panorama.add(pygmySpot);
     };
   };
 
@@ -307,9 +559,320 @@ const SpotView = () => {
       });
 
       panorama.add(backSpot);
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Back to UNESCO
+      ctx.drawImage(img, 0, 0, size, size);
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      // Forward to Puting Bato
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, size, size);
+      ctx.fillText("Go to Uwang-uwang", size / 2, size + 30);
+      const forwardArrowURL = canvas.toDataURL();
+      const forwardSpot = new PANOLENS.Infospot(1800, forwardArrowURL);
+      forwardSpot.position.set(7000, 200, -4000); // adjust as needed
+      forwardSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"68Q4aC5LVgIDYcU4rn0F"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+      panorama.add(forwardSpot);
     };
   };
 
+  /* ------------------ Uwang-uwang to Lantawan 2 ------------------ */
+
+  const addUwanguwangToLantawan2 = (panorama) => {
+    const size = 256;
+    const textHeight = 50;
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size + textHeight;
+    const ctx = canvas.getContext("2d");
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Back to UNESCO
+      ctx.drawImage(img, 0, 0, size, size);
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Back to Camp 4", size / 2, size + 30);
+
+      const backArrowURL = canvas.toDataURL();
+      const backSpot = new PANOLENS.Infospot(1400, backArrowURL);
+      backSpot.position.set(-500, 800, 4000); // adjust as needed
+      backSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"8us4vrBVTMIDiCXXWHlY"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+      panorama.add(backSpot);
+
+      // Forward to Puting Bato
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, size, size);
+      ctx.fillText("Go to Lantawan 2", size / 2, size + 30);
+      const forwardArrowURL = canvas.toDataURL();
+      const forwardSpot = new PANOLENS.Infospot(1400, forwardArrowURL);
+      forwardSpot.position.set(-500, 1000, -4000); // adjust as needed
+      forwardSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"dIxy6t8cHc88lGY7eHTD"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+      panorama.add(forwardSpot);
+    };
+  };
+
+  /* ------------------ Lantawan 2 to Camp 3 ------------------ */
+  const addLantawan2ToCamp3 = (panorama) => {
+    const size = 256;
+    const textHeight = 50;
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size + textHeight;
+    const ctx = canvas.getContext("2d");
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Back to UNESCO
+      ctx.drawImage(img, 0, 0, size, size);
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Back Uwang-uwang", size / 2, size + 30);
+
+      const backArrowURL = canvas.toDataURL();
+      const backSpot = new PANOLENS.Infospot(1400, backArrowURL);
+      backSpot.position.set(-3400, -2000, -6000); // adjust as needed
+      backSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"68Q4aC5LVgIDYcU4rn0F"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+      panorama.add(backSpot);
+
+      // Forward to Puting Bato
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, size, size);
+      ctx.fillText("Go to Camp 3", size / 2, size + 30);
+      const forwardArrowURL = canvas.toDataURL();
+      const forwardSpot = new PANOLENS.Infospot(1200, forwardArrowURL);
+      forwardSpot.position.set(-3000, -500, 4000); // adjust as needed
+      forwardSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"YCEKhHOU6eNHSqx10qSr"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+      panorama.add(forwardSpot);
+    };
+  };
+
+  const addTwinFallsToCamp3 = (panorama) => {
+    const size = 256; // canvas resolution
+    const textHeight = 50; // extra space inside canvas for text
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size + textHeight; // room for text
+    const ctx = canvas.getContext("2d");
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw the arrow image on top
+      ctx.drawImage(img, 0, 0, size, size);
+
+      // Draw always-visible bold text below the arrow
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Go Back to Camp 3", size / 2, size + 30);
+
+      const strokedImageURL = canvas.toDataURL();
+      const teleportSpot = new PANOLENS.Infospot(1700, strokedImageURL); // size of arrow
+      teleportSpot.position.set(-6000, -500, -3600);
+      teleportSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"zvuINqT41VhWCKpenjZw"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+
+      panorama.add(teleportSpot);
+    };
+  };
+
+  const addBlackMountainToCamp3 = (panorama) => {
+    const size = 256; // canvas resolution
+    const textHeight = 50; // extra space inside canvas for text
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size + textHeight; // room for text
+    const ctx = canvas.getContext("2d");
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw the arrow image on top
+      ctx.drawImage(img, 0, 0, size, size);
+
+      // Draw always-visible bold text below the arrow
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Go Back to Camp 3", size / 2, size + 30);
+
+      const strokedImageURL = canvas.toDataURL();
+      const teleportSpot = new PANOLENS.Infospot(2000, strokedImageURL); // size of arrow
+      teleportSpot.position.set(-6000, -1400, 3600);
+      teleportSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"zvuINqT41VhWCKpenjZw"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+
+      panorama.add(teleportSpot);
+    };
+  };
+
+  /* ------------------ Pygmy Field to Lantawan 3 ------------------ */
+
+  const addPygmyToLantawan3 = (panorama) => {
+    const size = 256;
+    const textHeight = 50;
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size + textHeight;
+    const ctx = canvas.getContext("2d");
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Back to UNESCO
+      ctx.drawImage(img, 0, 0, size, size);
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Back to Camp 3", size / 2, size + 30);
+
+      const backArrowURL = canvas.toDataURL();
+      const backSpot = new PANOLENS.Infospot(1000, backArrowURL);
+      backSpot.position.set(-1000, -500, -4000); // adjust as needed
+      backSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"YCEKhHOU6eNHSqx10qSr"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+      panorama.add(backSpot);
+
+      // Forward to Puting Bato
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, size, size);
+      ctx.fillText("Go to Lantawan 3", size / 2, size + 30);
+      const forwardArrowURL = canvas.toDataURL();
+      const forwardSpot = new PANOLENS.Infospot(1400, forwardArrowURL);
+      forwardSpot.position.set(-5000, -1000, -1800); // adjust as needed
+      forwardSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"rBS9OYsdZfgHCXMrWUNW"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+      panorama.add(forwardSpot);
+    };
+  };
+
+  /* ------------------ Lantawan 3 to Mossy Forest ------------------ */
+
+  const addLantawan3ToMossy = (panorama) => {
+    const size = 256;
+    const textHeight = 50;
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size + textHeight;
+    const ctx = canvas.getContext("2d");
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Back to UNESCO
+      ctx.drawImage(img, 0, 0, size, size);
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Back to Pygmy Field", size / 2, size + 30);
+
+      const backArrowURL = canvas.toDataURL();
+      const backSpot = new PANOLENS.Infospot(1200, backArrowURL);
+      backSpot.position.set(-5000, -500, -2000); // adjust as needed
+      backSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"q519aECmdG1TQF7D44Ld"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+      panorama.add(backSpot);
+
+      // Forward to Puting Bato
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, size, size);
+      ctx.fillText("Go to Mossy Forest", size / 2, size + 30);
+      const forwardArrowURL = canvas.toDataURL();
+      const forwardSpot = new PANOLENS.Infospot(1000, forwardArrowURL);
+      forwardSpot.position.set(-2000, -1000, 3000); // adjust as needed
+      forwardSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"faYghVBuX9xcHpYLAgdH"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+      panorama.add(forwardSpot);
+    };
+  };
+
+  const addMossyForestBackToLantawan3 = (panorama) => {
+    const size = 256; // canvas resolution
+    const textHeight = 50; // extra space inside canvas for text
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size + textHeight; // room for text
+    const ctx = canvas.getContext("2d");
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw the arrow image on top
+      ctx.drawImage(img, 0, 0, size, size);
+
+      // Draw always-visible bold text below the arrow
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Go Back to Lantawan 3", size / 2, size + 30);
+
+      const strokedImageURL = canvas.toDataURL();
+      const teleportSpot = new PANOLENS.Infospot(2700, strokedImageURL); // size of arrow
+      teleportSpot.position.set(-1000, -1400, -7600);
+      teleportSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"rBS9OYsdZfgHCXMrWUNW"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+
+      panorama.add(teleportSpot);
+    };
+  };
   /* 🖼️ Add Infospots for existing models */
   const addImageInsidePanorama = (panorama, type) => {
     /* ----------------- BLACK MOUNTAIN ----------------- */
@@ -340,25 +903,24 @@ const SpotView = () => {
         {
           name: "No widely recognized common name",
           description:
-            "Scientific Name: Scaveola micrantha\n\n" + "This Goodeniaceae shrub or small tree grows up to 10 m with smooth bark and 15 cm leaves. It is native to the Philippines, Taiwan, and Borneo and thrives on ultramafic soils, especially in the mossy-pygmy “bonsai” forests of Mt. Hamiguitan at 1,160–1,600 m. The species is an indicator of ultrabasic ecosystems, adapted to nutrient-poor, iron- and magnesium-rich soils. It is listed as Least Concern, but its specialized habitat makes it vulnerable. Ecologically, it supports biodiversity, stabilizes soil, and helps indicate forest health. Conservation efforts include habitat protection, monitoring, and regulated tourism.",
+            "Scientific Name: Scaveola micrantha\n\n" +
+            "This Goodeniaceae shrub or small tree grows up to 10 m with smooth bark and 15 cm leaves. It is native to the Philippines, Taiwan, and Borneo and thrives on ultramafic soils, especially in the mossy-pygmy “bonsai” forests of Mt. Hamiguitan at 1,160–1,600 m. The species is an indicator of ultrabasic ecosystems, adapted to nutrient-poor, iron- and magnesium-rich soils. It is listed as Least Concern, but its specialized habitat makes it vulnerable. Ecologically, it supports biodiversity, stabilizes soil, and helps indicate forest health. Conservation efforts include habitat protection, monitoring, and regulated tourism.",
           image: "https://imgur.com/yn2xxt7.jpeg",
         },
         {
           name: "No widely recognized common name",
           description:
-            "Scientific Name: Wendlandia nervosa\n\n" + "This flowering shrub or small tree is endemic to the Black Mountain area of Mt. Hamiguitan in Mindanao. It grows on nutrient-poor, acidic ultramafic soils and has opposite elliptic to oblong leaves with prominent veins. It produces fragrant tubular flowers in cymose or paniculiform clusters, often white, purple, or red. As part of the montane and ultramafic pygmy forest, it contributes to Mt. Hamiguitan’s high endemism and biodiversity. The species is Vulnerable due to its restricted ultramafic habitat and sensitivity to disturbance. Protection within the Mt. Hamiguitan Range Wildlife Sanctuary helps reduce threats such as deforestation. Ecologically, it supports pollinators, boosts plant diversity, provides habitat for small fauna, and serves as an indicator of ultramafic forest health. Conservation includes strict habitat protection, biodiversity monitoring, regulated eco-tourism, and environmental education.",
+            "Scientific Name: Wendlandia nervosa\n\n" +
+            "This flowering shrub or small tree is endemic to the Black Mountain area of Mt. Hamiguitan in Mindanao. It grows on nutrient-poor, acidic ultramafic soils and has opposite elliptic to oblong leaves with prominent veins. It produces fragrant tubular flowers in cymose or paniculiform clusters, often white, purple, or red. As part of the montane and ultramafic pygmy forest, it contributes to Mt. Hamiguitan’s high endemism and biodiversity. The species is Vulnerable due to its restricted ultramafic habitat and sensitivity to disturbance. Protection within the Mt. Hamiguitan Range Wildlife Sanctuary helps reduce threats such as deforestation. Ecologically, it supports pollinators, boosts plant diversity, provides habitat for small fauna, and serves as an indicator of ultramafic forest health. Conservation includes strict habitat protection, biodiversity monitoring, regulated eco-tourism, and environmental education.",
           image: "https://i.imgur.com/8RSlcGE.jpeg",
         },
       ];
 
       // ✅✅✅ CORRECT SOUND PATH
-      const clickSounds = [
-        "/sounds/click.mp3",
-        "/sounds/click.mp3",
-      ];
+      const clickSounds = ["/sounds/click.mp3", "/sounds/click.mp3"];
 
       // ✅✅✅ PRELOAD SOUNDS TO AVOID BLOCKING
-      const preloadedSounds = clickSounds.map(src => {
+      const preloadedSounds = clickSounds.map((src) => {
         const audio = new Audio(src);
         audio.load();
         audio.volume = 1.0;
@@ -401,7 +963,7 @@ const SpotView = () => {
           infospot.addEventListener("click", () => {
             const audio = preloadedSounds[i];
             audio.currentTime = 0; // allow rapid clicking
-            audio.play().catch(err => console.log("Sound failed:", err));
+            audio.play().catch((err) => console.log("Sound failed:", err));
 
             setBlurPanorama(true);
             setActiveModel({
@@ -418,47 +980,53 @@ const SpotView = () => {
       });
     }
 
-
-
     /* ----------------- PYGMY FIELD ----------------- */
     if (type === "Pygmy Field") {
       const pygmyModels = [
         "/3dmodels/Nepenthes micramphora.glb",
         "/3dmodels/philippine mock viper.glb",
         "/3dmodels/Lady Slipper Orchid.glb",
+        "/3dmodels/Nepenthes-peltata.glb",
       ];
 
       const modelSettings = [
         { scale: [0.4, 0.4, 0.4], position: [-0.5, 0, 0] },
         { scale: [0.6, 0.6, 0.6], position: [-0.2, 0.3, 0] },
         { scale: [0.3, 0.3, 0.3], position: [0, -9, 0] },
+        { scale: [0.3, 0.3, 0.3], position: [0, -0.5, 0] },
       ];
 
       const pygmyImages = [
         "https://i.imgur.com/HxNkUwr.png",
         "https://i.imgur.com/0mWD1dk.png",
         "https://i.imgur.com/XzOiUmN.png",
+        "https://i.imgur.com/oAwzgUV.png",
       ];
 
       const positions = [
         [1000, -800, 700],
         [1600, -1000, -1200],
         [500, -1800, 4000],
+        [-1200, -1800, 4000],
       ];
 
-      const sizes = [500, 700, 1300];
+      const sizes = [500, 700, 1300, 1000];
 
       const modelInfoList = [
         {
-          name: "No widely recognized common name",
+          name: "Pitcher Plant",
           description:
-            "Scientific Name: Nepenthes micramphora\n" + "\n" + "This tropical pitcher plant, endemic to Mount Hamiguitan, grows at 1,100–1,635 m in ultramafic montane forests. It has narrow, funnel-shaped pitchers (4–6.7 cm) with a pronounced peristome and lid, and smooth stems and leaves. Found with other Nepenthes species, it is Critically Endangered due to its very limited range, habitat loss, and risks of overcollection. Ecologically, it controls insect populations, obtains nutrients from trapped prey in nutrient-poor soils, and supports a specialized micro-ecosystem. In the Mt. Hamiguitan Range Wildlife Sanctuary, it is protected through strict habitat conservation, population monitoring, regulated tourism, and education efforts, all essential for its survival.",
+            "Scientific Name: Nepenthes micramphora\n" +
+            "\n" +
+            "This tropical pitcher plant, endemic to Mount Hamiguitan, grows at 1,100–1,635 m in ultramafic montane forests. It has narrow, funnel-shaped pitchers (4–6.7 cm) with a pronounced peristome and lid, and smooth stems and leaves. Found with other Nepenthes species, it is Critically Endangered due to its very limited range, habitat loss, and risks of overcollection. Ecologically, it controls insect populations, obtains nutrients from trapped prey in nutrient-poor soils, and supports a specialized micro-ecosystem. In the Mt. Hamiguitan Range Wildlife Sanctuary, it is protected through strict habitat conservation, population monitoring, regulated tourism, and education efforts, all essential for its survival.",
           image: "https://i.imgur.com/r0HRn0k.jpeg",
         },
         {
           name: "Philippine Mock Viper",
           description:
-            "Scientific Name: Psammodynastes pulverulentus\n" + "\n" + "The Philippine Mock Viper is a small, harmless snake (65–77 cm) with brown or gray patterns and a Y-shaped head marking. It lives near streams and moist forest floors, is active day and night, and eats frogs, geckos, and skinks. It is native to many Philippine islands up to 2,100 m elevation Though listed as Least Concern, it depends on intact forests, making protected areas like Mt. Hamiguitan important. It helps control small vertebrates and serves as prey, supporting the forest food chain. In the sanctuary, it benefits from habitat protection, monitoring, and regulated tourism.",
+            "Scientific Name: Psammodynastes pulverulentus\n" +
+            "\n" +
+            "The Philippine Mock Viper is a small, harmless snake (65–77 cm) with brown or gray patterns and a Y-shaped head marking. It lives near streams and moist forest floors, is active day and night, and eats frogs, geckos, and skinks. It is native to many Philippine islands up to 2,100 m elevation Though listed as Least Concern, it depends on intact forests, making protected areas like Mt. Hamiguitan important. It helps control small vertebrates and serves as prey, supporting the forest food chain. In the sanctuary, it benefits from habitat protection, monitoring, and regulated tourism.",
           image: "https://i.imgur.com/vBK0069.jpeg",
         },
         {
@@ -467,6 +1035,14 @@ const SpotView = () => {
             "This rare orchid, endemic to the Philippines and found in the Pygmy Field of Mt. Hamiguitan, grows on soil or rocks in montane forests (300–1,830 m). It has a single slipper-shaped flower with fine hairs and spotted petals, and narrow, tessellated leaves. Fewer than 2,500 mature individuals remain due to habitat disturbance and overcollection. Classified as Endangered, it is threatened by habitat loss, illegal collection, and its slow growth. It supports specialized pollinators, maintains soil microhabitats, and indicates healthy forest ecosystems. In the Mt. Hamiguitan Range Wildlife Sanctuary, it benefits from strict habitat protection, zero-extraction rules, monitoring, controlled tourism, and education efforts, all vital for its survival.",
           image: "https://imgur.com/ozvq09B.jpeg",
         },
+        {
+          name: "Pitcher Plant",
+          description:
+            "Scientific Name: Nepenthes Peltata\n" +
+            "\n" +
+            "The Philippine Mock Viper is a small, harmless snake (65–77 cm) with brown or gray patterns and a Y-shaped head marking. It lives near streams and moist forest floors, is active day and night, and eats frogs, geckos, and skinks. It is native to many Philippine islands up to 2,100 m elevation Though listed as Least Concern, it depends on intact forests, making protected areas like Mt. Hamiguitan important. It helps control small vertebrates and serves as prey, supporting the forest food chain. In the sanctuary, it benefits from habitat protection, monitoring, and regulated tourism.",
+          image: "https://i.imgur.com/vBK0069.jpeg",
+        },
       ];
 
       // ✅ ✅ ✅ CLICK SOUND FROM PUBLIC
@@ -474,10 +1050,11 @@ const SpotView = () => {
         "/sounds/click.mp3",
         "/sounds/click.mp3",
         "/sounds/click.mp3",
+        "/sounds/click.mp3",
       ];
 
       // ✅ ✅ ✅ PRELOAD SOUNDS
-      const preloadedSounds = clickSounds.map(src => {
+      const preloadedSounds = clickSounds.map((src) => {
         const audio = new Audio(src);
         audio.load();
         audio.volume = 1.0;
@@ -523,7 +1100,7 @@ const SpotView = () => {
           infospot.addEventListener("click", () => {
             const audio = preloadedSounds[i];
             audio.currentTime = 0;
-            audio.play().catch(err => console.log("Sound failed:", err));
+            audio.play().catch((err) => console.log("Sound failed:", err));
 
             setBlurPanorama(true);
             setActiveModel({
@@ -539,7 +1116,6 @@ const SpotView = () => {
         };
       });
     }
-
 
     /* ----------------- MOSSY FOREST ----------------- */
     if (type === "Mossy Forest") {
@@ -581,7 +1157,7 @@ const SpotView = () => {
           image: "https://imgur.com/7PKAuo0.jpeg",
         },
         {
-          name: "No widely recognized common name",
+          name: "Pitcher Plant",
           description:
             "Scientific Name: Nepenthes justinae\n\nThis tropical pitcher plant is endemic to Mt. Hamiguitan, Mindanao, growing at 1,000–1,620 m in montane and pygmy ultramafic forests. It has climbing stems up to 4 m, coriaceous leaves, and distinctive lower and upper pitchers, growing terrestrially or as an epiphyte and sometimes hybridizing with other Nepenthes species. Classified as Vulnerable, it is threatened by its limited range, slow growth, and sensitive habitat, though legal protection in the Mt. Hamiguitan Range Wildlife Sanctuary helps safeguard it. Ecologically, it traps insects for nutrients, supports specialized invertebrates, and enhances plant biodiversity. Conservation includes habitat protection, monitoring, regulated eco-tourism, and education to preserve the species and ecosystem balance.",
           image: "https://i.imgur.com/N3sxDPo.jpeg",
@@ -609,7 +1185,7 @@ const SpotView = () => {
       ];
 
       // ✅ ✅ ✅ PRELOAD SOUNDS
-      const preloadedSounds = clickSounds.map(src => {
+      const preloadedSounds = clickSounds.map((src) => {
         const audio = new Audio(src);
         audio.load();
         audio.volume = 1.0;
@@ -655,7 +1231,7 @@ const SpotView = () => {
           infospot.addEventListener("click", () => {
             const audio = preloadedSounds[i];
             audio.currentTime = 0;
-            audio.play().catch(err => console.log("Sound failed:", err));
+            audio.play().catch((err) => console.log("Sound failed:", err));
 
             setBlurPanorama(true);
             setActiveModel({
@@ -671,7 +1247,6 @@ const SpotView = () => {
         };
       });
     }
-
 
     /* ----------------- PEAK ----------------- */
     if (type === "Peak") {
@@ -705,7 +1280,7 @@ const SpotView = () => {
           image: "https://i.imgur.com/jIKS0I6.jpeg",
         },
         {
-          name: "Hamiguitan Pitcher Plant",
+          name: "Pitcher Plant",
           description:
             "Scientific Name: Nepenthes hamiguitanensis\n\nThe Hamiguitan Pitcher Plant is a tropical climbing Nepenthes endemic to Mt. Hamiguitan, growing at 1,200–1,600 m, mostly above 1,400 m. It has upper pitchers up to 20 cm, elliptic-oblong leaves, and hairy stems, and grows terrestrially in primary montane forests and edges. Classified as Vulnerable, it is threatened by limited range, specialized habitat, and slow growth. Ecologically, it traps insects, provides microhabitats, and boosts plant diversity. Conservation includes habitat protection, monitoring, controlled tourism, and education.",
           image: "https://i.imgur.com/xdwtCcg.jpeg",
@@ -713,10 +1288,7 @@ const SpotView = () => {
       ];
 
       // ✅ ✅ ✅ CLICK SOUND FROM PUBLIC
-      const clickSounds = [
-        "/sounds/click.mp3",
-        "/sounds/click.mp3",
-      ];
+      const clickSounds = ["/sounds/click.mp3", "/sounds/click.mp3"];
 
       // ✅ ✅ ✅ PRELOAD SOUNDS
       const preloadedSounds = clickSounds.map((src) => {
@@ -782,7 +1354,6 @@ const SpotView = () => {
       });
     }
 
-
     /* ----------------- CAMP 3 INSIDE ----------------- */
     if (type === "Camp III") {
       addBackToCamp3(panorama); // adds the back arrow
@@ -819,17 +1390,21 @@ const SpotView = () => {
       const modelInfoList = [
         {
           name: "Davao Waterside Skink",
-          description: "Scientific Name: Tropidophorus davaoensis\n\nThis small, semi-aquatic skink is endemic to southern Mindanao, living in lowland forest streams among rocks, leaf litter, and aquatic vegetation. It is ovoviviparous and has distinctive scale patterns, remaining largely cryptic and specialized for riparian habitats. Classified as Least Concern, it depends on healthy streams, threatened by pollution and deforestation. Ecologically, it controls insects, serves as prey, supports freshwater habitat health, and indicates riparian ecosystem quality. Conservation includes stream protection, monitoring, regulated tourism, and education.",
+          description:
+            "Scientific Name: Tropidophorus davaoensis\n\nThis small, semi-aquatic skink is endemic to southern Mindanao, living in lowland forest streams among rocks, leaf litter, and aquatic vegetation. It is ovoviviparous and has distinctive scale patterns, remaining largely cryptic and specialized for riparian habitats. Classified as Least Concern, it depends on healthy streams, threatened by pollution and deforestation. Ecologically, it controls insects, serves as prey, supports freshwater habitat health, and indicates riparian ecosystem quality. Conservation includes stream protection, monitoring, regulated tourism, and education.",
           image: "https://i.imgur.com/JBj0E3H.jpeg",
+          partsImage: "https://i.imgur.com/dy95ik9.png",
         },
         {
           name: "Mindanao Horned Frog",
-          description: "Scientific Name: Pelobatrachus stejnegeri\n\nThe Mindanao Horned Frog is a medium-sized, nocturnal frog endemic to Mindanao, living in moist lowland and montane forests near streams. It has horn-like eye projections and mottled skin, with tadpoles developing on submerged debris. Classified as Vulnerable, it is threatened by habitat loss, water pollution, and climate change, making Mt. Hamiguitan protection essential. Ecologically, it controls insects, serves as prey, aids nutrient cycling, and indicates forest-floor and freshwater health. Conservation includes habitat protection, monitoring, regulated tourism, and education.",
+          description:
+            "Scientific Name: Pelobatrachus stejnegeri\n\nThe Mindanao Horned Frog is a medium-sized, nocturnal frog endemic to Mindanao, living in moist lowland and montane forests near streams. It has horn-like eye projections and mottled skin, with tadpoles developing on submerged debris. Classified as Vulnerable, it is threatened by habitat loss, water pollution, and climate change, making Mt. Hamiguitan protection essential. Ecologically, it controls insects, serves as prey, aids nutrient cycling, and indicates forest-floor and freshwater health. Conservation includes habitat protection, monitoring, regulated tourism, and education.",
           image: "https://i.imgur.com/3AwsOpM.jpeg",
         },
         {
           name: "No widely recognized common name",
-          description: "Scientific Name: Hoya josseteae\n\nThis epiphytic vine is endemic to the Philippines, with leathery dark green leaves and pale pink to white star-shaped flowers in fragrant umbels. It grows in shaded, humid forests, anchoring to host trees with aerial roots, and blooms mainly in warmer months. Classified as Vulnerable, it is threatened by restricted range, habitat loss, and overcollection, making Mt. Hamiguitan protection essential. Ecologically, it provides nectar, supports canopy biodiversity, indicates forest health, and adds aesthetic value. Conservation includes forest protection, monitoring, regulated tourism, and education.",
+          description:
+            "Scientific Name: Hoya josseteae\n\nThis epiphytic vine is endemic to the Philippines, with leathery dark green leaves and pale pink to white star-shaped flowers in fragrant umbels. It grows in shaded, humid forests, anchoring to host trees with aerial roots, and blooms mainly in warmer months. Classified as Vulnerable, it is threatened by restricted range, habitat loss, and overcollection, making Mt. Hamiguitan protection essential. Ecologically, it provides nectar, supports canopy biodiversity, indicates forest health, and adds aesthetic value. Conservation includes forest protection, monitoring, regulated tourism, and education.",
         },
       ];
 
@@ -841,7 +1416,7 @@ const SpotView = () => {
       ];
 
       // ✅ PRELOAD SOUNDS
-      const preloadedSounds = clickSounds.map(src => {
+      const preloadedSounds = clickSounds.map((src) => {
         const audio = new Audio(src);
         audio.load();
         audio.volume = 1.0;
@@ -898,7 +1473,7 @@ const SpotView = () => {
           infospot.addEventListener("click", () => {
             const audio = preloadedSounds[i];
             audio.currentTime = 0;
-            audio.play().catch(err => console.log("Sound failed:", err));
+            audio.play().catch((err) => console.log("Sound failed:", err));
 
             setBlurPanorama(true);
             setActiveModel({
@@ -914,130 +1489,136 @@ const SpotView = () => {
         };
       });
 
+      // Add back arrow
+      addBackToCamp3(panorama);
+    }
 
+    if (type === "Camp IV") {
+      addBackToCamp4(panorama); // adds the back arrow
+    }
+  };
 
-    // Add back arrow
-    addBackToCamp3(panorama);
-  }
-
-  if (type === "Camp IV") {
-    addBackToCamp4(panorama); // adds the back arrow
-  }
-};
-
-if (error) return <p className="error-text">{error}</p>;
-if (!spot)
-  return (
-    <div className="loading-spinner-container">
-      <div className="spinner"></div>
-    </div>
-  );
-
-return (
-  <div className="spotview-container">
-    <div
-      ref={containerRef}
-      className={`panorama-container ${blurPanorama ? "blurred" : ""}`}
-    />
-    {loading && <div className="loading-overlay">Loading panorama...</div>}
-
-    {!activeModel && (
-      <div className="spot-info">
-        <h1 className="spot-title">{spot?.Name}</h1>
-        <p className="spot-description">{spot?.Description}</p>
-        <div
-          className={`back-btn ${hoverBack ? "hover" : ""}`}
-          onClick={() => {
-            navigate("/tour");
-            setTimeout(() => window.location.reload(), 140);
-          }}
-          onMouseEnter={() => setHoverBack(true)}
-          onMouseLeave={() => setHoverBack(false)}
-        >
-          ⬅ Back
-        </div>
+  if (error) return <p className="error-text">{error}</p>;
+  if (!spot)
+    return (
+      <div className="loading-spinner-container">
+        <div className="spinner"></div>
       </div>
-    )}
+    );
 
-    {activeModel && (
-      <div className="model-modal">
-        <button className="close-btn" onClick={handleCloseModal}>
-          ✖
-        </button>
+  return (
+    <div className="spotview-container">
+      <div
+        ref={containerRef}
+        className={`panorama-container ${blurPanorama ? "blurred" : ""}`}
+      />
+      {loading && <div className="loading-overlay">Loading panorama...</div>}
 
-        {modelInfo && <h2 className="model-title-top">{modelInfo.name}</h2>}
-        {modelError && <p className="model-error">{modelError}</p>}
-
-        {/* 3D MODEL BOX */}
-        <div className="model-3d-box">
-          <div className="model-view-section">
-            {/* LOADING SPINNER */}
-            {modelLoading && (
-              <div className="model-loading-spinner">
-                <div className="spinner"></div>
-              </div>
-            )}
-            <Canvas
-              camera={{ position: [0, 1.5, 5], fov: 45 }}
-              className="canvas-view"
-            >
-              <ambientLight intensity={0.7} />
-              <directionalLight position={[5, 10, 5]} intensity={1.2} />
-
-              <Suspense fallback={null}>
-                <ModelViewer
-                  url={activeModel.url}
-                  scale={activeModel.scale}
-                  position={activeModel.position}
-                  setModelError={setModelError}
-                  setModelLoading={setModelLoading}
-                />
-              </Suspense>
-
-              <OrbitControls target={[0, 1, 0]} />
-            </Canvas>
+      {!activeModel && (
+        <div className="spot-info">
+          <h1 className="spot-title">{spot?.Name}</h1>
+          <p className="spot-description">{spot?.Description}</p>
+          <div
+            className={`back-btn ${hoverBack ? "hover" : ""}`}
+            onClick={() => {
+              navigate("/tour");
+              setTimeout(() => window.location.reload(), 140);
+            }}
+            onMouseEnter={() => setHoverBack(true)}
+            onMouseLeave={() => setHoverBack(false)}
+          >
+            ⬅ Back
           </div>
         </div>
+      )}
 
-        {/* MODEL INFO SECTION - OUTSIDE THE 3D BOX */}
-        {modelInfo && (
-          <div
-            className="model-info-section"
-            onWheel={(e) => e.stopPropagation()}
-          >
-            <img
-              src={modelInfo.image}
-              alt={modelInfo.name}
-              className="model-img"
-            />
-            <div className="model-text">
-              <p className="model-description">
-                {modelInfo.description.split("\n").map((line, index) => {
-                  if (line.startsWith("Scientific Name:")) {
-                    const parts = line.split(":");
+      {activeModel && (
+        <div className="model-modal">
+          <button className="close-btn" onClick={handleCloseModal}>
+            ✖
+          </button>
+
+          {modelInfo && <h2 className="model-title-top">{modelInfo.name}</h2>}
+          {modelError && <p className="model-error">{modelError}</p>}
+
+          {/* 3D MODEL BOX */}
+          <div className="model-3d-box">
+            <div className="model-view-section">
+              {/* LOADING SPINNER */}
+              {modelLoading && (
+                <div className="model-loading-spinner">
+                  <div className="spinner"></div>
+                </div>
+              )}
+              <Canvas
+                camera={{ position: [0, 1.5, 5], fov: 45 }}
+                className="canvas-view"
+              >
+                <ambientLight intensity={0.7} />
+                <directionalLight position={[5, 10, 5]} intensity={1.2} />
+
+                <Suspense fallback={null}>
+                  <ModelViewer
+                    url={activeModel.url}
+                    scale={activeModel.scale}
+                    position={activeModel.position}
+                    setModelError={setModelError}
+                    setModelLoading={setModelLoading}
+                  />
+                </Suspense>
+
+                <OrbitControls target={[0, 1, 0]} />
+              </Canvas>
+            </div>
+          </div>
+
+          {/* MODEL INFO SECTION - OUTSIDE THE 3D BOX */}
+          {modelInfo && (
+            <div
+              className="model-info-section"
+              onWheel={(e) => e.stopPropagation()}
+            >
+              <img
+                src={modelInfo.image}
+                alt={modelInfo.name}
+                className="model-img"
+              />
+              <div className="model-text">
+                <p className="model-description">
+                  {modelInfo.description.split("\n").map((line, index) => {
+                    if (line.startsWith("Scientific Name:")) {
+                      const parts = line.split(":");
+                      return (
+                        <span key={index}>
+                          Scientific Name: <i>{parts[1].trim()}</i>
+                          <br />
+                        </span>
+                      );
+                    }
+
                     return (
                       <span key={index}>
-                        Scientific Name: <i>{parts[1].trim()}</i>
+                        {line}
                         <br />
                       </span>
                     );
-                  }
-
-                  return (
-                    <span key={index}>
-                      {line}
-                      <br />
-                    </span>
-                  );
-                })}
-              </p>
+                  })}
+                </p>
+              </div>
+              {/* Parts image */}
+              {modelInfo.partsImage && (
+                <img
+                  src={modelInfo.partsImage}
+                  alt="Model Parts"
+                  className="model-parts-img"
+                />
+              )}
             </div>
-          </div>
-        )}
-      </div>
-    )}
-  </div>
-);
+          )}
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default SpotView;
