@@ -1,0 +1,273 @@
+.admin-dashboard-wrapper {
+  position: relative;
+  font-family: "Montserrat", sans-serif;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.admin-overlay {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.admin-overlay h1 {
+  font-size: 2.8rem;
+  margin-bottom: 30px;
+  
+  color: #2f5233;
+}
+
+.update-btn {
+  margin-top: -10px;
+  padding: 8px 16px;
+  background-color: #4bd050;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 20;
+  position: relative; 
+  pointer-events:all
+  
+}
+
+.update-btn:hover {
+  background-color: #3fa941;
+  transform: scale(1.05);
+}
+
+.spot-card {
+  position: relative; /* allow absolute positioning inside */
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 14px;
+  overflow: hidden;
+  backdrop-filter: blur(3px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 300px;
+}
+
+
+.spot-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+}
+
+.spot-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.spot-card:hover img {
+  transform: scale(1.05);
+}
+
+.spot-info {
+  position: absolute; /* overlay on top of image */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px;
+
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 10;
+}
+
+.spot-info h3 {
+  color: #4bd050;
+  margin-top: 10px;
+}
+
+
+.spots-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+  gap: 30px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: rgba(0, 43, 64, 0.85);
+  backdrop-filter: blur(5px);
+  padding: 30px;
+  border-radius: 16px;
+  width: 400px;
+  text-align: left;
+  color: #fff;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.modal-content h2 {
+  margin-bottom: 15px;
+  color: white;
+  text-align: center;
+  
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+}
+
+.modal-content textarea,
+.modal-content input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  margin-top: 5px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.modal-buttons button:hover {
+  transform: scale(1.05);
+}
+
+.modal-buttons .cancel-btn {
+  background: #ff4c4c;
+  color: #fff;
+}
+
+.modal-buttons button:first-child {
+  background: #4bd050;
+  color: #fff;
+}
+
+/* Fade-in Animation */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .spots-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .spots-grid { grid-template-columns: 1fr; }
+  .modal-content { width: 90%; }
+}
+
+
+
+.account-icon {
+  position: relative;
+}
+
+.users-icon {
+  font-size: 35px;
+  color: #252222;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-top: 10px;
+  margin-left: 97%;
+}
+
+.users-icon:hover {
+  transform: scale(1.1);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 200;
+}
+
+.dropdown-button {
+  background-color: #8cc63f;
+  color: #efeeee;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  width: 100%;
+  cursor: pointer;
+  border: none;
+}
+
+.dropdown-button:hover {
+  background-color: #6aa52d;
+  color: #fff;
+}
+
+/* Confirm Logout Modal Buttons */
+.modal-buttons button {
+  padding: 8px 18px;
+  margin: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  font-weight: bold;
+}
+
+.confirm-btn {
+  background-color: #b00f0f;
+  color: #fff;
+}
+
+.confirm-btn:hover {
+  background-color: #7d0a0a;
+}
+
+.cancel-btn {
+  background-color: #505050;
+  color: #fff;
+}
+
+.cancel-btn:hover {
+  background-color: #333;
+}

@@ -79,7 +79,7 @@ body {
   color: #5acb52;
 }
 .nav-links li a.active {
-  background-color: #49b345;
+  background-color: #49b345b7;
   color: #ffffff;
   padding: 5px 13px; /* bigger padding to make the box larger */
   border-radius: 12px; /* slightly more rounded for emphasis */
@@ -1290,14 +1290,15 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
+  gap: -20px;
   animation: popIn 1s ease-out;
   margin-top: -200px;
 }
 
 .login-logo {
-  width: 150px;
+  width: 170px;
   height: auto;
+  margin-top: 50px
   
 }
 
@@ -1311,6 +1312,7 @@ img {
 .login-container {
   max-width: 450px;
   width: 90%;
+  height: 40%;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -1385,17 +1387,17 @@ img {
 
 .back-button {
   position: absolute;
-  top: 480px;
-  left: 550px;
+  top: 515px;
+  left: 727px;
   background: rgba(90, 203, 82, 0.85);
   border: none;
   color: #fff;
-  height: 30px;
+  height: 40px;
   width: 75px;/* smaller padding */
   font-size: 14px;   /* smaller font size */
   border-radius: 6px;
   cursor: pointer;
-  display: flex;
+  display: block;
   align-items: center;
   gap: 4px;
   transition: all 0.3s ease;
@@ -1408,5 +1410,26 @@ img {
 }
 
 
-/* rest of your admin-login styles remain the same... */
+.error-message {
+  margin-top: -200px;
+  padding: 10px;
+  background-color: rgba(255, 0, 0, 0.2);
+  color: #ff0000;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
