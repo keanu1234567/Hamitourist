@@ -144,8 +144,9 @@ const SpotView = () => {
       } else if (name.includes("mossy")) {
         addImageInsidePanorama(panorama, "Mossy Forest");
         addMossyForestBackToLantawan3(panorama);
-      } else if (name.includes("peak"))
+      } else if (name.includes("peak")){
         addImageInsidePanorama(panorama, "Peak");
+        addPeakToCamp3(panorama)}
       else if (name.includes("camp iii"))
         addImageInsidePanorama(panorama, "Camp III");
       else if (name.includes("camp 3"))
@@ -163,6 +164,7 @@ const SpotView = () => {
       else if (name.includes("lantawan 2")) addLantawan2ToCamp3(panorama);
       else if (name.includes("twin falls")) addTwinFallsToCamp3(panorama);
       else if (name.includes("lantawan 3")) addLantawan3ToMossy(panorama);
+       
     });
 
     const handleResize = () => viewer.onWindowResize();
@@ -437,7 +439,7 @@ const SpotView = () => {
       ctx.fillText("Go to Twin Falls", size / 2, size + 30);
 
       const twinImageURL = canvas.toDataURL();
-      const twinSpot = new PANOLENS.Infospot(2000, twinImageURL); // size of arrow
+      const twinSpot = new PANOLENS.Infospot(1800, twinImageURL); // size of arrow
       twinSpot.position.set(8500, -800, -3000);
       twinSpot.addEventListener("click", () => {
         navigate(`/Spots/${"QGRePSC5lFbcbJ8ICvtB"}`); // previous panorama ID
@@ -458,7 +460,7 @@ const SpotView = () => {
       ctx.fillText("Go to Black Mountain", size / 2, size + 30);
 
       const blackImageURL = canvas.toDataURL();
-      const blackSpot = new PANOLENS.Infospot(1300, blackImageURL); // size of arrow
+      const blackSpot = new PANOLENS.Infospot(1100, blackImageURL); // size of arrow
       blackSpot.position.set(4500, -800, -3000);
       blackSpot.addEventListener("click", () => {
         navigate(`/Spots/${"5u8jnd3X4g9lYMy2OMpq"}`); // previous panorama ID
@@ -487,6 +489,27 @@ const SpotView = () => {
       });
 
       panorama.add(pygmySpot);
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw arrow image on top
+      ctx.drawImage(img, 0, 0, size, size);
+
+      // Draw always-visible bold text below arrow
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Go to Peak", size / 2, size + 30);
+
+      const peakImageURL = canvas.toDataURL();
+      const peakSpot = new PANOLENS.Infospot(600, peakImageURL); // size of arrow
+      peakSpot.position.set(300, -300, -3000);
+      peakSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"q519aECmdG1TQF7D44Ld"}`); // previous panorama ID
+        setTimeout(() => window.location.reload(), 100);
+      });
+
+      panorama.add(peakSpot);
     };
   };
 
@@ -769,10 +792,10 @@ const SpotView = () => {
       ctx.fillText("Back to Camp 3", size / 2, size + 30);
 
       const backArrowURL = canvas.toDataURL();
-      const backSpot = new PANOLENS.Infospot(1000, backArrowURL);
+      const backSpot = new PANOLENS.Infospot(800, backArrowURL);
       backSpot.position.set(-1000, -500, -4000); // adjust as needed
       backSpot.addEventListener("click", () => {
-        navigate(`/Spots/${"YCEKhHOU6eNHSqx10qSr"}`);
+        navigate(`/Spots/${"zvuINqT41VhWCKpenjZw"}`);
         setTimeout(() => window.location.reload(), 100);
       });
       panorama.add(backSpot);
@@ -782,7 +805,7 @@ const SpotView = () => {
       ctx.drawImage(img, 0, 0, size, size);
       ctx.fillText("Go to Lantawan 3", size / 2, size + 30);
       const forwardArrowURL = canvas.toDataURL();
-      const forwardSpot = new PANOLENS.Infospot(1400, forwardArrowURL);
+      const forwardSpot = new PANOLENS.Infospot(1200, forwardArrowURL);
       forwardSpot.position.set(-5000, -1000, -1800); // adjust as needed
       forwardSpot.addEventListener("click", () => {
         navigate(`/Spots/${"rBS9OYsdZfgHCXMrWUNW"}`);
@@ -873,6 +896,42 @@ const SpotView = () => {
       panorama.add(teleportSpot);
     };
   };
+
+
+   const addPeakToCamp3 = (panorama) => {
+    const size = 256; // canvas resolution
+    const textHeight = 50; // extra space inside canvas for text
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size + textHeight; // room for text
+    const ctx = canvas.getContext("2d");
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = "https://i.imgur.com/uTh9cBK.png"; // arrow icon
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw the arrow image on top
+      ctx.drawImage(img, 0, 0, size, size);
+
+      // Draw always-visible bold text below the arrow
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Go Back to Camp3", size / 2, size + 30);
+
+      const strokedImageURL = canvas.toDataURL();
+      const teleportSpot = new PANOLENS.Infospot(1700, strokedImageURL); // size of arrow
+      teleportSpot.position.set(-5000, -3400, 2000);
+      teleportSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"zvuINqT41VhWCKpenjZw"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+
+      panorama.add(teleportSpot);
+    };
+  };
   /* 🖼️ Add Infospots for existing models */
   const addImageInsidePanorama = (panorama, type) => {
     /* ----------------- BLACK MOUNTAIN ----------------- */
@@ -906,6 +965,7 @@ const SpotView = () => {
             "Scientific Name: Scaveola micrantha\n\n" +
             "This Goodeniaceae shrub or small tree grows up to 10 m with smooth bark and 15 cm leaves. It is native to the Philippines, Taiwan, and Borneo and thrives on ultramafic soils, especially in the mossy-pygmy “bonsai” forests of Mt. Hamiguitan at 1,160–1,600 m. The species is an indicator of ultrabasic ecosystems, adapted to nutrient-poor, iron- and magnesium-rich soils. It is listed as Least Concern, but its specialized habitat makes it vulnerable. Ecologically, it supports biodiversity, stabilizes soil, and helps indicate forest health. Conservation efforts include habitat protection, monitoring, and regulated tourism.",
           image: "https://imgur.com/yn2xxt7.jpeg",
+          partsImage: "https://i.imgur.com/OVXW0az.png",
         },
         {
           name: "No widely recognized common name",
@@ -913,6 +973,7 @@ const SpotView = () => {
             "Scientific Name: Wendlandia nervosa\n\n" +
             "This flowering shrub or small tree is endemic to the Black Mountain area of Mt. Hamiguitan in Mindanao. It grows on nutrient-poor, acidic ultramafic soils and has opposite elliptic to oblong leaves with prominent veins. It produces fragrant tubular flowers in cymose or paniculiform clusters, often white, purple, or red. As part of the montane and ultramafic pygmy forest, it contributes to Mt. Hamiguitan’s high endemism and biodiversity. The species is Vulnerable due to its restricted ultramafic habitat and sensitivity to disturbance. Protection within the Mt. Hamiguitan Range Wildlife Sanctuary helps reduce threats such as deforestation. Ecologically, it supports pollinators, boosts plant diversity, provides habitat for small fauna, and serves as an indicator of ultramafic forest health. Conservation includes strict habitat protection, biodiversity monitoring, regulated eco-tourism, and environmental education.",
           image: "https://i.imgur.com/8RSlcGE.jpeg",
+          partsImage: "https://i.imgur.com/UTA380Y.png",
         },
       ];
 
@@ -1020,6 +1081,7 @@ const SpotView = () => {
             "\n" +
             "This tropical pitcher plant, endemic to Mount Hamiguitan, grows at 1,100–1,635 m in ultramafic montane forests. It has narrow, funnel-shaped pitchers (4–6.7 cm) with a pronounced peristome and lid, and smooth stems and leaves. Found with other Nepenthes species, it is Critically Endangered due to its very limited range, habitat loss, and risks of overcollection. Ecologically, it controls insect populations, obtains nutrients from trapped prey in nutrient-poor soils, and supports a specialized micro-ecosystem. In the Mt. Hamiguitan Range Wildlife Sanctuary, it is protected through strict habitat conservation, population monitoring, regulated tourism, and education efforts, all essential for its survival.",
           image: "https://i.imgur.com/r0HRn0k.jpeg",
+          partsImage: "https://i.imgur.com/GD9iTvs.png",
         },
         {
           name: "Philippine Mock Viper",
@@ -1028,12 +1090,14 @@ const SpotView = () => {
             "\n" +
             "The Philippine Mock Viper is a small, harmless snake (65–77 cm) with brown or gray patterns and a Y-shaped head marking. It lives near streams and moist forest floors, is active day and night, and eats frogs, geckos, and skinks. It is native to many Philippine islands up to 2,100 m elevation Though listed as Least Concern, it depends on intact forests, making protected areas like Mt. Hamiguitan important. It helps control small vertebrates and serves as prey, supporting the forest food chain. In the sanctuary, it benefits from habitat protection, monitoring, and regulated tourism.",
           image: "https://i.imgur.com/vBK0069.jpeg",
+          partsImage: "https://i.imgur.com/ViqNaPm.png",
         },
         {
           name: "Lady Slipper Orchid",
           description:
             "This rare orchid, endemic to the Philippines and found in the Pygmy Field of Mt. Hamiguitan, grows on soil or rocks in montane forests (300–1,830 m). It has a single slipper-shaped flower with fine hairs and spotted petals, and narrow, tessellated leaves. Fewer than 2,500 mature individuals remain due to habitat disturbance and overcollection. Classified as Endangered, it is threatened by habitat loss, illegal collection, and its slow growth. It supports specialized pollinators, maintains soil microhabitats, and indicates healthy forest ecosystems. In the Mt. Hamiguitan Range Wildlife Sanctuary, it benefits from strict habitat protection, zero-extraction rules, monitoring, controlled tourism, and education efforts, all vital for its survival.",
           image: "https://imgur.com/ozvq09B.jpeg",
+          partsImage: "https://i.imgur.com/r8j542C.png",
         },
         {
           name: "Pitcher Plant",
@@ -1042,6 +1106,7 @@ const SpotView = () => {
             "\n" +
             "The Philippine Mock Viper is a small, harmless snake (65–77 cm) with brown or gray patterns and a Y-shaped head marking. It lives near streams and moist forest floors, is active day and night, and eats frogs, geckos, and skinks. It is native to many Philippine islands up to 2,100 m elevation Though listed as Least Concern, it depends on intact forests, making protected areas like Mt. Hamiguitan important. It helps control small vertebrates and serves as prey, supporting the forest food chain. In the sanctuary, it benefits from habitat protection, monitoring, and regulated tourism.",
           image: "https://i.imgur.com/vBK0069.jpeg",
+          partsImage: "https://i.imgur.com/H6T20fK.png",
         },
       ];
 
@@ -1155,24 +1220,28 @@ const SpotView = () => {
           description:
             "Scientific Name: Lindsaea hamiguitanensis\n\nThis small terrestrial fern is endemic to Mt. Hamiguitan, Mindanao, growing at 1,100–1,200 m in lower montane rainforest. It has short-creeping rhizomes, long quadrangular petioles, and triangular bipinnate to tripinnate fronds with continuous sori along the pinnule margins. Discovered in 2009, it is restricted to the ultramafic pygmy forests alongside other endemic ferns. Classified as Endangered, it is threatened by its limited distribution and fragile habitat. Ecologically, it stabilizes soil, provides microhabitats for invertebrates, and supports biodiversity in the Pygmy Forest. Conservation includes habitat protection, monitoring, regulated tourism, and research, ensuring its survival.",
           image: "https://imgur.com/7PKAuo0.jpeg",
+          partsImage: "https://i.imgur.com/4wAlTKj.png",
         },
         {
           name: "Pitcher Plant",
           description:
             "Scientific Name: Nepenthes justinae\n\nThis tropical pitcher plant is endemic to Mt. Hamiguitan, Mindanao, growing at 1,000–1,620 m in montane and pygmy ultramafic forests. It has climbing stems up to 4 m, coriaceous leaves, and distinctive lower and upper pitchers, growing terrestrially or as an epiphyte and sometimes hybridizing with other Nepenthes species. Classified as Vulnerable, it is threatened by its limited range, slow growth, and sensitive habitat, though legal protection in the Mt. Hamiguitan Range Wildlife Sanctuary helps safeguard it. Ecologically, it traps insects for nutrients, supports specialized invertebrates, and enhances plant biodiversity. Conservation includes habitat protection, monitoring, regulated eco-tourism, and education to preserve the species and ecosystem balance.",
           image: "https://i.imgur.com/N3sxDPo.jpeg",
+          partsImage: "https://i.imgur.com/Xk4nZrl.png",
         },
         {
           name: "Philippine Pit Viper",
           description:
             "Scientific Name: Trimeresurus flavomaculatus\n\nThe Philippine Pit Viper is a medium-sized, venomous snake endemic to the Philippines, green to yellow-green with yellow spots, living in low to mid-elevation forests (200–1,160 m). It is nocturnal, arboreal, and feeds on small vertebrates. Classified as Least Concern, it is threatened by habitat loss, making Mt. Hamiguitan protection important. It regulates prey populations, serves as prey, and helps maintain the forest food web. Conservation includes habitat protection, monitoring, and education.",
           image: "https://i.imgur.com/szpzG6n.jpeg",
+          partsImage: "https://i.imgur.com/K0sbuRH.png",
         },
         {
           name: "Big-eyed Frog",
           description:
             "Scientific Name: Pulchrana grandocula\n\nThe Big-eyed Frog is endemic to the southern Philippines, living in streams below 1,500 m. Males call near pools, females stay in understory or caves, and tadpoles cling to debris. It controls insects and serves as prey. Classified as Least Concern, it is threatened by habitat loss and pollution. Conservation in Mt. Hamiguitan includes stream protection, monitoring, and education to maintain healthy populations and ecosystems.",
           image: "https://imgur.com/1PftzG4.jpeg",
+          partsImage: "https://i.imgur.com/FZ2wrAK.png",
         },
       ];
 
@@ -1274,16 +1343,18 @@ const SpotView = () => {
 
       const modelInfoList = [
         {
-          name: "No widely recognized common name",
+          name: "Ground Orchid",
           description:
             "Scientific Name: Dendrochilum kopfii\n\nThis orchid is endemic to Mt. Hamiguitan, growing at 1,200–2,000 m in shaded montane forests. It has arching inflorescences with small brown, white, or red flowers and lance-shaped leaves from pseudobulbs, thriving in cool, humid habitats. Classified as Vulnerable, it is threatened by limited range and habitat disturbance, but protected within the Mt. Hamiguitan Range Wildlife Sanctuary. Ecologically, it provides nectar and microhabitats for pollinators, supports biodiversity, and indicates forest health. Conservation includes habitat protection, monitoring, regulated tourism, and education",
           image: "https://i.imgur.com/jIKS0I6.jpeg",
+          partsImage: "https://i.imgur.com/Q4kpl8c.png",
         },
         {
           name: "Pitcher Plant",
           description:
             "Scientific Name: Nepenthes hamiguitanensis\n\nThe Hamiguitan Pitcher Plant is a tropical climbing Nepenthes endemic to Mt. Hamiguitan, growing at 1,200–1,600 m, mostly above 1,400 m. It has upper pitchers up to 20 cm, elliptic-oblong leaves, and hairy stems, and grows terrestrially in primary montane forests and edges. Classified as Vulnerable, it is threatened by limited range, specialized habitat, and slow growth. Ecologically, it traps insects, provides microhabitats, and boosts plant diversity. Conservation includes habitat protection, monitoring, controlled tourism, and education.",
           image: "https://i.imgur.com/xdwtCcg.jpeg",
+          partsImage: "https://i.imgur.com/jYokLBN.png",
         },
       ];
 
@@ -1393,18 +1464,21 @@ const SpotView = () => {
           description:
             "Scientific Name: Tropidophorus davaoensis\n\nThis small, semi-aquatic skink is endemic to southern Mindanao, living in lowland forest streams among rocks, leaf litter, and aquatic vegetation. It is ovoviviparous and has distinctive scale patterns, remaining largely cryptic and specialized for riparian habitats. Classified as Least Concern, it depends on healthy streams, threatened by pollution and deforestation. Ecologically, it controls insects, serves as prey, supports freshwater habitat health, and indicates riparian ecosystem quality. Conservation includes stream protection, monitoring, regulated tourism, and education.",
           image: "https://i.imgur.com/JBj0E3H.jpeg",
-          partsImage: "https://i.imgur.com/dy95ik9.png",
+          partsImage: "https://i.imgur.com/EmHGTTa.png",
         },
         {
           name: "Mindanao Horned Frog",
           description:
             "Scientific Name: Pelobatrachus stejnegeri\n\nThe Mindanao Horned Frog is a medium-sized, nocturnal frog endemic to Mindanao, living in moist lowland and montane forests near streams. It has horn-like eye projections and mottled skin, with tadpoles developing on submerged debris. Classified as Vulnerable, it is threatened by habitat loss, water pollution, and climate change, making Mt. Hamiguitan protection essential. Ecologically, it controls insects, serves as prey, aids nutrient cycling, and indicates forest-floor and freshwater health. Conservation includes habitat protection, monitoring, regulated tourism, and education.",
           image: "https://i.imgur.com/3AwsOpM.jpeg",
+          partsImage: "https://i.imgur.com/vRMmNjw.png",
         },
         {
           name: "No widely recognized common name",
           description:
             "Scientific Name: Hoya josseteae\n\nThis epiphytic vine is endemic to the Philippines, with leathery dark green leaves and pale pink to white star-shaped flowers in fragrant umbels. It grows in shaded, humid forests, anchoring to host trees with aerial roots, and blooms mainly in warmer months. Classified as Vulnerable, it is threatened by restricted range, habitat loss, and overcollection, making Mt. Hamiguitan protection essential. Ecologically, it provides nectar, supports canopy biodiversity, indicates forest health, and adds aesthetic value. Conservation includes forest protection, monitoring, regulated tourism, and education.",
+          image: "https://i.imgur.com/wFj426G.jpeg",
+          partsImage: "https://i.imgur.com/UKgUGeD.png",
         },
       ];
 

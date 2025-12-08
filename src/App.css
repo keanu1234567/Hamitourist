@@ -801,7 +801,7 @@ footer,
 /* Fixed size container for model image */
 /* Auto-sizing container for model image */
 .model-img {
-  max-width: 300px;        /* optional maximum width */
+  max-width: 600px;        /* optional maximum width */
   max-height: 100%;       /* optional maximum height */
   width: auto;             /* let width adjust to image */
   height: 100%;            /* let height adjust to image */
@@ -821,7 +821,7 @@ footer,
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  text-align: justify;
+  
 }
 
 .model-title {
