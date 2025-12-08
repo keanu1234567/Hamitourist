@@ -29,6 +29,7 @@ body {
   font-weight: 600;
   backdrop-filter: blur(10px);
   animation: fadeDown 0.8s ease;
+ 
 }
 
 @keyframes fadeDown {
@@ -81,7 +82,7 @@ body {
 .nav-links li a.active {
   background-color: #49b345b7;
   color: #ffffff;
-  padding: 5px 13px; /* bigger padding to make the box larger */
+  padding: 1px 5px; /* bigger padding to make the box larger */
   border-radius: 12px; /* slightly more rounded for emphasis */
   transform: scale(1.1); /* optional: makes the box pop out slightly */
 }
@@ -360,6 +361,8 @@ footer,
   .tour-overlay h1 { font-size: 2.3rem; }
   .back-button { right: 400px; }
 
+  
+
 }
 
 .close-btn {
@@ -381,7 +384,10 @@ footer,
   .navbar {
     flex-direction: column;
     align-items: center;
-    padding: 15px 25px;
+    padding: 1px 25px;
+    white-space: nowrap;
+    word-spacing: 0.2rem;
+    
   }
 
    /* FIXED nav-links to row and smaller text */
@@ -494,11 +500,23 @@ footer,
 
 }
 
-@media (max-width: 480px) {
+@media (max-width: 400px) {
   .tour-overlay h1 { font-size: 1.6rem; }
   .tour-box { width: 95%; height: 280px; margin-top: -80px; }
   .back-button { font-size: 0.9rem; padding: 8px 14px; border-radius: 6px; }
+  .navbar {word-spacing: -0.1rem;}
+  
 }
+@media (max-width: 740px) {
+  .navbar .nav-links {
+    gap: 15px;
+  }
+  .dropdown-menu{
+    width: 10px;
+    height: auto;
+  }
+}
+
 
 /* Shared Animations */
 @keyframes fadeIn {
@@ -1215,7 +1233,7 @@ img {
   right: 0;
   background: rgba(255, 255, 255, 0.638);
   border-radius: 6px;
-  padding: 10px;
+  padding: 100px;
   width: 180px;
   text-align: center;
   box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
@@ -1335,10 +1353,19 @@ img {
   border-radius: 8px;
 }
 
-.login-container button {
-  padding: 12px;
-  width: 80px;
+/* Make buttons stacked and centered */
+.login-container .button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centers horizontally */
+  gap: 10px; /* spacing between Login and Back buttons */
   margin-top: 10px;
+}
+
+/* Buttons inherit existing style */
+.login-container .button-group button {
+  padding: 12px;
+  width: 120px; /* wider so text fits nicely */
   cursor: pointer;
   border: none;
   border-radius: 8px;
@@ -1348,7 +1375,7 @@ img {
   transition: all 0.3s ease;
 }
 
-.login-container button:hover {
+.login-container .button-group button:hover {
   transform: scale(1.05);
   box-shadow: 0 0 15px #5acb52;
 }
@@ -1385,29 +1412,6 @@ img {
   }
 }
 
-.back-button {
-  position: absolute;
-  top: 515px;
-  left: 727px;
-  background: rgba(90, 203, 82, 0.85);
-  border: none;
-  color: #fff;
-  height: 40px;
-  width: 75px;/* smaller padding */
-  font-size: 14px;   /* smaller font size */
-  border-radius: 6px;
-  cursor: pointer;
-  display: block;
-  align-items: center;
-  gap: 4px;
-  transition: all 0.3s ease;
-  z-index: 10;
-}
-
-.back-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 8px #5acb52;
-}
 
 
 .error-message {
@@ -1430,6 +1434,7 @@ img {
     opacity: 1;
     transform: translateY(0);
   }
-}
 
+  
+}
 

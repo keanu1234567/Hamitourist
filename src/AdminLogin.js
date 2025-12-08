@@ -63,23 +63,25 @@ function AdminLogin() {
         {/* Login Form */}
         <div className="login-container">
           <h2>Admin Login</h2>
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleLogin} className="login-form">
             <input
               type="password"
               placeholder="Enter Admin Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button type="submit">Login</button>
+
+            {/* Buttons wrapper */}
+            <div className="button-group">
+              <button type="submit">Login</button>
+              <button type="button" onClick={() => navigate("/")}>
+                Back
+              </button>
+            </div>
           </form>
 
           {/* Error Message */}
           {error && <div className="error-message">{error}</div>}
-
-          {/* Back Button */}
-          <button className="back-button" onClick={() => navigate("/")}>
-            Back
-          </button>
         </div>
       </div>
     </div>
