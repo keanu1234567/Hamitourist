@@ -206,7 +206,7 @@ const SpotView = () => {
       ctx.fillText("To Crossing Stampa", size / 2, size + 30);
 
       const strokedImageURL = canvas.toDataURL();
-      const teleportSpot = new PANOLENS.Infospot(1500, strokedImageURL); // size of arrow
+      const teleportSpot = new PANOLENS.Infospot(1300, strokedImageURL); // size of arrow
       teleportSpot.position.set(1000, -500, 4600);
       teleportSpot.addEventListener("click", () => {
         navigate(`/Spots/${"EFNFONngOYNOOFbqdloj"}`);
@@ -240,7 +240,7 @@ const SpotView = () => {
       ctx.fillText("Back to UNESCO Marker", size / 2, size + 30);
 
       const backArrowURL = canvas.toDataURL();
-      const backSpot = new PANOLENS.Infospot(1300, backArrowURL);
+      const backSpot = new PANOLENS.Infospot(1100, backArrowURL);
       backSpot.position.set(-4000, -500, 500); // adjust as needed
       backSpot.addEventListener("click", () => {
         navigate(`/Spots/${"fTLAXWb7Cph8jqeHxlXT"}`);
@@ -253,7 +253,7 @@ const SpotView = () => {
       ctx.drawImage(img, 0, 0, size, size);
       ctx.fillText("Go to Puting Bato", size / 2, size + 30);
       const forwardArrowURL = canvas.toDataURL();
-      const forwardSpot = new PANOLENS.Infospot(1300, forwardArrowURL);
+      const forwardSpot = new PANOLENS.Infospot(1100, forwardArrowURL);
       forwardSpot.position.set(4000, -200, -3000); // adjust as needed
       forwardSpot.addEventListener("click", () => {
         navigate(`/Spots/${"sk2Dc8hJYl1NUr3bAEsj"}`);
@@ -300,8 +300,8 @@ const SpotView = () => {
       ctx.drawImage(img, 0, 0, size, size);
       ctx.fillText("Go to Lantawan 1", size / 2, size + 30);
       const forwardArrowURL = canvas.toDataURL();
-      const forwardSpot = new PANOLENS.Infospot(1000, forwardArrowURL);
-      forwardSpot.position.set(500, 800, -2000); // adjust as needed
+      const forwardSpot = new PANOLENS.Infospot(600, forwardArrowURL);
+      forwardSpot.position.set(500, 800, -1800); // adjust as needed
       forwardSpot.addEventListener("click", () => {
         navigate(`/Spots/${"IMcVNrMMCsgXbiLPe10T"}`);
         setTimeout(() => window.location.reload(), 100);
@@ -390,6 +390,27 @@ const SpotView = () => {
       });
 
       panorama.add(teleportSpot);
+
+       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw the arrow image on top
+      ctx.drawImage(img, 0, 0, size, size);
+
+      // Draw always-visible bold text below the arrow
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Go Back to Lantawan 2", size / 2, size + 30);
+
+      const backImageURL = canvas.toDataURL();
+      const backSpot = new PANOLENS.Infospot(400, backImageURL); // size of arrow
+      backSpot.position.set(-2000, -500, -400);
+      backSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"dIxy6t8cHc88lGY7eHTD"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+
+      panorama.add(backSpot);
     };
   };
 
@@ -546,6 +567,27 @@ const SpotView = () => {
       });
 
       panorama.add(teleportSpot);
+
+       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw arrow image on top
+      ctx.drawImage(img, 0, 0, size, size);
+
+      // Draw always-visible bold text below arrow
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Back to Lantawan 1", size / 2, size + 30);
+
+      const backImageURL = canvas.toDataURL();
+      const backSpot = new PANOLENS.Infospot(500, backImageURL); // size of arrow
+      backSpot.position.set(-2000, -500, -600);
+      backSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"IMcVNrMMCsgXbiLPe10T"}`);
+        setTimeout(() => window.location.reload(), 100);
+      });
+
+      panorama.add(backSpot);
     };
   };
 
@@ -629,7 +671,7 @@ const SpotView = () => {
       ctx.fillText("Back to Camp 4", size / 2, size + 30);
 
       const backArrowURL = canvas.toDataURL();
-      const backSpot = new PANOLENS.Infospot(1400, backArrowURL);
+      const backSpot = new PANOLENS.Infospot(1000, backArrowURL);
       backSpot.position.set(-500, 800, 4000); // adjust as needed
       backSpot.addEventListener("click", () => {
         navigate(`/Spots/${"8us4vrBVTMIDiCXXWHlY"}`);
@@ -642,7 +684,7 @@ const SpotView = () => {
       ctx.drawImage(img, 0, 0, size, size);
       ctx.fillText("Go to Lantawan 2", size / 2, size + 30);
       const forwardArrowURL = canvas.toDataURL();
-      const forwardSpot = new PANOLENS.Infospot(1400, forwardArrowURL);
+      const forwardSpot = new PANOLENS.Infospot(1200, forwardArrowURL);
       forwardSpot.position.set(-500, 1000, -4000); // adjust as needed
       forwardSpot.addEventListener("click", () => {
         navigate(`/Spots/${"dIxy6t8cHc88lGY7eHTD"}`);
@@ -672,7 +714,7 @@ const SpotView = () => {
       ctx.font = "bold 20px Poppins";
       ctx.fillStyle = "white";
       ctx.textAlign = "center";
-      ctx.fillText("Back Uwang-uwang", size / 2, size + 30);
+      ctx.fillText("Go Back to Uwang-uwang", size / 2, size + 30);
 
       const backArrowURL = canvas.toDataURL();
       const backSpot = new PANOLENS.Infospot(1400, backArrowURL);
@@ -688,7 +730,7 @@ const SpotView = () => {
       ctx.drawImage(img, 0, 0, size, size);
       ctx.fillText("Go to Camp 3", size / 2, size + 30);
       const forwardArrowURL = canvas.toDataURL();
-      const forwardSpot = new PANOLENS.Infospot(1200, forwardArrowURL);
+      const forwardSpot = new PANOLENS.Infospot(1000, forwardArrowURL);
       forwardSpot.position.set(-3000, -500, 4000); // adjust as needed
       forwardSpot.addEventListener("click", () => {
         navigate(`/Spots/${"YCEKhHOU6eNHSqx10qSr"}`);
@@ -1104,8 +1146,8 @@ const SpotView = () => {
           description:
             "Scientific Name: Nepenthes Peltata\n" +
             "\n" +
-            "The Philippine Mock Viper is a small, harmless snake (65–77 cm) with brown or gray patterns and a Y-shaped head marking. It lives near streams and moist forest floors, is active day and night, and eats frogs, geckos, and skinks. It is native to many Philippine islands up to 2,100 m elevation Though listed as Least Concern, it depends on intact forests, making protected areas like Mt. Hamiguitan important. It helps control small vertebrates and serves as prey, supporting the forest food chain. In the sanctuary, it benefits from habitat protection, monitoring, and regulated tourism.",
-          image: "https://i.imgur.com/vBK0069.jpeg",
+            "Nepenthes peltata is a terrestrial pitcher plant distinguished by its dark green, peltate leaves and large, ground-level pitchers with reddish to dark maroon coloration. It grows in ultramafic soils of the pygmy forest of Mt. Hamiguitan at elevations between 865–1,635 meters. This species is strictly endemic to the area and produces only rosette and lower pitchers, which trap insects for nutrients. Nepenthes peltata, though not currently listed as threatened, has a naturally restricted range, making it highly dependent on the intact mossy and pygmy forests of Mt. Hamiguitan. Ecologically, it helps regulate insect populations and contributes to nutrient cycling in nutrient-poor soils. Within the Mt. Hamiguitan Range Wildlife Sanctuary, strict habitat protection, regulated tourism, ongoing monitoring, and conservation programs support the long-term survival of this endemic pitcher plant.",
+          image: "https://i.imgur.com/ezLWQm4.jpeg",
           partsImage: "https://i.imgur.com/H6T20fK.png",
         },
       ];
