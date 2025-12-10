@@ -144,10 +144,10 @@ const SpotView = () => {
       } else if (name.includes("mossy")) {
         addImageInsidePanorama(panorama, "Mossy Forest");
         addMossyForestBackToLantawan3(panorama);
-      } else if (name.includes("peak")){
+      } else if (name.includes("peak")) {
         addImageInsidePanorama(panorama, "Peak");
-        addPeakToCamp3(panorama)}
-      else if (name.includes("camp iii"))
+        addPeakToCamp3(panorama);
+      } else if (name.includes("camp iii"))
         addImageInsidePanorama(panorama, "Camp III");
       else if (name.includes("camp 3"))
         addCamp3Teleport(panorama); // ✅ Add Camp 3 teleport
@@ -164,7 +164,6 @@ const SpotView = () => {
       else if (name.includes("lantawan 2")) addLantawan2ToCamp3(panorama);
       else if (name.includes("twin falls")) addTwinFallsToCamp3(panorama);
       else if (name.includes("lantawan 3")) addLantawan3ToMossy(panorama);
-       
     });
 
     const handleResize = () => viewer.onWindowResize();
@@ -181,6 +180,11 @@ const SpotView = () => {
   }, [spot]);
 
   /* ------------------ Unesco Marker to Crossing Stampa ------------------ */
+
+  // 🔊 Preload single click sound for all teleport arrows
+  const arrowClickSound = new Audio("/sounds/click.mp3");
+  arrowClickSound.volume = 1.0;
+  arrowClickSound.load();
 
   const addUnescoToCrossingStampa = (panorama) => {
     const size = 256; // canvas resolution
@@ -209,8 +213,9 @@ const SpotView = () => {
       const teleportSpot = new PANOLENS.Infospot(1300, strokedImageURL); // size of arrow
       teleportSpot.position.set(1000, -500, 4600);
       teleportSpot.addEventListener("click", () => {
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
         navigate(`/Spots/${"EFNFONngOYNOOFbqdloj"}`);
-        setTimeout(() => window.location.reload(), 100);
       });
 
       panorama.add(teleportSpot);
@@ -243,8 +248,9 @@ const SpotView = () => {
       const backSpot = new PANOLENS.Infospot(1100, backArrowURL);
       backSpot.position.set(-4000, -500, 500); // adjust as needed
       backSpot.addEventListener("click", () => {
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
         navigate(`/Spots/${"fTLAXWb7Cph8jqeHxlXT"}`);
-        setTimeout(() => window.location.reload(), 100);
       });
       panorama.add(backSpot);
 
@@ -256,8 +262,9 @@ const SpotView = () => {
       const forwardSpot = new PANOLENS.Infospot(1100, forwardArrowURL);
       forwardSpot.position.set(4000, -200, -3000); // adjust as needed
       forwardSpot.addEventListener("click", () => {
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
         navigate(`/Spots/${"sk2Dc8hJYl1NUr3bAEsj"}`);
-        setTimeout(() => window.location.reload(), 100);
       });
       panorama.add(forwardSpot);
     };
@@ -291,7 +298,8 @@ const SpotView = () => {
       backSpot.position.set(-1000, -500, 5500); // adjust as needed
       backSpot.addEventListener("click", () => {
         navigate(`/Spots/${"EFNFONngOYNOOFbqdloj"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
       panorama.add(backSpot);
 
@@ -304,7 +312,8 @@ const SpotView = () => {
       forwardSpot.position.set(500, 800, -1800); // adjust as needed
       forwardSpot.addEventListener("click", () => {
         navigate(`/Spots/${"IMcVNrMMCsgXbiLPe10T"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
       panorama.add(forwardSpot);
     };
@@ -338,7 +347,8 @@ const SpotView = () => {
       backSpot.position.set(-500, -2000, -6000); // adjust as needed
       backSpot.addEventListener("click", () => {
         navigate(`/Spots/${"sk2Dc8hJYl1NUr3bAEsj"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
       panorama.add(backSpot);
 
@@ -351,13 +361,15 @@ const SpotView = () => {
       forwardSpot.position.set(-1800, 200, 4000); // adjust as needed
       forwardSpot.addEventListener("click", () => {
         navigate(`/Spots/${"MeD7yd6kVBnAJYJXND7c"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
       panorama.add(forwardSpot);
     };
   };
 
   /* ------------------ Camp 3 teleport to inside panorama ------------------ */
+
   const addCamp3Teleport = (panorama) => {
     const size = 256; // canvas resolution
     const textHeight = 50; // extra space inside canvas for text
@@ -386,12 +398,13 @@ const SpotView = () => {
       teleportSpot.position.set(2000, -500, 1600);
       teleportSpot.addEventListener("click", () => {
         navigate(`/Spots/${"zvuINqT41VhWCKpenjZw"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
 
       panorama.add(teleportSpot);
 
-       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Draw the arrow image on top
       ctx.drawImage(img, 0, 0, size, size);
@@ -403,18 +416,42 @@ const SpotView = () => {
       ctx.fillText("Go Back to Lantawan 2", size / 2, size + 30);
 
       const backImageURL = canvas.toDataURL();
-      const backSpot = new PANOLENS.Infospot(400, backImageURL); // size of arrow
+      const backSpot = new PANOLENS.Infospot(500, backImageURL); // size of arrow
       backSpot.position.set(-2000, -500, -400);
       backSpot.addEventListener("click", () => {
         navigate(`/Spots/${"dIxy6t8cHc88lGY7eHTD"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
 
       panorama.add(backSpot);
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw arrow image on top
+      ctx.drawImage(img, 0, 0, size, size);
+
+      // Draw always-visible bold text below arrow
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Go to Peak", size / 2, size + 30);
+
+      const peakImageURL = canvas.toDataURL();
+      const peakSpot = new PANOLENS.Infospot(500, peakImageURL); // size of arrow
+      peakSpot.position.set(-2000, -100, -400);
+      peakSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"iNq6B4KSRrEnBcYOzYVX"}`); // previous panorama ID
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
+      });
+
+      panorama.add(peakSpot);
     };
   };
 
   /* ------------------ Back to Camp 3 teleport inside Camp 3 ------------------ */
+
   const addBackToCamp3 = (panorama) => {
     const size = 256; // canvas resolution for arrow
     const textHeight = 50; // extra space inside canvas for text
@@ -443,7 +480,8 @@ const SpotView = () => {
       backSpot.position.set(-5000, -800, 400);
       backSpot.addEventListener("click", () => {
         navigate(`/Spots/${"YCEKhHOU6eNHSqx10qSr"}`); // previous panorama ID
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
 
       panorama.add(backSpot);
@@ -464,7 +502,8 @@ const SpotView = () => {
       twinSpot.position.set(8500, -800, -3000);
       twinSpot.addEventListener("click", () => {
         navigate(`/Spots/${"QGRePSC5lFbcbJ8ICvtB"}`); // previous panorama ID
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
 
       panorama.add(twinSpot);
@@ -485,7 +524,8 @@ const SpotView = () => {
       blackSpot.position.set(4500, -800, -3000);
       blackSpot.addEventListener("click", () => {
         navigate(`/Spots/${"5u8jnd3X4g9lYMy2OMpq"}`); // previous panorama ID
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
 
       panorama.add(blackSpot);
@@ -506,31 +546,11 @@ const SpotView = () => {
       pygmySpot.position.set(-300, -100, 3000);
       pygmySpot.addEventListener("click", () => {
         navigate(`/Spots/${"q519aECmdG1TQF7D44Ld"}`); // previous panorama ID
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
 
       panorama.add(pygmySpot);
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Draw arrow image on top
-      ctx.drawImage(img, 0, 0, size, size);
-
-      // Draw always-visible bold text below arrow
-      ctx.font = "bold 20px Poppins";
-      ctx.fillStyle = "white";
-      ctx.textAlign = "center";
-      ctx.fillText("Go to Peak", size / 2, size + 30);
-
-      const peakImageURL = canvas.toDataURL();
-      const peakSpot = new PANOLENS.Infospot(600, peakImageURL); // size of arrow
-      peakSpot.position.set(300, -300, -3000);
-      peakSpot.addEventListener("click", () => {
-        navigate(`/Spots/${"q519aECmdG1TQF7D44Ld"}`); // previous panorama ID
-        setTimeout(() => window.location.reload(), 100);
-      });
-
-      panorama.add(peakSpot);
     };
   };
 
@@ -563,12 +583,13 @@ const SpotView = () => {
       teleportSpot.position.set(2000, -500, -600);
       teleportSpot.addEventListener("click", () => {
         navigate(`/Spots/${"8us4vrBVTMIDiCXXWHlY"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
 
       panorama.add(teleportSpot);
 
-       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Draw arrow image on top
       ctx.drawImage(img, 0, 0, size, size);
@@ -584,7 +605,8 @@ const SpotView = () => {
       backSpot.position.set(-2000, -500, -600);
       backSpot.addEventListener("click", () => {
         navigate(`/Spots/${"IMcVNrMMCsgXbiLPe10T"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
 
       panorama.add(backSpot);
@@ -620,7 +642,8 @@ const SpotView = () => {
       backSpot.position.set(-1000, -300, 650);
       backSpot.addEventListener("click", () => {
         navigate(`/Spots/${"MeD7yd6kVBnAJYJXND7c"}`); // previous panorama ID
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
 
       panorama.add(backSpot);
@@ -641,7 +664,8 @@ const SpotView = () => {
       forwardSpot.position.set(7000, 200, -4000); // adjust as needed
       forwardSpot.addEventListener("click", () => {
         navigate(`/Spots/${"68Q4aC5LVgIDYcU4rn0F"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
       panorama.add(forwardSpot);
     };
@@ -675,7 +699,8 @@ const SpotView = () => {
       backSpot.position.set(-500, 800, 4000); // adjust as needed
       backSpot.addEventListener("click", () => {
         navigate(`/Spots/${"8us4vrBVTMIDiCXXWHlY"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
       panorama.add(backSpot);
 
@@ -688,7 +713,8 @@ const SpotView = () => {
       forwardSpot.position.set(-500, 1000, -4000); // adjust as needed
       forwardSpot.addEventListener("click", () => {
         navigate(`/Spots/${"dIxy6t8cHc88lGY7eHTD"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
       panorama.add(forwardSpot);
     };
@@ -721,7 +747,8 @@ const SpotView = () => {
       backSpot.position.set(-3400, -2000, -6000); // adjust as needed
       backSpot.addEventListener("click", () => {
         navigate(`/Spots/${"68Q4aC5LVgIDYcU4rn0F"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
       panorama.add(backSpot);
 
@@ -734,7 +761,8 @@ const SpotView = () => {
       forwardSpot.position.set(-3000, -500, 4000); // adjust as needed
       forwardSpot.addEventListener("click", () => {
         navigate(`/Spots/${"YCEKhHOU6eNHSqx10qSr"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
       panorama.add(forwardSpot);
     };
@@ -768,7 +796,8 @@ const SpotView = () => {
       teleportSpot.position.set(-6000, -500, -3600);
       teleportSpot.addEventListener("click", () => {
         navigate(`/Spots/${"zvuINqT41VhWCKpenjZw"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
 
       panorama.add(teleportSpot);
@@ -803,7 +832,8 @@ const SpotView = () => {
       teleportSpot.position.set(-6000, -1400, 3600);
       teleportSpot.addEventListener("click", () => {
         navigate(`/Spots/${"zvuINqT41VhWCKpenjZw"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
 
       panorama.add(teleportSpot);
@@ -838,7 +868,8 @@ const SpotView = () => {
       backSpot.position.set(-1000, -500, -4000); // adjust as needed
       backSpot.addEventListener("click", () => {
         navigate(`/Spots/${"zvuINqT41VhWCKpenjZw"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
       panorama.add(backSpot);
 
@@ -851,7 +882,8 @@ const SpotView = () => {
       forwardSpot.position.set(-5000, -1000, -1800); // adjust as needed
       forwardSpot.addEventListener("click", () => {
         navigate(`/Spots/${"rBS9OYsdZfgHCXMrWUNW"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
       panorama.add(forwardSpot);
     };
@@ -882,10 +914,11 @@ const SpotView = () => {
 
       const backArrowURL = canvas.toDataURL();
       const backSpot = new PANOLENS.Infospot(1200, backArrowURL);
-      backSpot.position.set(-5000, -500, -2000); // adjust as needed
+      backSpot.position.set(-5000, -500, 1000); // adjust as needed
       backSpot.addEventListener("click", () => {
         navigate(`/Spots/${"q519aECmdG1TQF7D44Ld"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
       panorama.add(backSpot);
 
@@ -894,11 +927,12 @@ const SpotView = () => {
       ctx.drawImage(img, 0, 0, size, size);
       ctx.fillText("Go to Mossy Forest", size / 2, size + 30);
       const forwardArrowURL = canvas.toDataURL();
-      const forwardSpot = new PANOLENS.Infospot(1000, forwardArrowURL);
-      forwardSpot.position.set(-2000, -1000, 3000); // adjust as needed
+      const forwardSpot = new PANOLENS.Infospot(600, forwardArrowURL);
+      forwardSpot.position.set(1500, -1000, -1500); // adjust as needed
       forwardSpot.addEventListener("click", () => {
         navigate(`/Spots/${"faYghVBuX9xcHpYLAgdH"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
       panorama.add(forwardSpot);
     };
@@ -929,18 +963,37 @@ const SpotView = () => {
 
       const strokedImageURL = canvas.toDataURL();
       const teleportSpot = new PANOLENS.Infospot(2700, strokedImageURL); // size of arrow
-      teleportSpot.position.set(-1000, -1400, -7600);
+      teleportSpot.position.set(-5000, -1400, 7500);
       teleportSpot.addEventListener("click", () => {
         navigate(`/Spots/${"rBS9OYsdZfgHCXMrWUNW"}`);
-        setTimeout(() => window.location.reload(), 100);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
 
       panorama.add(teleportSpot);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, size, size);
+
+      // Draw always-visible bold text below the arrow
+      ctx.font = "bold 20px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText("Go back to Camp3", size / 2, size + 30);
+
+      const backImageURL = canvas.toDataURL();
+      const backSpot = new PANOLENS.Infospot(1300, backImageURL); // size of arrow
+      backSpot.position.set(500, -1000, 5000);
+      backSpot.addEventListener("click", () => {
+        navigate(`/Spots/${"zvuINqT41VhWCKpenjZw"}`);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
+      });
+
+      panorama.add(backSpot);
     };
   };
 
-
-   const addPeakToCamp3 = (panorama) => {
+  const addPeakToCamp3 = (panorama) => {
     const size = 256; // canvas resolution
     const textHeight = 50; // extra space inside canvas for text
     const canvas = document.createElement("canvas");
@@ -967,8 +1020,9 @@ const SpotView = () => {
       const teleportSpot = new PANOLENS.Infospot(1700, strokedImageURL); // size of arrow
       teleportSpot.position.set(-5000, -3400, 2000);
       teleportSpot.addEventListener("click", () => {
-        navigate(`/Spots/${"zvuINqT41VhWCKpenjZw"}`);
-        setTimeout(() => window.location.reload(), 100);
+        navigate(`/Spots/${"YCEKhHOU6eNHSqx10qSr"}`);
+        arrowClickSound.currentTime = 0;
+        arrowClickSound.play().catch(() => {});
       });
 
       panorama.add(teleportSpot);
