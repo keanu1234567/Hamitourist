@@ -35,6 +35,44 @@ function ModelViewer({
   return <primitive object={scene} />;
 }
 
+// Keep track of current playing audio
+const modelAudioRef = { current: null };
+
+const playModelMusic = (src) => {
+  if (modelAudioRef.current) {
+    modelAudioRef.current.pause();
+    modelAudioRef.current.currentTime = 0;
+  }
+  const audio = new Audio(src);
+  audio.loop = true;
+  audio.volume = 0.6;
+  audio.play().catch(() => {});
+  modelAudioRef.current = audio;
+};
+
+const stopModelMusic = () => {
+  if (modelAudioRef.current) {
+    modelAudioRef.current.pause();
+    modelAudioRef.current.currentTime = 0;
+    modelAudioRef.current = null;
+  }
+};
+
+// 🎵 GLOBAL BACKGROUND MUSIC (ONE INSTANCE)
+const bgAudio = new Audio();
+bgAudio.loop = true;
+bgAudio.volume = 0.5;
+
+const playBackgroundMusic = (src) => {
+  if (bgAudio.src.includes(src)) return;
+
+  bgAudio.pause();
+  bgAudio.currentTime = 0;
+  bgAudio.src = src;
+
+  bgAudio.play().catch(() => {});
+};
+
 /* 🎯 Main SpotView Component */
 const SpotView = () => {
   const { id } = useParams();
@@ -51,6 +89,59 @@ const SpotView = () => {
   const viewerRef = useRef(null);
   const panoramaRef = useRef(null);
   const [modelLoading, setModelLoading] = useState(true);
+
+  const modelAudioRef = { current: null };
+
+  const playModelMusic = (src) => {
+    if (modelAudioRef.current) {
+      modelAudioRef.current.pause();
+      modelAudioRef.current.currentTime = 0;
+    }
+    const audio = new Audio(src);
+    audio.loop = true;
+    audio.volume = 0.6;
+    audio.play().catch(() => {});
+    modelAudioRef.current = audio;
+  };
+
+  const stopModelMusic = () => {
+    if (modelAudioRef.current) {
+      modelAudioRef.current.pause();
+      modelAudioRef.current.currentTime = 0;
+      modelAudioRef.current = null;
+    }
+  };
+
+  // ----------------- UseEffect for model music -----------------
+  useEffect(() => {
+    if (!activeModel?.url) {
+      stopModelMusic();
+      return;
+    }
+
+    const modelName = activeModel.url.toLowerCase();
+
+    if (
+      modelName.includes("horned frog") ||
+      modelName.includes("pulchrana")
+    ) {
+      playModelMusic("/sounds/frog.mp3");
+    } else if (
+      modelName.includes("mock viper") ||
+      modelName.includes("pit viper")
+    ) {
+      playModelMusic("/sounds/snake.mp3");
+    }  else if (
+      modelName.includes("tropidophorus")
+    ) {
+      playModelMusic("/sounds/skink.mp3");
+    }
+     else {
+      stopModelMusic();
+    }
+
+    return () => stopModelMusic();
+  }, [activeModel]);
 
   useEffect(() => {
     const handleContextMenu = (e) => e.preventDefault();
@@ -113,6 +204,47 @@ const SpotView = () => {
     containerRef.current.innerHTML = "";
 
     const panorama = new PANOLENS.ImagePanorama(spot.Image);
+
+    panorama.addEventListener("enter", () => {
+      const name = (spot.Name || "").toLowerCase();
+
+      /* 🌲 FOREST / NATURE */
+      if (
+        name.includes("mossy forest") ||
+        name.includes("pygmy field") ||
+        name.includes("unesco") ||
+        name.includes("crossing stampa") ||
+        name.includes("hidden garden") ||
+        name.includes("camp 3") ||
+        name.includes("camp 4") ||
+        name.includes("camp iii") ||
+        name.includes("camp iv") ||
+        name.includes("tinagong dagat")
+      ) {
+        playBackgroundMusic("/sounds/forest.mp3");
+      } else if (
+        /* 💦 WATER */
+        name.includes("twin falls") ||
+        name.includes("uwang uwang") ||
+        name.includes("puting bato")
+      ) {
+        playBackgroundMusic("/sounds/waterfall.mp3");
+      } else if (
+        /* 🌬️ WIND / PEAK / RIDGE */
+        name.includes("peak") ||
+        name.includes("lantawan 1") ||
+        name.includes("lantawan 2") ||
+        name.includes("black mountain") ||
+        name.includes("lantawan 3")
+      ) {
+        playBackgroundMusic("/sounds/wind.mp3");
+      }
+    });
+
+    panorama.addEventListener("leave", () => {
+      bgAudio.pause();
+    });
+
     panoramaRef.current = panorama;
 
     const viewer = new PANOLENS.Viewer({

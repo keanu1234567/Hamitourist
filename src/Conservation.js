@@ -32,7 +32,7 @@ function Conservation() {
       desc: "Collecting or possessing plants/animals without permit is illegal. Respect wildlife and their habitats."
     },
     {
-      icon: "no-smoking.png",
+      icon: "no smoking.png",
       title: "No Smoking",
       desc: "Smoking is strictly prohibited in all areas to prevent forest fires and protect air quality."
     },
@@ -42,7 +42,7 @@ function Conservation() {
       desc: "Cooking is allowed only in assigned areas. Check stoves for safety and avoid damaging the soil."
     },
     {
-      icon: "water-pollution.png",
+      icon: "faucet.png",
       title: "Water Safety",
       desc: "Avoid polluting water sources with soap, shampoo, or detergents to protect aquatic life."
     },
@@ -57,7 +57,7 @@ function Conservation() {
       desc: "Do not deface trees, rocks, signs, or facilities. Respect the natural and cultural heritage."
     },
     {
-      icon: "csr.png",
+      icon: "tent.png",
       title: "Avoid Damaging Facilities",
       desc: "Help maintain trails, shelters, and other facilities by using them responsibly."
     },
