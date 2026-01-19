@@ -44,8 +44,8 @@ const playModelMusic = (src) => {
     modelAudioRef.current.currentTime = 0;
   }
   const audio = new Audio(src);
-  audio.loop = true;
-  audio.volume = 0.6;
+  audio.loop = false;
+  audio.volume = 0.4;
   audio.play().catch(() => {});
   modelAudioRef.current = audio;
 };
@@ -61,7 +61,7 @@ const stopModelMusic = () => {
 // 🎵 GLOBAL BACKGROUND MUSIC (ONE INSTANCE)
 const bgAudio = new Audio();
 bgAudio.loop = true;
-bgAudio.volume = 0.5;
+bgAudio.volume = 0.3;
 
 const playBackgroundMusic = (src) => {
   if (bgAudio.src.includes(src)) return;
@@ -92,25 +92,7 @@ const SpotView = () => {
 
   const modelAudioRef = { current: null };
 
-  const playModelMusic = (src) => {
-    if (modelAudioRef.current) {
-      modelAudioRef.current.pause();
-      modelAudioRef.current.currentTime = 0;
-    }
-    const audio = new Audio(src);
-    audio.loop = true;
-    audio.volume = 0.6;
-    audio.play().catch(() => {});
-    modelAudioRef.current = audio;
-  };
 
-  const stopModelMusic = () => {
-    if (modelAudioRef.current) {
-      modelAudioRef.current.pause();
-      modelAudioRef.current.currentTime = 0;
-      modelAudioRef.current = null;
-    }
-  };
 
   // ----------------- UseEffect for model music -----------------
   useEffect(() => {
