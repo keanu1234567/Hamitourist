@@ -334,7 +334,7 @@ const Tour = () => {
           />
 
           <Suspense fallback={null}>
-            <Model url="/3dmap/Map.glb" />
+            <Model url="/3dmap/HMap.glb" />
           </Suspense>
           {/* 🟤 ACTUAL TRAIL LINES */}
           {trailConnections.map(({ from, to, height }, index) => {
