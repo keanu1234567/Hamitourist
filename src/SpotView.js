@@ -207,7 +207,7 @@ const SpotView = () => {
       } else if (
         /* 💦 WATER */
         name.includes("twin falls") ||
-        name.includes("uwang uwang") ||
+        name.includes("uwang-uwang") ||
         name.includes("puting bato")
       ) {
         playBackgroundMusic("/sounds/waterfall.mp3");
