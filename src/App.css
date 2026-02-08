@@ -1027,6 +1027,20 @@ footer,
   pointer-events: none; /* doesn't block clicks */
 }
 
+.map-title {
+  position: absolute;   /* float over the canvas */
+  top: 20px;            /* adjust vertical position */
+  left: 50%;            /* center horizontally */
+  transform: translateX(-50%);
+  font-size: 28px;
+  font-weight: bold;
+  color: rgb(240, 240, 240);
+  text-shadow: 2px 2px 5px black;
+  pointer-events: none; /* don’t block clicks on canvas */
+  z-index: 10;
+}
+
+
 .legend h4 {
   margin: 0 0 5px 0;
   font-size: 1rem;
@@ -1057,24 +1071,29 @@ footer,
 /* Responsive: smaller screens */
 @media screen and (max-width: 1024px) {
   .legend {
-    width: 180px;
+    width: 100px;
+    height: 90px;
     font-size: 0.5rem;
-    padding: 8px 12px;
+    padding: 8px 10px;
     top: 5px;
     left: 5px;
   }
 
   .legend h4 {
-    font-size: 0.9rem;
+    font-size: 0.6rem;
   }
 
   .legend-dot {
-    width: 10px;
-    height: 10px;
+    width: 7px;
+    height: 7px;
   }
 
   .legend-item {
     gap: 6px;
+  }
+
+  .map-title {
+    font-size: 18px;
   }
 }
 

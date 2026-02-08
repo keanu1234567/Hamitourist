@@ -62,7 +62,7 @@ function Marker({ position, label, onClick }) {
     if (meshRef.current) {
       meshRef.current.scale.set(pulse, pulse, pulse);
       meshRef.current.material.emissive.set(
-        specialMarkers.includes(label) ? GREEN : "#ffffff"
+        specialMarkers.includes(label) ? GREEN : "#ffffff",
       );
       meshRef.current.material.emissiveIntensity = pulse * 0.5;
     }
@@ -232,13 +232,13 @@ const Tour = () => {
     const endPos = new THREE.Vector3(
       targetPosition[0] + 5,
       targetPosition[1] + 8,
-      targetPosition[2] + 12
+      targetPosition[2] + 12,
     );
 
     const endTarget = new THREE.Vector3(
       targetPosition[0],
       targetPosition[1],
-      targetPosition[2]
+      targetPosition[2],
     );
 
     let progress = 0;
@@ -260,6 +260,33 @@ const Tour = () => {
     };
 
     animate();
+  };
+
+  // 🚶 Trail connections (by label)
+  const trailConnections = [
+    { from: "Unesco Marker", to: "Crossing Stampa", height: 0.8 },
+    { from: "Crossing Stampa", to: "Puting Bato", height: 0.5 },
+    { from: "Puting Bato", to: "Lantawan 1", height: 0.5 },
+    { from: "Lantawan 1", to: "Camp 4", height: 0.7 },
+    { from: "Camp 4", to: "Uwang Uwang", height: 2.4 },
+    { from: "Uwang Uwang", to: "Lantawan 2", height: 0.5 },
+    { from: "Lantawan 2", to: "Camp 3", height: 0.4 },
+
+    // branches
+    { from: "Camp 3", to: "Peak", height: 0.3 },
+    { from: "Camp 3", to: "Black Mountain", height: 0.4 },
+    { from: "Camp 3", to: "Twin Falls", height: 0.1 },
+    { from: "Camp 3", to: "Pygmy Field", height: 0.1 },
+
+    { from: "Pygmy Field", to: "Lantawan 3", height: -0.9 },
+    { from: "Lantawan 3", to: "Mossy Forest", height: 0.2 },
+    { from: "Mossy Forest", to: "Tinagong Dagat", height: 0.1 },
+    { from: "Tinagong Dagat", to: "Hidden Garden", height: 0.1 },
+  ];
+
+  const getMarkerPosition = (label) => {
+    const marker = markers.find((m) => m.label === label);
+    return marker ? marker.position : null;
   };
 
   return (
@@ -287,6 +314,9 @@ const Tour = () => {
           </div>
         )}
 
+        {/* Plain text overlay inside Canvas area */}
+        <div className="map-title">San Isidro Trail</div>
+
         <Canvas
           className="tour-canvas"
           shadows
@@ -306,6 +336,32 @@ const Tour = () => {
           <Suspense fallback={null}>
             <Model url="/3dmap/Map.glb" />
           </Suspense>
+          {/* 🟤 ACTUAL TRAIL LINES */}
+          {trailConnections.map(({ from, to, height }, index) => {
+            const start = getMarkerPosition(from);
+            const end = getMarkerPosition(to);
+            if (!start || !end) return null;
+
+            // Calculate the middle point
+            const midX = (start[0] + end[0]) / 2;
+            const midY = (start[1] + end[1]) / 2 + height; // height raises or lowers middle
+            const midZ = (start[2] + end[2]) / 2;
+
+            return (
+              <Line
+                key={index}
+                points={[
+                  new THREE.Vector3(start[0], start[1], start[2]), // start
+                  new THREE.Vector3(midX, midY, midZ), // middle (adjustable height)
+                  new THREE.Vector3(end[0], end[1], end[2]), // end
+                ]}
+                color="#8b5a2b"
+                lineWidth={2.5}
+                transparent
+                opacity={0.9}
+              />
+            );
+          })}
 
           {markers.map((m, i) => (
             <Marker
@@ -315,8 +371,8 @@ const Tour = () => {
               onClick={() =>
                 flyToCamera(m.position, () =>
                   playZoomVideo(
-                    m.onClick ? m.onClick : () => navigate(`/Spots/${m.id}`)
-                  )
+                    m.onClick ? m.onClick : () => navigate(`/Spots/${m.id}`),
+                  ),
                 )
               }
             />
